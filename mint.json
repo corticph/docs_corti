@@ -19,6 +19,10 @@
     {
       "name": "Support",
       "url": "https://help.corti.ai"
+    },
+    {
+      "name": "Legacy Documentation",
+      "url": "https://docs-legacy.corti.ai"
     }
   ],
   "tabs": [
@@ -54,8 +58,8 @@
     {
       "group": "API Documentation",
       "pages": [
-        "api-reference"
-      ]
+        "api-reference"    
+          ]
     }
   ],
   "footerSocials": {
