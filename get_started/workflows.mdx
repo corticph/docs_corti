@@ -1,0 +1,126 @@
+---
+title: Example Workflows
+description: 'Discover the flexibility of Corti Copilot API'
+---
+
+The Corti Copilot API is designed to be highly flexible, allowing developers to build customized workflows that best suit their internal needs. While the following examples, Real-Time Workflow and Asynchronous Workflow, illustrate common use cases, they are just starting points. By leveraging the core concept of Interactions and the full range of our API collection, you can create tailored workflows that seamlessly integrate with your existing systems and processes.
+
+# Real-Time Workflow
+The Real-Time Workflow is designed for scenarios where immediate processing and feedback are essential during live interactions between medical practitioners and patients. This workflow leverages WebSocket connections to enable continuous streaming, real-time transcription, and dynamic updates throughout the interaction. It is ideal for situations where clinicians need to capture and act on information instantaneously, ensuring that all relevant data is processed and available in real-time.
+
+## Initialization
+
+
+<Card>
+  ```mermaid
+        sequenceDiagram
+        participant Client
+        participant Public API
+        Client->> Public API: POST /interactions
+        Public API -->> Client: interactionId, wssUrL
+        opt Clients wants to provide known facts pre-interaction
+        Client ->> Public API: POST /interactions/:interactionId/facts
+        end
+
+        Client ->> Public API: PATCH /interactions/:interactionId "in-progress"
+        Public API -->> Client: 200, interaction
+    ```
+</Card>
+
+1. The workflow begins with the client application initiating an interaction. This is done by sending a `POST` request to the `/interactions` endpoint.
+2. The API responds with a unique `interactionId` and a WebSocket URL (`wssUrl`). The identifier will be used to manage the subsequent steps of the workflow.
+
+
+## Live Interaction
+
+<Card>
+  ```mermaid
+        sequenceDiagram
+        participant Client
+        participant Public API
+        participant WebSocket
+        note over Client, WebSocket: Live Interaction Starts
+        Client->>WebSocket: WSS to /interactions/:interactionId/stream
+        Client->>WebSocket: configuration
+        WebSocket-->>Client: "configuration commited", configuration
+
+        Client-->>WebSocket: Send audio packets
+        WebSocket-->>Client: Live transcripts and fact updates
+
+        opt User wants to create a fact
+        Client ->> Public API: POST /interactions/:interactionId/facts
+        Public API -->> Client: 200, fact
+        WebSocket-->>Client: Created facts
+        end 
+
+        Client->>WebSocket: Send "end" message
+
+        note over Client, WebSocket: Live Interaction Ends
+    ```
+</Card>
+
+- *Optional* **Pre-Interaction Data**: If the client has pre-existing information (known `Facts`) about the patient or session, these can be sent to `/interactions/:interactionId/facts` before starting the live interaction. This ensures that the interaction starts with contextually relevant data.
+- **Start the interaction:** The client should `PATCH` to `/interactions/:interactionId` changing the interaction state to `“in-progress”`
+- **Opening the WebSocket Connection**: The client establishes a real-time connection by opening a WebSocket using the provided `wssUrl`. This connection serves as the primary channel for transmitting and receiving data throughout the interaction.
+- **Streaming and Configuration**: Upon connection, the client should send configuration details to tailor the interaction. These configurations are committed via the WebSocket, which acknowledges them back to the client.
+- **Continuous Data Flow**: As the interaction progresses, the client sends audio packets through the WebSocket. In return, the API streams back `live transcripts` and updates any `Facts` in real-time.
+- During the interaction, the Client may need to introduce new facts based on the ongoing conversation. These are sent to `/interactions/:interactionId/facts`, updating the current interaction data.
+- The newly created `Facts` are immediately reflected in the WebSocket stream, ensuring that all participants and processes have the latest information.
+
+## Ending the Interaction
+
+
+<Card>
+  ```mermaid
+        sequenceDiagram
+        participant Client
+        participant Public API
+        participant WebSocket
+
+        WebSocket-->>Client: Final updates
+        WebSocket-->>Client: Received "ended" message
+
+        Client->>Client: Makes final edits to facts
+        Client->>Public API: POST /documents with final facts list
+        Public API-->>Client: Return document
+
+        Client ->> Public API: PATCH /interactions/:interactionId "completed"
+        Public API -->> Client: 200, interaction
+    ```
+</Card>
+
+- Once the live interaction is complete, the client sends an `"end"` message via the WebSocket, signalling the conclusion of the session.
+- The WebSocket then sends any final updates and the `"ended"` message formally closing the live interaction.
+- After the live session, the client can review and make final edits to the facts collected during the interaction.
+- These finalized `Facts` are then submitted through a `POST` request to `/interactions/:interactionId/documents`, which generates the desired documentation, such as clinical notes or summaries, based on the provided data and a template.
+- The API processes this request and returns the completed document, ready for use or further review.
+- The client should `PATCH` to `/interactions/:interactionId` changing the interaction state to `“completed”`
+
+
+# Asynchronous Workflow
+The Asynchronous Workflow is designed for scenarios where real-time processing isn't required, and the interaction can be processed after the fact. This workflow allows for the uploading, transcription, and documentation of recorded interactions, providing flexibility for situations where immediate processing is not feasible or necessary.
+
+<Card>
+  ```mermaid
+        sequenceDiagram
+        Client ->> Public API: POST /interactions
+        Public API -->> Client: 200, interactionId, wssUrl
+        Client ->> Public API: POST /interactions/:interactionId/recording
+        Public API -->> Client: 200, recordingId
+        Client ->> Public API: POST /interactions/:interactionId/transcripts
+        Public API -->> Client: 200, transcript
+        Client ->> Public API: POST /interactions/:interactionId/documents
+        Public API -->> Client: 200, document
+    ```
+</Card>
+
+1. The workflow begins with the client initiating an interaction by sending a `POST` request to the `/interactions` endpoint.
+2. The API responds with a unique `interactionId` and a WebSocket URL (`wssUrl`). The identifier will be used to manage the subsequent steps of the workflow.
+3. Once the interaction is initialized, the client uploads an audio file associated with that interaction by sending a `POST` request to the `/interactions/:interactionId/recording` endpoint.
+4. The API responds with a `200` status and returns a `recordingId`, confirming that the audio file has been successfully uploaded and linked to the interaction.
+5. After the recording is uploaded, the client initiates the transcription process by sending a `POST` request to the `/interactions/:interactionId/transcripts` endpoint.
+6. The API processes the audio and returns a `200` status with the generated transcript. This transcript contains the text version of the recorded interaction, extracted and formatted for review.
+7. Finally, the client creates the necessary documentation by sending a `POST` request to the `/interactions/:interactionId/documents` endpoint. This request includes the transcript generated in the previous step and a `templateId` to specify the format of the output document.
+8. The API processes the request and returns a `200` status along with the final document, which is ready for use or further editing.
+
+

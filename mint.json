@@ -1,0 +1,69 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Corti API Documentation",
+  "logo": {
+    "dark": "/logo/corti_dark.svg",
+    "light": "/logo/corti_light.svg"
+  },
+  "favicon": "/logo/favicon-docs.png",
+  "colors": {
+    "primary": "#0D9373",
+    "light": "#07C983",
+    "dark": "#0D9373",
+    "anchors": {
+      "from": "#0D9373",
+      "to": "#07C983"
+    }
+  },
+  "topbarLinks": [
+    {
+      "name": "Support",
+      "url": "https://help.corti.ai"
+    }
+  ],
+  "tabs": [
+    {
+      "name": "API Reference",
+      "url": "api-reference"
+    }
+  ],
+  "anchors": [
+
+    {
+      "name": "API Reference",
+      "openapi": "/api-reference/swagger-spec.json",
+      "url": "api-reference",
+      "icon": "square-terminal"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "About Corti API",
+      "pages": [
+        "about/introduction",
+        "about/ai_platform"
+      ]
+    },
+    {
+      "group": "Get Started",
+      "pages": [
+        "get_started/authentication",
+        "get_started/workflows"
+      ]
+    },
+    {
+      "group": "API Documentation",
+      "pages": [
+        "api-reference"
+      ]
+    }
+  ],
+  "footerSocials": {
+    "x": "https://x.com/corti_ai",
+    "github": "https://github.com/corticph",
+    "linkedin": "https://www.linkedin.com/company/corti"
+  },
+  "integrations": {
+    "intercom": "y30epli4"
+  }
+}
