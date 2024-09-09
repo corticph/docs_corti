@@ -1304,6 +1304,233 @@
           }
         }
       }
+    },
+     "/private/v2/tools/guidelines": {
+      "post": {
+        "summary": "Guidelines Tool API",
+        "description": "Processes a query and returns a summary along with relevant sources.",
+        "tags": ["Experimental"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "description": "The text-based query from the user."
+                  },
+                  "context": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "An array of contexts, such as documents or relevant segments."
+                  },
+                  "source_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "An array of source IDs to narrow down the search."
+                  }
+                },
+                "required": ["query", "context", "source_ids"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns a summary and a list of relevant sources.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "summary": {
+                      "type": "string",
+                      "description": "A summary of the response."
+                    },
+                    "sources": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "favicon": {
+                            "type": "string",
+                            "description": "The favicon URL of the source."
+                          },
+                          "title": {
+                            "type": "string",
+                            "description": "The title of the source."
+                          },
+                          "url": {
+                            "type": "string",
+                            "description": "The URL of the source."
+                          },
+                          "type": {
+                            "type": "string",
+                            "description": "The type of the source (e.g., PDF, Web)."
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "A brief description of the source."
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/v2/tools/mentions": {
+      "post": {
+        "summary": "Mentions Tool API",
+        "description": "Finds mentions of a query within a set of reference texts.",
+        "tags": ["Experimental"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": {
+                    "type": "string",
+                    "description": "The text-based query from the user."
+                  },
+                  "reference_texts": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "An array of reference texts where the mentions will be searched."
+                  }
+                },
+                "required": ["query", "reference_texts"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns an array of mentions found in the reference texts.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "description": "The type of mention (e.g., transcript, document)."
+                      },
+                      "range": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer"
+                        },
+                        "description": "Character range for document type."
+                      },
+                      "time": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer"
+                        },
+                        "description": "Time range in seconds for transcript type."
+                      },
+                      "snippet": {
+                        "type": "string",
+                        "description": "Text snippet for the mention."
+                      },
+                      "document_id": {
+                        "type": "string",
+                        "description": "The document ID if applicable."
+                      },
+                      "utterance_id": {
+                        "type": "string",
+                        "description": "The utterance ID if applicable."
+                      },
+                      "timestamp": {
+                        "type": "string",
+                        "description": "The timestamp for transcript mentions."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/v2/tools/question-prompts": {
+      "post": {
+        "summary": "Question Prompts Tool API",
+        "description": "Provides a list of suggested questions based on a query and/or context.",
+        "tags": ["Experimental"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "context": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "description": "The context in which the query is being made."
+                  },
+                  "query": {
+                    "type": "string",
+                    "description": "The query for which the questions are being generated (optional)."
+                  }
+                },
+                "required": ["context"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns an array of suggested questions.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "prompts": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "description": "An array of suggested questions."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
     }
   },
   "components": {
