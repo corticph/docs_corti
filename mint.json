@@ -69,5 +69,8 @@
   },
   "integrations": {
     "intercom": "y30epli4"
+  },
+  "feedback": {
+	"thumbsRating": true
   }
 }
