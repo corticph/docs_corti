@@ -1,51 +1,108 @@
 {
-  "openapi": "3.0.1",
+  "openapi": "3.0.0",
   "info": {
     "title": "Corti Copilot API",
-    "description": "Description.",
-    "version": "x.y.z"
+    "version": "2.0.0"
   },
   "servers": [
     {
-      "url": "https://copilot.{region}.corti.app/",
-      "variables": {
-        "region": {
-          "default": "us",
-          "enum": ["us", "eu"]
-        }
-      }
+      "url": "/",
+      "description": "Default Server URL"
     }
   ],
   "paths": {
+    "/private/v2/interactions/{id}/classification/binary/": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseClassificationCreate"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "classifications"
+        ],
+        "summary": "Create classification",
+        "description": " This endpoint is used for binary classification tasks where a boolean output is expected.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "UUID of the interaction",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "UUID of the interaction"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestClassificationCreate"
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
     "/v2/interactions/": {
       "get": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseInteractions"
+                }
+              }
+            }
+          }
+        },
         "tags": [
           "interactions"
         ],
         "summary": "List all interactions",
-        "description": "Lists all existing interactions.",
-        "operationId": "v2-interaction-list",
+        "description": " Lists all existing interactions.",
         "parameters": [
           {
             "name": "pageSize",
             "in": "query",
+            "description": " ",
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "format": "int64",
+              "description": " "
             }
           },
           {
             "name": "index",
             "in": "query",
+            "description": " ",
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "format": "int64",
+              "description": " "
             }
           },
           {
             "name": "encounterStatus",
             "in": "query",
-            "description": "The status of the encounter. To fetch for multiple status pass the same parameter again.\n",
+            "description": "The status of the encounter. To fetch for multiple status pass the same parameter again.",
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "string",
+              "description": "The status of the encounter. To fetch for multiple status pass the same parameter again."
             }
           },
           {
@@ -54,79 +111,61 @@
             "description": "A unique identifier for the patient.",
             "schema": {
               "type": "string",
-              "format": "uuid"
+              "format": "string",
+              "description": "A unique identifier for the patient."
             }
           }
-        ],
+        ]
+      },
+      "post": {
         "responses": {
           "200": {
-            "description": "Returns 200 and list of Interaction objects on success",
+            "description": " ",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ResponseInteractions"
+                  "$ref": "#/components/schemas/ResponseInteractionCreate"
                 }
               }
             }
-          },
-          "404": {
-            "description": "",
-            "content": {}
-          },
-          "500": {
-            "description": "",
-            "content": {}
           }
-        }
-      },
-      "post": {
+        },
         "tags": [
           "interactions"
         ],
         "summary": "Create interaction",
-        "description": "Creates a new interaction.",
-        "operationId": "v2-interaction-create",
+        "description": " Creates a new interaction.",
         "requestBody": {
           "content": {
-            "*/*": {
+            "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/RequestInteractionCreate"
               }
             }
           },
           "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Returns an interaction object",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseInteractionCreate"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "",
-            "content": {}
-          },
-          "500": {
-            "description": "",
-            "content": {}
-          }
-        },
-        "x-codegen-request-body-name": "Body"
+        }
       }
     },
     "/v2/interactions/{id}": {
       "get": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseInteraction"
+                }
+              }
+            }
+          }
+        },
         "tags": [
           "interactions"
         ],
         "summary": "Get existing interaction",
-        "description": "Gets an existing interaction.",
-        "operationId": "v2-interaction-get",
+        "description": " Gets an existing interaction.",
         "parameters": [
           {
             "name": "id",
@@ -135,71 +174,30 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "uuid"
+              "format": "string",
+              "description": "UUID of the interaction"
             }
           }
-        ],
+        ]
+      },
+      "patch": {
         "responses": {
           "200": {
-            "description": "Returns 200 and Interaction object on success",
+            "description": " ",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseInteraction"
                 }
               }
             }
-          },
-          "404": {
-            "description": "",
-            "content": {}
-          },
-          "500": {
-            "description": "",
-            "content": {}
           }
-        }
-      },
-      "delete": {
-        "tags": [
-          "interactions"
-        ],
-        "summary": "Delete interaction",
-        "description": "Deletes an existing interaction.",
-        "operationId": "v2-interaction-delete",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "UUID of the interaction",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Returns no content",
-            "content": {}
-          },
-          "404": {
-            "description": "",
-            "content": {}
-          },
-          "500": {
-            "description": "",
-            "content": {}
-          }
-        }
-      },
-      "patch": {
+        },
         "tags": [
           "interactions"
         ],
         "summary": "Update interaction",
-        "description": "Patches an existing interaction.",
-        "operationId": "v2-interaction-update",
+        "description": " Patches an existing interaction.",
         "parameters": [
           {
             "name": "id",
@@ -207,50 +205,41 @@
             "description": "UUID of the interaction",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "string",
+              "description": "UUID of the interaction"
             }
           }
         ],
         "requestBody": {
           "content": {
-            "*/*": {
+            "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/RequestInteractionUpdate"
               }
             }
           },
           "required": true
-        },
+        }
+      },
+      "delete": {
         "responses": {
-          "200": {
-            "description": "Returns an interaction object",
+          "204": {
+            "description": "",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ResponseInteraction"
+                  "$ref": "#/components/schemas/NoContent"
                 }
               }
             }
-          },
-          "404": {
-            "description": "",
-            "content": {}
-          },
-          "500": {
-            "description": "",
-            "content": {}
           }
         },
-        "x-codegen-request-body-name": "Body"
-      }
-    },
-    "/v2/interactions/{id}/codes": {
-      "get": {
         "tags": [
-          "codes"
+          "interactions"
         ],
-        "summary": "List Codes",
-        "operationId": "v2-interaction-codes-list",
+        "summary": "Delete interaction",
+        "description": " Deletes an existing interaction.",
         "parameters": [
           {
             "name": "id",
@@ -258,29 +247,32 @@
             "description": "UUID of the interaction",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "string",
+              "description": "UUID of the interaction"
             }
           }
-        ],
+        ]
+      }
+    },
+    "/v2/interactions/{id}/codes": {
+      "get": {
         "responses": {
           "200": {
-            "description": "Description",
+            "description": " ",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseCodesList"
                 }
               }
             }
           }
-        }
-      },
-      "post": {
+        },
         "tags": [
           "codes"
         ],
-        "summary": "Predict codes",
-        "operationId": "v2-interaction-codes-create",
+        "summary": "List Codes",
         "parameters": [
           {
             "name": "id",
@@ -288,25 +280,60 @@
             "description": "UUID of the interaction",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "string",
+              "description": "UUID of the interaction"
+            }
+          }
+        ]
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCodesList"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "codes"
+        ],
+        "summary": "Predict codes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "UUID of the interaction",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "UUID of the interaction"
             }
           }
         ],
         "requestBody": {
           "content": {
-            "*/*": {
+            "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/RequestCodesCreate"
               }
             }
           },
           "required": true
-        },
+        }
+      },
+      "patch": {
         "responses": {
           "200": {
-            "description": "Description",
+            "description": " ",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseCodesList"
                 }
@@ -314,14 +341,10 @@
             }
           }
         },
-        "x-codegen-request-body-name": "Body"
-      },
-      "patch": {
         "tags": [
           "codes"
         ],
         "summary": "Select Codes",
-        "operationId": "v2-interaction-codes-update",
         "parameters": [
           {
             "name": "id",
@@ -329,73 +352,42 @@
             "description": "UUID of the interaction",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "string",
+              "description": "UUID of the interaction"
             }
           }
         ],
         "requestBody": {
           "content": {
-            "*/*": {
+            "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/RequestCodesUpdate"
               }
             }
           },
           "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Description",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseCodesList"
-                }
-              }
-            }
-          }
-        },
-        "x-codegen-request-body-name": "Body"
+        }
       }
     },
     "/v2/interactions/{id}/documents": {
       "get": {
-        "tags": [
-          "documents"
-        ],
-        "summary": "List documents",
-        "operationId": "v2-interaction-docs-list",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "UUID of the interaction",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "200": {
-            "description": "Description",
+            "description": " ",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseDocumentList"
                 }
               }
             }
           }
-        }
-      },
-      "post": {
+        },
         "tags": [
           "documents"
         ],
-        "summary": "Create document",
-        "description": "Genearte document.",
-        "operationId": "v2-interaction-docs-create",
+        "summary": "List documents",
         "parameters": [
           {
             "name": "id",
@@ -403,34 +395,19 @@
             "description": "UUID of the interaction",
             "required": true,
             "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "stream",
-            "in": "query",
-            "description": "If true the response happens via SSE sending back a full valid JSON always, however, the content within text may be incomplete.",
-            "schema": {
-              "type": "boolean",
-              "default": false
+              "type": "string",
+              "format": "string",
+              "description": "UUID of the interaction"
             }
           }
-        ],
-        "requestBody": {
-          "content": {
-            "*/*": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestDocumentCreate"
-              }
-            }
-          },
-          "required": true
-        },
+        ]
+      },
+      "post": {
         "responses": {
           "200": {
-            "description": "",
+            "description": " ",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseDocumentCreate"
                 }
@@ -438,16 +415,11 @@
             }
           }
         },
-        "x-codegen-request-body-name": "Body"
-      }
-    },
-    "/v2/interactions/{id}/documents/{documentId}": {
-      "get": {
         "tags": [
           "documents"
         ],
-        "summary": "Get Document",
-        "operationId": "v2-interaction-docs-get",
+        "summary": "Create document",
+        "description": " Generate document.",
         "parameters": [
           {
             "name": "id",
@@ -455,7 +427,63 @@
             "description": "UUID of the interaction",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "string",
+              "description": "UUID of the interaction"
+            }
+          },
+          {
+            "name": "stream",
+            "in": "query",
+            "description": "If true the response happens via SSE sending back a full valid JSON always, however, the content within text may be incomplete.",
+            "example": "false",
+            "schema": {
+              "type": "boolean",
+              "format": "boolean",
+              "description": "If true the response happens via SSE sending back a full valid JSON always, however, the content within text may be incomplete."
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestDocumentCreate"
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/v2/interactions/{id}/documents/{documentId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDocumentRead"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "documents"
+        ],
+        "summary": "Get Document",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "UUID of the interaction",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "UUID of the interaction"
             }
           },
           {
@@ -464,38 +492,41 @@
             "description": "UUID of the interaction",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "string",
+              "description": "UUID of the interaction"
             }
           },
           {
             "name": "context",
             "in": "query",
             "description": "If true the response contains the context used to generated the document, such as fact, transcript or string.",
+            "example": "false",
             "schema": {
-              "type": "string",
-              "default": "false"
+              "type": "boolean",
+              "format": "boolean",
+              "description": "If true the response contains the context used to generated the document, such as fact, transcript or string."
             }
           }
-        ],
+        ]
+      },
+      "patch": {
         "responses": {
           "200": {
-            "description": "Description",
+            "description": " ",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseDocumentRead"
                 }
               }
             }
           }
-        }
-      },
-      "patch": {
+        },
         "tags": [
           "documents"
         ],
         "summary": "Update Document",
-        "operationId": "v2-interaction-docs-update",
         "parameters": [
           {
             "name": "id",
@@ -503,7 +534,9 @@
             "description": "UUID of the interaction",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "string",
+              "description": "UUID of the interaction"
             }
           },
           {
@@ -512,73 +545,42 @@
             "description": "UUID of the interaction",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "string",
+              "description": "UUID of the interaction"
             }
           }
         ],
         "requestBody": {
           "content": {
-            "*/*": {
+            "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/RequestDocumentUpdate"
               }
             }
           },
           "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Description",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDocumentRead"
-                }
-              }
-            }
-          }
-        },
-        "x-codegen-request-body-name": "Body"
+        }
       }
     },
     "/v2/interactions/{id}/facts": {
       "get": {
-        "tags": [
-          "facts"
-        ],
-        "summary": "List Facts",
-        "operationId": "v2-interaction-facts-list",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "UUID of the interaction",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "200": {
-            "description": "",
+            "description": " ",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseFactsList"
                 }
               }
             }
           }
-        }
-      },
-      "post": {
+        },
         "tags": [
           "facts"
         ],
-        "summary": "Create Facts",
-        "description": "When creating a Fact if the interaction status = “in progress” then the Client will receive the newly created fact over the WebSocket.",
-        "operationId": "v2-interaction-facts-create",
+        "summary": "List Facts",
         "parameters": [
           {
             "name": "id",
@@ -587,25 +589,18 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "uuid"
+              "format": "string",
+              "description": "UUID of the interaction"
             }
           }
-        ],
-        "requestBody": {
-          "content": {
-            "*/*": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestFactsCreate"
-              }
-            }
-          },
-          "required": true
-        },
+        ]
+      },
+      "post": {
         "responses": {
           "200": {
-            "description": "",
+            "description": " ",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseFactsCreate"
                 }
@@ -613,17 +608,11 @@
             }
           }
         },
-        "x-codegen-request-body-name": "Body"
-      }
-    },
-    "/v2/interactions/{id}/facts/{factId}": {
-      "patch": {
         "tags": [
           "facts"
         ],
-        "summary": "Update Fact",
-        "description": "When updating a `Fact` if the interaction `status = “in progress”` then the Client will receive the updated fact over the WebSocket.\nTo discard a fact, simply set `discarded = true`",
-        "operationId": "v2-interaction-facts-update",
+        "summary": "Create Facts",
+        "description": " When creating a Fact if the interaction status = “in progress” then the Client will receive the newly created fact over the WebSocket.",
         "parameters": [
           {
             "name": "id",
@@ -631,7 +620,95 @@
             "description": "UUID of the interaction",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "string",
+              "description": "UUID of the interaction"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestFactsCreate"
+              }
+            }
+          },
+          "required": true
+        }
+      },
+      "put": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseFactsList"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "facts"
+        ],
+        "summary": "Generate Facts",
+        "description": " Generate facts from provided transcript, replacing existing ones.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "UUID of the interaction",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "UUID of the interaction"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestFactGenerate"
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/v2/interactions/{id}/facts/{factId}": {
+      "patch": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseFactCreate"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "facts"
+        ],
+        "summary": "Update Fact",
+        "description": " When updating a `Fact` if the interaction `status = “in progress”` then the Client will receive the updated fact over the WebSocket. To discard a fact, simply set `discarded = true`",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "UUID of the interaction",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "UUID of the interaction"
             }
           },
           {
@@ -641,72 +718,41 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "uuid"
+              "format": "string",
+              "description": "UUID of the fact"
             }
           }
         ],
         "requestBody": {
           "content": {
-            "*/*": {
+            "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/RequestFactUpdate"
               }
             }
           },
           "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseFactCreate"
-                }
-              }
-            }
-          }
-        },
-        "x-codegen-request-body-name": "Body"
+        }
       }
     },
     "/v2/interactions/{id}/recordings": {
       "get": {
-        "tags": [
-          "recordings"
-        ],
-        "summary": "List Recordings",
-        "operationId": "v2-interaction-recording-list",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "UUID of the interaction",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "200": {
-            "description": "Description",
+            "description": " ",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseRecordingList"
                 }
               }
             }
           }
-        }
-      },
-      "post": {
+        },
         "tags": [
           "recordings"
         ],
-        "summary": "Upload recording",
-        "operationId": "v2-interaction-recording-create",
+        "summary": "List Recordings",
         "parameters": [
           {
             "name": "id",
@@ -714,26 +760,19 @@
             "description": "UUID of the interaction",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "string",
+              "description": "UUID of the interaction"
             }
           }
-        ],
-        "requestBody": {
-          "content": {
-            "*/*": {
-              "schema": {
-                "type": "string",
-                "format": "binary"
-              }
-            }
-          },
-          "required": true
-        },
+        ]
+      },
+      "post": {
         "responses": {
           "200": {
-            "description": "Description",
+            "description": " ",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseRecordingCreate"
                 }
@@ -741,16 +780,11 @@
             }
           }
         },
-        "x-codegen-request-body-name": "Body"
-      }
-    },
-    "/v2/interactions/{id}/recordings/{recordingId}": {
-      "get": {
         "tags": [
           "recordings"
         ],
-        "summary": "Get Recording",
-        "operationId": "v2-interaction-recording-get",
+        "summary": "Upload recording",
+        "description": " Accept only audio of max 60 minutes in length and 150MB in size.",
         "parameters": [
           {
             "name": "id",
@@ -758,7 +792,59 @@
             "description": "UUID of the interaction",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "string",
+              "description": "UUID of the interaction"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Recording": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "binary"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/v2/interactions/{id}/recordings/{recordingId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "binary",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "recordings"
+        ],
+        "summary": "Get Recording",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "UUID of the interaction",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "UUID of the interaction"
             }
           },
           {
@@ -767,44 +853,30 @@
             "description": "UUID of the recording",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "string",
+              "description": "UUID of the recording"
             }
           }
-        ],
+        ]
+      },
+      "delete": {
         "responses": {
-          "200": {
-            "description": "Description",
+          "204": {
+            "description": "",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "string",
-                  "format": "binary"
+                  "$ref": "#/components/schemas/NoContent"
                 }
               }
             }
           }
-        }
-      }
-    },
-    "/v2/interactions/{id}/stream": {
-      "get": {
-        "servers": [
-          {
-            "url": "wss://copilot.{region}.corti.app/",
-            "variables": {
-              "region": {
-                "default": "us",
-                "enum": ["us", "eu"]
-              }
-            }
-          }
-        ],
+        },
         "tags": [
-          "interactions", "websockets"
+          "recordings"
         ],
-        "summary": "Stream interaction",
-        "description": "WSS connection.",
-        "operationId": "v2-interaction-stream",
+        "summary": "Delete Recording",
         "parameters": [
           {
             "name": "id",
@@ -812,68 +884,119 @@
             "description": "UUID of the interaction",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "string",
+              "description": "UUID of the interaction"
+            }
+          },
+          {
+            "name": "recordingId",
+            "in": "path",
+            "description": "UUID of the recording",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "UUID of the recording"
             }
           }
-        ],
-        "requestBody": {
-          "description": "One of.",
-          "content": {
-            "*/*": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "StreamConfig": {
-                    "$ref": "#/components/schemas/RequestInteractionStreamConfig",
-                    "description": "Configuration object for the interaction stream. Must be the first message."
-                  },
-                  "request2": {
-                    "type": "object",
-                    "description": "Audio array buffer"
-                  },
-                  "request3": {
-                    "$ref": "#/components/schemas/RequestInteractionStreamStatus"
-                  }
+        ]
+      }
+    },
+    "/v2/interactions/{id}/stream": {
+      "get": {
+        "responses": {
+          "101": {
+            "description": "Protocol switching",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestInteractionStreamConfig",
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ResponseInteractionStreamTranscript"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ResponseInteractionStreamFact"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ResponseInteractionStreamTopic"
+                    }
+                  ]
                 }
               }
             }
-          },
-          "required": false
+          }
+        },
+        "tags": [
+          "stream"
+        ],
+        "summary": "Stream interaction",
+        "description": " Extablish WSS connection. See placeholder `TRACE` method for client/server messages in the socket.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "UUID of the interaction",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "UUID of the interaction"
+            }
+          }
+        ]
+      },
+      "trace": {
+        "summary": "WSS client/server messages.",
+        "description": "Due to OpenAPI limitation this is a dummy placeholder for the client/server messages in WSS stream.",
+        "tags": [
+          "stream"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/RequestInteractionStreamConfig"
+                  },
+                  {
+                    "$ref": "#/components/schemas/RequestInteractionStreamStatus"
+                  },
+                  {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "arraybuffer",
+                    "title": "Audio"
+                  }
+                ]
+              }
+            }
+          }
         },
         "responses": {
           "101": {
             "description": "Protocol switching",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "response1": {
+                  "oneOf": [
+                    {
                       "$ref": "#/components/schemas/ResponseInteractionStreamTranscript"
                     },
-                    "response2": {
+                    {
                       "$ref": "#/components/schemas/ResponseInteractionStreamFact"
                     },
-                    "response3": {
+                    {
                       "$ref": "#/components/schemas/ResponseInteractionStreamTopic"
                     }
-                  }
+                  ]
                 }
               }
             }
           }
         },
-        "x-codegen-request-body-name": "Config"
-      }
-    },
-    "/v2/interactions/{id}/transcripts": {
-      "post": {
-        "tags": [
-          "transcripts"
-        ],
-        "summary": "Transcribe audio",
-        "description": "Time-out for this endpoint is 10 minute.\nAccept only audio of max 60 minutes in length.",
-        "operationId": "v2-interaction-transcript-create",
         "parameters": [
           {
             "name": "id",
@@ -881,26 +1004,21 @@
             "description": "UUID of the interaction",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "string",
+              "description": "UUID of the interaction"
             }
           }
-        ],
-        "requestBody": {
-          "description": "Description",
-          "content": {
-            "*/*": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestTranscriptCreate"
-              }
-            }
-          },
-          "required": false
-        },
+        ]
+      }
+    },
+    "/v2/interactions/{id}/transcripts": {
+      "post": {
         "responses": {
           "200": {
-            "description": "Description",
+            "description": " ",
             "content": {
-              "*/*": {
+              "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseTranscriptCreate"
                 }
@@ -908,16 +1026,11 @@
             }
           }
         },
-        "x-codegen-request-body-name": "Body"
-      }
-    },
-    "/v2/interactions/{id}/transcripts/{transcriptId}": {
-      "get": {
         "tags": [
           "transcripts"
         ],
-        "summary": "Get Transcript",
-        "operationId": "v2-interaction-transcript-get",
+        "summary": "Transcribe audio",
+        "description": " Time-out for this endpoint is 10 minutes.",
         "parameters": [
           {
             "name": "id",
@@ -925,7 +1038,52 @@
             "description": "UUID of the interaction",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "string",
+              "description": "UUID of the interaction"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestTranscriptCreate"
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/v2/interactions/{id}/transcripts/{transcriptId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseTranscriptCreate"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "transcripts"
+        ],
+        "summary": "Get Transcript",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "UUID of the interaction",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "UUID of the interaction"
             }
           },
           {
@@ -934,602 +1092,12 @@
             "description": "UUID of the transcript",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "string",
+              "description": "UUID of the transcript"
             }
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Description",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseTranscriptCreate"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-      "/private/v2/interactions/{id}/classification/binary/": {
-      "post": {
-        "tags": [
-          "Experimental"
-        ],
-        "summary": "Create classification",
-        "description": "This endpoint is used for binary classification tasks where a boolean output is expected.",
-        "operationId": "v2-interaction-classification-create",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "UUID of the interaction",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "*/*": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestClassificationCreate"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Description",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseClassificationCreate"
-                }
-              }
-            }
-          }
-        },
-        "x-codegen-request-body-name": "Body"
-      }
-    },
-    "/private/v2/align": {
-      "post": {
-        "summary": "Align Sections",
-        "description": "Compares a 'source' document with a 'target' document and returns a percentage alignment, optionally including aligned segments.",
-        "tags": ["Experimental"],
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "source_document": {
-                    "type": "string",
-                    "description": "The content of the source document.",
-                    "example": "The content of the source document..."
-                  },
-                  "target_document": {
-                    "type": "string",
-                    "description": "The content of the target document.",
-                    "example": "The content of the target document..."
-                  },
-                  "compare_segments": {
-                    "type": "boolean",
-                    "description": "Indicates if segments from the source should be compared with the target.",
-                    "default": false
-                  }
-                },
-                "required": ["source_document", "target_document"]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Alignment results with percentage and optionally aligned segments.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "alignment_percentage": {
-                      "type": "number",
-                      "format": "float",
-                      "description": "Alignment percentage between the source and target documents."
-                    },
-                    "aligned_segments": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "target_segment": {
-                            "type": "object",
-                            "properties": {
-                              "text": {
-                                "type": "string",
-                                "description": "The content of the target document segment."
-                              },
-                              "range": {
-                                "type": "array",
-                                "items": {
-                                  "type": "integer"
-                                },
-                                "description": "Start and end indices of the segment in the target document."
-                              }
-                            }
-                          },
-                          "source_references": {
-                            "type": "array",
-                            "items": {
-                              "type": "object",
-                              "properties": {
-                                "text": {
-                                  "type": "string",
-                                  "description": "The content of the matching segment in the source document."
-                                },
-                                "range": {
-                                  "type": "array",
-                                  "items": {
-                                    "type": "integer"
-                                  },
-                                  "description": "Start and end indices of the segment in the source document."
-                                }
-                              }
-                            }
-                          },
-                          "alignment_percentage": {
-                            "type": "number",
-                            "format": "float",
-                            "description": "Alignment percentage between the target and source segment."
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request - The request was malformed or missing required parameters."
-          },
-          "401": {
-            "description": "Unauthorized - Authentication failed or user is not authorized."
-          },
-          "500": {
-            "description": "Internal Server Error - An error occurred on the server."
-          }
-        }
-      }
-    },
-    "/private/v2/interactions/{id}/query": {
-      "post": {
-        "summary": "Contextual Query Assistant",
-        "description": "Allows users to ask questions or make queries, which are processed in the context of a specific interaction. Multiple tools provide responses via SSE. A thread ID is returned with the initial query, which can be used to continue posting to the same thread in subsequent queries.",
-        "tags": ["Experimental"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "The interaction ID representing the context for the query.",
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "thread_id",
-            "in": "query",
-            "required": false,
-            "description": "Optional. The thread ID for continuing an existing conversation.",
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "query": {
-                    "type": "string",
-                    "description": "The text-based query from the user.",
-                    "example": "What are the key points from the latest guidelines?"
-                  },
-                  "query_context": {
-                    "type": "string",
-                    "description": "A specific document or focus context for the query.",
-                    "example": "doc123"
-                  },
-                  "focus_contexts": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "description": "A list of additional focus contexts or documents.",
-                    "example": ["doc456", "doc789"]
-                  }
-                },
-                "required": ["query"]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "SSE streaming response with results from multiple tools. The initial response includes a thread ID for continuing the conversation.",
-            "headers": {
-              "X-Thread-ID": {
-                "description": "The thread ID for continuing the conversation.",
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "text/event-stream": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "tool": {
-                      "type": "string",
-                      "description": "The tool providing the response (e.g., guidelines, mentions, general_chat, etc.)"
-                    },
-                    "data": {
-                      "type": "object",
-                      "description": "The response data specific to the tool.",
-                      "properties": {
-                        "summary": {
-                          "type": "string",
-                          "description": "For guidelines, a summary of the response."
-                        },
-                        "sources": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "favicon": {
-                                "type": "string",
-                                "description": "The favicon URL of the source."
-                              },
-                              "title": {
-                                "type": "string",
-                                "description": "The title of the source."
-                              },
-                              "url": {
-                                "type": "string",
-                                "description": "The URL of the source."
-                              },
-                              "type": {
-                                "type": "string",
-                                "description": "The type of the source (e.g., PDF, Web)."
-                              },
-                              "description": {
-                                "type": "string",
-                                "description": "A brief description of the source."
-                              }
-                            }
-                          }
-                        },
-                        "mentions": {
-                          "type": "array",
-                          "items": {
-                            "type": "object",
-                            "properties": {
-                              "type": {
-                                "type": "string",
-                                "description": "The type of mention (e.g., transcript, document)."
-                              },
-                              "data": {
-                                "type": "object",
-                                "properties": {
-                                  "range": {
-                                    "type": "array",
-                                    "items": {
-                                      "type": "integer"
-                                    },
-                                    "description": "Character range for document type."
-                                  },
-                                  "time": {
-                                    "type": "array",
-                                    "items": {
-                                      "type": "integer"
-                                    },
-                                    "description": "Time range in seconds for transcript type."
-                                  },
-                                  "snippet": {
-                                    "type": "string",
-                                    "description": "Text snippet for the mention."
-                                  },
-                                  "document_id": {
-                                    "type": "string",
-                                    "description": "The document ID if applicable."
-                                  },
-                                  "utterance_id": {
-                                    "type": "string",
-                                    "description": "The utterance ID if applicable."
-                                  },
-                                  "timestamp": {
-                                    "type": "string",
-                                    "description": "The timestamp for transcript mentions."
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        },
-                        "response": {
-                          "type": "string",
-                          "description": "General chat response in markdown format."
-                        },
-                        "rewritten_text": {
-                          "type": "string",
-                          "description": "For document rewrites, the rewritten text in markdown format."
-                        },
-                        "queries": {
-                          "type": "array",
-                          "items": {
-                            "type": "string"
-                          },
-                          "description": "Related or follow-up queries."
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request - The request was malformed or missing required parameters."
-          },
-          "401": {
-            "description": "Unauthorized - Authentication failed or user is not authorized."
-          },
-          "500": {
-            "description": "Internal Server Error - An error occurred on the server."
-          }
-        }
-      }
-    },
-     "/private/v2/tools/guidelines": {
-      "post": {
-        "summary": "Guidelines Tool API",
-        "description": "Processes a query and returns a summary along with relevant sources.",
-        "tags": ["Experimental"],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "query": {
-                    "type": "string",
-                    "description": "The text-based query from the user."
-                  },
-                  "context": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "description": "An array of contexts, such as documents or relevant segments."
-                  },
-                  "source_ids": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "description": "An array of source IDs to narrow down the search."
-                  }
-                },
-                "required": ["query", "context", "source_ids"]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Returns a summary and a list of relevant sources.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "summary": {
-                      "type": "string",
-                      "description": "A summary of the response."
-                    },
-                    "sources": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "favicon": {
-                            "type": "string",
-                            "description": "The favicon URL of the source."
-                          },
-                          "title": {
-                            "type": "string",
-                            "description": "The title of the source."
-                          },
-                          "url": {
-                            "type": "string",
-                            "description": "The URL of the source."
-                          },
-                          "type": {
-                            "type": "string",
-                            "description": "The type of the source (e.g., PDF, Web)."
-                          },
-                          "description": {
-                            "type": "string",
-                            "description": "A brief description of the source."
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/v2/tools/mentions": {
-      "post": {
-        "summary": "Mentions Tool API",
-        "description": "Finds mentions of a query within a set of reference texts.",
-        "tags": ["Experimental"],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "query": {
-                    "type": "string",
-                    "description": "The text-based query from the user."
-                  },
-                  "reference_texts": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "description": "An array of reference texts where the mentions will be searched."
-                  }
-                },
-                "required": ["query", "reference_texts"]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Returns an array of mentions found in the reference texts.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "type": {
-                        "type": "string",
-                        "description": "The type of mention (e.g., transcript, document)."
-                      },
-                      "range": {
-                        "type": "array",
-                        "items": {
-                          "type": "integer"
-                        },
-                        "description": "Character range for document type."
-                      },
-                      "time": {
-                        "type": "array",
-                        "items": {
-                          "type": "integer"
-                        },
-                        "description": "Time range in seconds for transcript type."
-                      },
-                      "snippet": {
-                        "type": "string",
-                        "description": "Text snippet for the mention."
-                      },
-                      "document_id": {
-                        "type": "string",
-                        "description": "The document ID if applicable."
-                      },
-                      "utterance_id": {
-                        "type": "string",
-                        "description": "The utterance ID if applicable."
-                      },
-                      "timestamp": {
-                        "type": "string",
-                        "description": "The timestamp for transcript mentions."
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
-    "/v2/tools/question-prompts": {
-      "post": {
-        "summary": "Question Prompts Tool API",
-        "description": "Provides a list of suggested questions based on a query and/or context.",
-        "tags": ["Experimental"],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "context": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    },
-                    "description": "The context in which the query is being made."
-                  },
-                  "query": {
-                    "type": "string",
-                    "description": "The query for which the questions are being generated (optional)."
-                  }
-                },
-                "required": ["context"]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Returns an array of suggested questions.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "prompts": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      },
-                      "description": "An array of suggested questions."
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
+        ]
       }
     }
   },
@@ -1538,701 +1106,193 @@
       "AdditionalCode": {
         "type": "object",
         "properties": {
-          "code": {
-            "type": "string",
-            "example": "W0231",
-            "x-go-name": "Code"
-          },
-          "description": {
-            "type": "string",
-            "x-go-name": "Description"
-          },
-          "state": {
-            "$ref": "#/components/schemas/CodesState"
-          },
           "subsetName": {
             "type": "string",
-            "example": "orsakskoder",
-            "x-go-name": "SubsetName"
+            "example": "orsakskoder"
+          },
+          "code": {
+            "type": "string",
+            "example": "W0231"
+          },
+          "description": {
+            "type": "string"
+          },
+          "state": {
+            "type": "object",
+            "$ref": "#/components/schemas/CodesState"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/code"
-      },
-      "BaseModel": {
-        "type": "object",
-        "x-go-package": "github.com/uptrace/bun/schema"
+        }
       },
       "ClassificationResult": {
         "type": "object",
         "properties": {
           "prediction": {
-            "type": "string",
-            "x-go-name": "Prediction"
+            "type": "string"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/classification"
+        }
       },
       "CodesContext": {
-        "required": [
-          "data",
-          "type"
-        ],
         "type": "object",
+        "required": [
+          "type",
+          "data"
+        ],
         "properties": {
-          "data": {
-            "type": "string",
-            "description": "The actual data, which can be a transcript object or a document ID.",
-            "x-go-name": "Data"
-          },
           "type": {
-            "type": "string",
-            "description": "Indicates whether the context is a string or a document.\nstring CodesContextString\ndocumentId CodesContextDocumentId",
-            "enum": [
-              "string",
-              "documentId"
-            ],
-            "x-go-enum-desc": "string CodesContextString\ndocumentId CodesContextDocumentId",
-            "x-go-name": "Type"
+            "$ref": "#/components/schemas/CodesContextTypeEnum"
+          },
+          "data": {
+            "type": "string"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/code"
+        }
+      },
+      "CodesContextType": {
+        "type": "string"
+      },
+      "CodesContextTypeEnum": {
+        "type": "string",
+        "enum": [
+          "string",
+          "documentId"
+        ]
       },
       "CodesState": {
         "type": "object",
         "properties": {
           "isSelected": {
-            "type": "boolean",
-            "x-go-name": "IsSelected"
+            "type": "boolean"
           },
           "source": {
-            "type": "string",
-            "enum": [
-              "core",
-              "system",
-              "user"
-            ],
-            "x-go-enum-desc": "core V2SourceCore  Coming from Corti\nsystem V2SourceSystem  Coming from tenant\nuser V2SourceUser",
-            "x-go-name": "Source"
+            "$ref": "#/components/schemas/V2SourceEnum"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/code"
+        }
       },
       "DocumentContext": {
-        "required": [
-          "data",
-          "type"
-        ],
         "type": "object",
+        "required": [
+          "type",
+          "data"
+        ],
         "properties": {
+          "type": {
+            "$ref": "#/components/schemas/V2DocumentContextEnum"
+          },
           "data": {
             "type": "array",
-            "description": "The actual data, which can be an array of Fact, a transcript, or a string.",
             "items": {
               "type": "object"
-            },
-            "x-go-name": "Data"
-          },
-          "type": {
-            "type": "string",
-            "description": "The type of context data.\nfact V2DocumentContextFact\ntranscript V2DocumentContextTranscript\nstring V2DocumentContextString",
-            "enum": [
-              "fact",
-              "transcript",
-              "string"
-            ],
-            "x-go-enum-desc": "fact V2DocumentContextFact\ntranscript V2DocumentContextTranscript\nstring V2DocumentContextString",
-            "x-go-name": "Type"
+            }
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
+        }
       },
       "DocumentSection": {
         "type": "object",
         "properties": {
           "key": {
-            "type": "string",
-            "enum": [
-              "medical_history",
-              "observations"
-            ],
-            "x-go-enum-desc": "medical_history V2DocumentSectionKeyMedicalHistory\nobservations V2DocumentSectionKeyObservations",
-            "x-go-name": "Key"
+            "$ref": "#/components/schemas/V2DocumentSectionKeyEnum"
           },
           "text": {
-            "type": "string",
-            "x-go-name": "Text"
+            "type": "string"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
+        }
       },
       "DocumentTemplate": {
         "type": "object",
         "properties": {
-          "additionalInstructions": {
-            "type": "string",
-            "description": "Any additional instructions to be considered during document generation.",
-            "x-go-name": "AdditionalInstructions"
-          },
-          "documentName": {
-            "type": "string",
-            "description": "The name of the document.",
-            "x-go-name": "DocumentName"
-          },
-          "outputLanguage": {
-            "type": "string",
-            "description": "The language in which the document will be generated.",
-            "x-go-name": "OutputLanguage"
-          },
           "sectionIds": {
             "type": "array",
-            "description": "An array of section IDs.",
             "items": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "x-go-name": "SectionIds"
+              "$ref": "#/components/schemas/UUID"
+            }
+          },
+          "outputLanguage": {
+            "type": "string"
+          },
+          "documentName": {
+            "type": "string"
+          },
+          "additionalInstructions": {
+            "type": "string"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
-      },
-      "DocumentationBase": {
-        "type": "object",
-        "x-go-package": "github.com/corticph/copilot-api/pkg/documentation"
-      },
-      "DocumentationRead": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "Id"
-          },
-          "sections": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DocumentationSectionRead"
-            },
-            "x-go-name": "Sections"
-          },
-          "templateVersionId": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "TemplateVersionId"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/documentation"
-      },
-      "DocumentationReadBase": {
-        "type": "object",
-        "x-go-package": "github.com/corticph/copilot-api/pkg/documentation"
-      },
-      "DocumentationSectionRead": {
-        "type": "object",
-        "properties": {
-          "markdown": {
-            "type": "string",
-            "x-go-name": "Markdown"
-          },
-          "records": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DocumentationSectionRecordRead"
-            },
-            "x-go-name": "Records"
-          },
-          "sectionId": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "SectionId"
-          },
-          "sectionTitle": {
-            "type": "string",
-            "x-go-name": "SectionTitle"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/documentation"
-      },
-      "DocumentationSectionRecordRead": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "Id"
-          },
-          "isFinal": {
-            "type": "boolean",
-            "x-go-name": "IsFinal"
-          },
-          "text": {
-            "type": "string",
-            "x-go-name": "Text"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/documentation"
-      },
-      "DomainBase": {
-        "type": "object",
-        "x-go-package": "github.com/corticph/copilot-api/pkg/domain"
-      },
-      "DomainCreate": {
-        "type": "object",
-        "properties": {
-          "domain": {
-            "type": "string",
-            "x-go-name": "Domain"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/domain"
-      },
-      "DomainRead": {
-        "type": "object",
-        "properties": {
-          "domain": {
-            "type": "string",
-            "x-go-name": "Domain"
-          },
-          "templates": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DomainTemplateRead"
-            },
-            "x-go-name": "Templates"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/domain"
-      },
-      "DomainTemplateRead": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "Id"
-          },
-          "name": {
-            "type": "string",
-            "x-go-name": "Name"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/domain"
+        }
       },
       "Encounter": {
+        "type": "object",
         "required": [
           "identifier",
-          "period",
           "status",
-          "type"
+          "type",
+          "period"
         ],
-        "type": "object",
         "properties": {
           "identifier": {
-            "type": "string",
-            "description": "A unique identifier for the encounter, essential for tracking and referencing specific patient interactions.",
-            "x-go-name": "Identifier"
-          },
-          "period": {
-            "$ref": "#/components/schemas/EncounterPeriod"
+            "type": "string"
           },
           "status": {
-            "type": "string",
-            "description": "Indicates the current state of the encounter, crucial for understanding the progression and current state of care.\nplanned V2EncounterStatusPlanned\nin-progress V2EncounterStatusInProgress\non-hold V2EncounterStatusOnHold\ncompleted V2EncounterStatusCompleted\ncancelled V2EncounterStatusCancelled\ndeleted V2EncounterStatusDeleted",
-            "enum": [
-              "planned",
-              "in-progress",
-              "on-hold",
-              "completed",
-              "cancelled",
-              "deleted"
-            ],
-            "x-go-enum-desc": "planned V2EncounterStatusPlanned\nin-progress V2EncounterStatusInProgress\non-hold V2EncounterStatusOnHold\ncompleted V2EncounterStatusCompleted\ncancelled V2EncounterStatusCancelled\ndeleted V2EncounterStatusDeleted",
-            "x-go-name": "Status"
-          },
-          "title": {
-            "type": "string",
-            "description": "A readable name for the interaction",
-            "x-go-name": "Title"
+            "$ref": "#/components/schemas/V2EncounterStatusEnum"
           },
           "type": {
-            "type": "string",
-            "description": "The specific type of encounter, providing context about the nature and setting of the patient interaction.\nfirst_consultation V2EncounterTypeFirstConsultation\nconsultation V2EncounterTypeConsultation\nemergency V2EncounterTypeEmergency\ninpatient V2EncounterTypeInpatient\noutpatient V2EncounterTypeOutpatient",
-            "enum": [
-              "first_consultation",
-              "consultation",
-              "emergency",
-              "inpatient",
-              "outpatient"
-            ],
-            "x-go-enum-desc": "first_consultation V2EncounterTypeFirstConsultation\nconsultation V2EncounterTypeConsultation\nemergency V2EncounterTypeEmergency\ninpatient V2EncounterTypeInpatient\noutpatient V2EncounterTypeOutpatient",
-            "x-go-name": "Type"
+            "$ref": "#/components/schemas/V2EncounterTypeEnum"
+          },
+          "period": {
+            "type": "object",
+            "$ref": "#/components/schemas/EncounterPeriod"
+          },
+          "title": {
+            "type": "string"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
+        }
       },
       "EncounterPeriod": {
+        "type": "object",
         "required": [
           "startedAt"
         ],
-        "type": "object",
         "properties": {
-          "endedAt": {
-            "type": "string",
-            "description": "The end date/time of the encounter. (UTC)",
-            "format": "date-time",
-            "x-go-name": "EndedAt"
-          },
-          "endedAtTzoffset": {
-            "type": "string",
-            "description": "Timezone offset for endedAt",
-            "x-go-name": "EndedAtTzoffset"
-          },
           "startedAt": {
             "type": "string",
-            "description": "The start date/time of the encounter. (UTC)",
-            "format": "date-time",
-            "x-go-name": "StartedAt"
+            "format": "date-time"
           },
           "startedAtTzoffset": {
             "type": "string",
-            "description": "Timezone offset for startedAt",
-            "x-go-name": "StartedAtTzoffset"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
-      },
-      "FactBase": {
-        "type": "object",
-        "x-go-package": "github.com/corticph/copilot-api/pkg/fact"
-      },
-      "FactCreate": {
-        "type": "object",
-        "properties": {
-          "groupId": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "GroupId"
-          },
-          "value": {
-            "type": "string",
-            "x-go-name": "Value"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/fact"
-      },
-      "FactRead": {
-        "type": "object",
-        "properties": {
-          "created": {
-            "type": "string",
-            "format": "date-time",
-            "x-go-name": "Created"
-          },
-          "discarded": {
-            "type": "boolean",
-            "x-go-name": "Discarded"
-          },
-          "group": {
-            "type": "string",
-            "x-go-name": "Group"
-          },
-          "groupId": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "GroupId"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "Id"
-          },
-          "modified": {
-            "type": "string",
-            "format": "date-time",
-            "x-go-name": "Modified"
-          },
-          "source": {
-            "type": "string",
-            "enum": [
-              "LLM",
-              "USER",
-              "SYSTEM",
-              "OTHER"
-            ],
-            "x-go-enum-desc": "LLM FactSourceLlm\nUSER FactSourceUser\nSYSTEM FactSourceSystem\nOTHER FactSourceOther",
-            "x-go-name": "Source"
-          },
-          "value": {
-            "type": "string",
-            "x-go-name": "Value"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/fact"
-      },
-      "FactsCreate": {
-        "type": "object",
-        "properties": {
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FactCreate"
-            },
-            "x-go-name": "Data"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/fact"
-      },
-      "FactsRead": {
-        "type": "object",
-        "properties": {
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FactRead"
-            },
-            "x-go-name": "Data"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/fact"
-      },
-      "InteractionAnalyticsRead": {
-        "type": "object",
-        "properties": {
-          "endedAt": {
-            "type": "string",
-            "format": "date-time",
-            "x-go-name": "EndedAt"
-          },
-          "endsAt": {
-            "type": "string",
-            "format": "date-time",
-            "x-go-name": "EndsAt"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "Id"
-          },
-          "startedAt": {
-            "type": "string",
-            "format": "date-time",
-            "x-go-name": "StartedAt"
-          },
-          "state": {
-            "$ref": "#/components/schemas/InteractionState"
-          },
-          "templateId": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "TemplateId"
-          },
-          "userId": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "UserId"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
-      },
-      "InteractionBase": {
-        "type": "object",
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
-      },
-      "InteractionRead": {
-        "type": "object",
-        "properties": {
-          "documentation": {
-            "$ref": "#/components/schemas/DocumentationRead"
+            "example": "+00:00"
           },
           "endedAt": {
             "type": "string",
-            "format": "date-time",
-            "x-go-name": "EndedAt"
+            "format": "date-time"
           },
-          "endsAt": {
+          "endedAtTzoffset": {
             "type": "string",
-            "format": "date-time",
-            "x-go-name": "EndsAt"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "Id"
-          },
-          "language": {
-            "$ref": "#/components/schemas/LanguageRead"
-          },
-          "maxDurationInMinutes": {
-            "type": "integer",
-            "format": "int64",
-            "x-go-name": "MaxDurationInMinutes"
-          },
-          "pauseIntervals": {
-            "type": "string",
-            "x-go-name": "PauseIntervals"
-          },
-          "startedAt": {
-            "type": "string",
-            "format": "date-time",
-            "x-go-name": "StartedAt"
-          },
-          "state": {
-            "$ref": "#/components/schemas/InteractionState"
-          },
-          "templateId": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "TemplateId"
-          },
-          "transcript": {
-            "$ref": "#/components/schemas/TranscriptRead"
+            "example": "+00:00"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
+        }
       },
-      "InteractionState": {
-        "type": "string",
-        "x-go-package": "github.com/corticph/copilot-api/pkg/db"
-      },
-      "LanguageBase": {
-        "type": "object",
-        "properties": {
-          "code": {
-            "type": "string",
-            "x-go-name": "Code"
-          },
-          "localName": {
-            "type": "string",
-            "x-go-name": "LocalName"
-          },
-          "name": {
-            "type": "string",
-            "x-go-name": "Name"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/language"
-      },
-      "LanguageRead": {
-        "type": "object",
-        "properties": {
-          "code": {
-            "type": "string",
-            "x-go-name": "Code"
-          },
-          "localName": {
-            "type": "string",
-            "x-go-name": "LocalName"
-          },
-          "name": {
-            "type": "string",
-            "x-go-name": "Name"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/language"
-      },
-      "Pagination": {
-        "type": "object",
-        "properties": {
-          "Index": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "PageSize": {
-            "type": "integer",
-            "format": "int64"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/common"
-      },
-      "ParticipantBase": {
-        "type": "object",
-        "properties": {
-          "channel": {
-            "type": "integer",
-            "format": "int64",
-            "x-go-name": "Channel"
-          },
-          "role": {
-            "type": "string",
-            "enum": [
-              "AGENT",
-              "PATIENT",
-              "OTHER",
-              "MULTIPLE"
-            ],
-            "x-go-enum-desc": "AGENT ParticipantRoleAgent\nPATIENT ParticipantRolePatient\nOTHER ParticipantRoleOther\nMULTIPLE ParticipantRoleMultiple",
-            "x-go-name": "Role"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/transcription"
-      },
-      "ParticipantRead": {
-        "type": "object",
-        "properties": {
-          "channel": {
-            "type": "integer",
-            "format": "int64",
-            "x-go-name": "Channel"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "Id"
-          },
-          "role": {
-            "type": "string",
-            "enum": [
-              "AGENT",
-              "PATIENT",
-              "OTHER",
-              "MULTIPLE"
-            ],
-            "x-go-enum-desc": "AGENT ParticipantRoleAgent\nPATIENT ParticipantRolePatient\nOTHER ParticipantRoleOther\nMULTIPLE ParticipantRoleMultiple",
-            "x-go-name": "Role"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/transcription"
+      "NoContent": {
+        "type": "object"
       },
       "Patient": {
+        "type": "object",
         "required": [
           "identifier"
         ],
-        "type": "object",
         "properties": {
-          "birthDate": {
-            "type": "string",
-            "description": "FHIR reference to patient birth date.",
-            "format": "date-time",
-            "x-go-name": "BirthDate"
-          },
-          "gender": {
-            "type": "string",
-            "description": "FHIR reference to patient gender. Ensures the documentation is written with the correct pronouns.\nmale V2GenderMale\nfemale V2GenderFemale\nunknown V2GenderUnknown\nother V2GenderOther",
-            "enum": [
-              "male",
-              "female",
-              "unknown",
-              "other"
-            ],
-            "x-go-enum-desc": "male V2GenderMale\nfemale V2GenderFemale\nunknown V2GenderUnknown\nother V2GenderOther",
-            "x-go-name": "Gender"
-          },
           "identifier": {
-            "type": "string",
-            "description": "FHIR reference to patient identifier.",
-            "x-go-name": "Identifier"
+            "type": "string"
           },
           "name": {
+            "type": "string"
+          },
+          "gender": {
+            "$ref": "#/components/schemas/V2GenderEnum"
+          },
+          "birthDate": {
             "type": "string",
-            "description": "FHIR reference to Text representation of the full name. Ensures the patient is referred by their name in the documentation.",
-            "x-go-name": "Name"
+            "format": "date-time"
           },
           "pronouns": {
-            "type": "string",
-            "description": "FHIR reference to patient extension Individual Pronouns.",
-            "x-go-name": "Pronouns"
+            "type": "string"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
+        }
       },
       "RequestClassificationCreate": {
         "type": "object",
@@ -2241,496 +1301,386 @@
             "type": "array",
             "items": {
               "type": "string"
-            },
-            "x-go-name": "Inputs"
+            }
           },
           "taskId": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "TaskId"
+            "type": "array",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/classification"
+        }
       },
       "RequestCodeUpdate": {
         "type": "object",
         "properties": {
+          "code": {
+            "type": "string",
+            "example": "W0231"
+          },
           "additionalCodes": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/AdditionalCode"
-            },
-            "x-go-name": "AdditionalCodes"
-          },
-          "code": {
-            "type": "string",
-            "x-go-name": "Code"
+            }
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/code"
+        }
       },
       "RequestCodesCreate": {
-        "required": [
-          "context",
-          "modelName"
-        ],
         "type": "object",
+        "required": [
+          "modelName",
+          "context"
+        ],
         "properties": {
+          "modelName": {
+            "type": "string",
+            "example": "\"geography_modelName (Latest)\" | \"geography_modelName_version\""
+          },
           "context": {
+            "type": "object",
             "$ref": "#/components/schemas/CodesContext"
           },
           "existingCodes": {
             "type": "array",
-            "description": "Any pre-selected codes before the interaction began",
             "items": {
               "type": "string"
-            },
-            "x-go-name": "ExistingCodes"
-          },
-          "modelName": {
-            "type": "string",
-            "description": "The model name, including the version if specific (e.g., 'geography_modelName_version').",
-            "example": "'\"geography_modelName (Latest)\" | \"geography_modelName_version\"'",
-            "x-go-name": "ModelName"
+            }
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/code"
+        }
       },
       "RequestCodesUpdate": {
+        "type": "object",
         "required": [
           "finalCodes"
         ],
-        "type": "object",
         "properties": {
           "finalCodes": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/RequestCodeUpdate"
-            },
-            "x-go-name": "FinalCodes"
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "string",
+                  "example": "W0231"
+                },
+                "additionalCodes": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AdditionalCode"
+                  }
+                }
+              }
+            }
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/code"
+        }
       },
       "RequestDocumentCreate": {
+        "type": "object",
         "required": [
           "context",
           "templateId"
         ],
-        "type": "object",
         "properties": {
           "context": {
+            "type": "object",
             "$ref": "#/components/schemas/DocumentContext"
+          },
+          "templateId": {
+            "type": "array",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
+          },
+          "template": {
+            "type": "object",
+            "$ref": "#/components/schemas/DocumentTemplate"
+          },
+          "name": {
+            "type": "string"
           },
           "modelName": {
             "type": "string",
-            "description": "The model name, including the version if specific (e.g., 'closed_ai_3105').",
-            "example": "'\"model_name (Latest)\" | \"model_name_version\"'",
-            "x-go-name": "ModelName"
-          },
-          "name": {
-            "type": "string",
-            "description": "An optional name for the document.",
-            "x-go-name": "Name"
-          },
-          "template": {
-            "$ref": "#/components/schemas/DocumentTemplate"
-          },
-          "templateId": {
-            "type": "string",
-            "description": "The ID of the template that informs on what kind of document is to be generated.",
-            "format": "uuid",
-            "x-go-name": "TemplateId"
+            "example": "\"model_name (Latest)\" | \"model_name_version\""
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
+        }
       },
       "RequestDocumentUpdate": {
         "type": "object",
         "properties": {
           "documentId": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "DocumentId"
+            "type": "array",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
           },
           "sections": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/DocumentSection"
-            },
-            "x-go-name": "Sections"
+            }
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
+        }
       },
       "RequestEncounterPeriodUpdate": {
+        "type": "object",
         "required": [
           "startedAt"
         ],
-        "type": "object",
         "properties": {
-          "endedAt": {
-            "type": "string",
-            "description": "The end date/time of the encounter. (UTC)",
-            "format": "date-time",
-            "x-go-name": "EndedAt"
-          },
-          "endedAtTzoffset": {
-            "type": "string",
-            "description": "Timezone offset for endedAt",
-            "x-go-name": "EndedAtTzoffset"
-          },
           "startedAt": {
             "type": "string",
-            "description": "The start date/time of the encounter. (UTC)",
-            "format": "date-time",
-            "x-go-name": "StartedAt"
+            "format": "date-time"
           },
           "startedAtTzoffset": {
             "type": "string",
-            "description": "Timezone offset for startedAt",
-            "x-go-name": "StartedAtTzoffset"
+            "example": "+00:00"
+          },
+          "endedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endedAtTzoffset": {
+            "type": "string",
+            "example": "+00:00"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
+        }
       },
       "RequestEncounterUpdate": {
         "type": "object",
         "properties": {
           "identifier": {
-            "type": "string",
-            "x-go-name": "Identifier"
-          },
-          "period": {
-            "$ref": "#/components/schemas/RequestEncounterPeriodUpdate"
+            "type": "string"
           },
           "status": {
-            "type": "string",
-            "enum": [
-              "planned",
-              "in-progress",
-              "on-hold",
-              "completed",
-              "cancelled",
-              "deleted"
-            ],
-            "x-go-enum-desc": "planned V2EncounterStatusPlanned\nin-progress V2EncounterStatusInProgress\non-hold V2EncounterStatusOnHold\ncompleted V2EncounterStatusCompleted\ncancelled V2EncounterStatusCancelled\ndeleted V2EncounterStatusDeleted",
-            "x-go-name": "Status"
-          },
-          "title": {
-            "type": "string",
-            "x-go-name": "Title"
+            "$ref": "#/components/schemas/V2EncounterStatusEnum"
           },
           "type": {
-            "type": "string",
-            "enum": [
-              "first_consultation",
-              "consultation",
-              "emergency",
-              "inpatient",
-              "outpatient"
-            ],
-            "x-go-enum-desc": "first_consultation V2EncounterTypeFirstConsultation\nconsultation V2EncounterTypeConsultation\nemergency V2EncounterTypeEmergency\ninpatient V2EncounterTypeInpatient\noutpatient V2EncounterTypeOutpatient",
-            "x-go-name": "Type"
+            "$ref": "#/components/schemas/V2EncounterTypeEnum"
+          },
+          "period": {
+            "type": "object",
+            "$ref": "#/components/schemas/RequestEncounterPeriodUpdate"
+          },
+          "title": {
+            "type": "string"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
+        }
       },
       "RequestFactCreate": {
-        "required": [
-          "source",
-          "text"
-        ],
         "type": "object",
+        "required": [
+          "text",
+          "source"
+        ],
         "properties": {
+          "text": {
+            "type": "string"
+          },
           "group": {
             "type": "string",
-            "description": "The group to which the fact belongs.",
-            "example": "Others",
-            "x-go-name": "Group"
+            "example": "Others"
           },
           "source": {
-            "type": "string",
-            "description": "The source of the fact. 'USER' refers to facts provided by the user, while 'SYSTEM' refers to system-generated facts (e.g., EHR).\ncore V2SourceCore  Coming from Corti\nsystem V2SourceSystem  Coming from tenant\nuser V2SourceUser",
-            "enum": [
-              "core",
-              "system",
-              "user"
-            ],
-            "x-go-enum-desc": "core V2SourceCore  Coming from Corti\nsystem V2SourceSystem  Coming from tenant\nuser V2SourceUser",
-            "x-go-name": "Source"
-          },
-          "text": {
-            "type": "string",
-            "description": "The text of the fact.",
-            "x-go-name": "Text"
+            "$ref": "#/components/schemas/V2SourceEnum"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/fact"
+        }
+      },
+      "RequestFactGenerate": {
+        "type": "object",
+        "required": [
+          "transcript"
+        ],
+        "properties": {
+          "transcript": {
+            "type": "object",
+            "$ref": "#/components/schemas/Transcript"
+          }
+        }
       },
       "RequestFactUpdate": {
-        "required": [
-          "source",
-          "text"
-        ],
         "type": "object",
         "properties": {
-          "group": {
-            "type": "string",
-            "description": "The group to which the fact belongs.",
-            "example": "Others",
-            "x-go-name": "Group"
-          },
           "isDiscarded": {
-            "type": "boolean",
-            "x-go-name": "IsDiscarded"
-          },
-          "source": {
-            "type": "string",
-            "description": "The source of the fact. 'USER' refers to facts provided by the user, while 'SYSTEM' refers to system-generated facts (e.g., EHR).\ncore V2SourceCore  Coming from Corti\nsystem V2SourceSystem  Coming from tenant\nuser V2SourceUser",
-            "enum": [
-              "core",
-              "system",
-              "user"
-            ],
-            "x-go-enum-desc": "core V2SourceCore  Coming from Corti\nsystem V2SourceSystem  Coming from tenant\nuser V2SourceUser",
-            "x-go-name": "Source"
+            "type": "boolean"
           },
           "text": {
+            "type": "string"
+          },
+          "group": {
             "type": "string",
-            "description": "The text of the fact.",
-            "x-go-name": "Text"
+            "example": "Others"
+          },
+          "source": {
+            "$ref": "#/components/schemas/V2SourceEnum"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/fact"
+        }
       },
       "RequestFactsCreate": {
+        "type": "object",
         "required": [
           "facts"
         ],
-        "type": "object",
         "properties": {
           "facts": {
             "type": "array",
-            "description": "An array of fact objects.",
             "items": {
-              "$ref": "#/components/schemas/RequestFactCreate"
-            },
-            "x-go-name": "Facts"
+              "type": "object",
+              "required": [
+                "text",
+                "source"
+              ],
+              "properties": {
+                "text": {
+                  "type": "string"
+                },
+                "group": {
+                  "type": "string",
+                  "example": "Others"
+                },
+                "source": {
+                  "$ref": "#/components/schemas/V2SourceEnum"
+                }
+              }
+            }
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/fact"
+        }
       },
       "RequestInteractionCreate": {
+        "type": "object",
         "required": [
           "assignedUserId",
           "encounter"
         ],
-        "type": "object",
         "properties": {
           "assignedUserId": {
-            "type": "string",
-            "description": "A unique identifier for the medical professional.",
-            "format": "uuid",
-            "x-go-name": "AssignedUserId"
+            "type": "array",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
           },
           "encounter": {
+            "type": "object",
             "$ref": "#/components/schemas/Encounter"
           },
           "patient": {
+            "type": "object",
             "$ref": "#/components/schemas/Patient"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
-      },
-      "RequestInteractionList": {
-        "type": "object",
-        "properties": {
-          "EncounterStatus": {
-            "type": "string",
-            "enum": [
-              "planned",
-              "in-progress",
-              "on-hold",
-              "completed",
-              "cancelled",
-              "deleted"
-            ],
-            "x-go-enum-desc": "planned V2EncounterStatusPlanned\nin-progress V2EncounterStatusInProgress\non-hold V2EncounterStatusOnHold\ncompleted V2EncounterStatusCompleted\ncancelled V2EncounterStatusCancelled\ndeleted V2EncounterStatusDeleted"
-          },
-          "Index": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "PageSize": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "PatientId": {
-            "type": "string"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
+        }
       },
       "RequestInteractionStreamConfig": {
         "type": "object",
         "properties": {
-          "Configuration": {
-            "$ref": "#/components/schemas/StreamConfig"
-          },
-          "Type": {
-            "type": "string",
-            "example": "config"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
-      },
-      "RequestInteractionStreamStatus": {
-        "type": "object",
-        "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "end",
-              "pause",
-              "resume"
-            ],
-            "x-go-enum-desc": "end RequestStreamStatusEnd\npause RequestStreamStatusPause\nresume RequestStreamStatusResume",
-            "x-go-name": "Type"
+            "example": "config"
+          },
+          "configuration": {
+            "type": "object",
+            "$ref": "#/components/schemas/StreamConfig"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
+        }
       },
       "RequestInteractionUpdate": {
         "type": "object",
         "properties": {
           "assignedUserId": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "AssignedUserId"
+            "type": "array",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
           },
           "encounter": {
+            "type": "object",
             "$ref": "#/components/schemas/RequestEncounterUpdate"
           },
           "patient": {
+            "type": "object",
             "$ref": "#/components/schemas/RequestPatientUpdate"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
+        }
       },
       "RequestParticipantCreate": {
+        "type": "object",
         "required": [
           "channel",
           "role"
         ],
-        "type": "object",
         "properties": {
           "channel": {
-            "type": "integer",
-            "description": "The audio channel associated with the participant.",
-            "format": "int64",
-            "x-go-name": "Channel"
+            "type": "integer"
           },
           "role": {
-            "type": "string",
-            "description": "The role of the participant (e.g., \"doctor\", \"patient\").\ndoctor V2ParticipantRoleDoctor\npatient V2ParticipantRolePatient",
-            "enum": [
-              "doctor",
-              "patient"
-            ],
-            "x-go-enum-desc": "doctor V2ParticipantRoleDoctor\npatient V2ParticipantRolePatient",
-            "x-go-name": "Role"
+            "$ref": "#/components/schemas/V2ParticipantRoleEnum"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/transcription"
+        }
       },
       "RequestPatientUpdate": {
         "type": "object",
         "properties": {
-          "birthDate": {
-            "type": "string",
-            "format": "date-time",
-            "x-go-name": "BirthDate"
-          },
-          "gender": {
-            "type": "string",
-            "enum": [
-              "male",
-              "female",
-              "unknown",
-              "other"
-            ],
-            "x-go-enum-desc": "male V2GenderMale\nfemale V2GenderFemale\nunknown V2GenderUnknown\nother V2GenderOther",
-            "x-go-name": "Gender"
-          },
           "identifier": {
-            "type": "string",
-            "x-go-name": "Identifier"
+            "type": "string"
           },
           "name": {
+            "type": "string"
+          },
+          "gender": {
+            "$ref": "#/components/schemas/V2GenderEnum"
+          },
+          "birthDate": {
             "type": "string",
-            "x-go-name": "Name"
+            "format": "date-time"
           },
           "pronouns": {
-            "type": "string",
-            "x-go-name": "Pronouns"
+            "type": "string"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
+        }
+      },
+      "RequestStreamStatusEnum": {
+        "type": "string",
+        "enum": [
+          "end",
+          "pause",
+          "resume"
+        ]
       },
       "RequestTranscriptCreate": {
-        "required": [
-          "participants",
-          "primaryLanguage",
-          "recordingId"
-        ],
         "type": "object",
+        "required": [
+          "recordingId",
+          "primaryLanguage",
+          "participants"
+        ],
         "properties": {
-          "isDiarization": {
-            "type": "boolean",
-            "description": "Indicates whether to separate speakers in a single channel.",
-            "x-go-name": "IsDiarization"
+          "recordingId": {
+            "type": "array",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
+          },
+          "primaryLanguage": {
+            "type": "string"
           },
           "isDictation": {
-            "type": "boolean",
-            "description": "Indicates whether spoken dictation commands should be converted to punctuation marks.",
-            "x-go-name": "IsDictation"
+            "type": "boolean"
           },
           "isMultichannel": {
-            "type": "boolean",
-            "description": "Indicates whether to transcribe each audio channel independently.",
-            "x-go-name": "IsMultichannel"
+            "type": "boolean"
+          },
+          "isDiarization": {
+            "type": "boolean"
           },
           "participants": {
             "type": "array",
-            "description": "An array of participant objects, each containing information about a participant's role and audio channel.",
             "items": {
               "$ref": "#/components/schemas/RequestParticipantCreate"
-            },
-            "x-go-name": "Participants"
-          },
-          "primaryLanguage": {
-            "type": "string",
-            "description": "The primary language of the recording in BCP-47 format.",
-            "x-go-name": "PrimaryLanguage"
-          },
-          "recordingId": {
-            "type": "string",
-            "description": "A unique identifier for the recording.",
-            "format": "uuid",
-            "x-go-name": "RecordingId"
+            }
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/transcription"
+        }
       },
       "ResponseClassificationCreate": {
         "type": "object",
         "properties": {
           "result": {
+            "type": "object",
             "$ref": "#/components/schemas/ClassificationResult"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/classification"
+        }
       },
       "ResponseCodesList": {
         "type": "object",
@@ -2738,73 +1688,128 @@
           "data": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ResponseCodesRead"
-            },
-            "x-go-name": "Data"
+              "type": "object",
+              "properties": {
+                "system": {
+                  "type": "string",
+                  "example": "ICD-10"
+                },
+                "code": {
+                  "type": "string",
+                  "example": "T933"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/CodesState"
+                },
+                "additionalCodes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "subsetName": {
+                        "type": "string",
+                        "example": "orsakskoder"
+                      },
+                      "code": {
+                        "type": "string",
+                        "example": "W0231"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "state": {
+                        "type": "object",
+                        "$ref": "#/components/schemas/CodesState"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/code"
+        }
       },
       "ResponseCodesRead": {
         "type": "object",
         "properties": {
-          "additionalCodes": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/AdditionalCode"
-            },
-            "x-go-name": "AdditionalCodes"
+          "system": {
+            "type": "string",
+            "example": "ICD-10"
           },
           "code": {
             "type": "string",
-            "example": "T933",
-            "x-go-name": "Code"
+            "example": "T933"
           },
           "description": {
-            "type": "string",
-            "x-go-name": "Description"
+            "type": "string"
           },
           "state": {
+            "type": "object",
             "$ref": "#/components/schemas/CodesState"
           },
-          "system": {
-            "type": "string",
-            "example": "ICD-10-",
-            "x-go-name": "System"
+          "additionalCodes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "subsetName": {
+                  "type": "string",
+                  "example": "orsakskoder"
+                },
+                "code": {
+                  "type": "string",
+                  "example": "W0231"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/CodesState"
+                }
+              }
+            }
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/code"
+        }
       },
       "ResponseDocumentCreate": {
         "type": "object",
         "properties": {
+          "isStream": {
+            "type": "boolean"
+          },
           "documentId": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "DocumentId"
+            "type": "array",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
           },
           "documentName": {
-            "type": "string",
-            "x-go-name": "DocumentName"
+            "type": "string"
           },
-          "isStream": {
-            "type": "boolean",
-            "x-go-name": "IsStream"
+          "templateId": {
+            "type": "array",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
           },
           "sections": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/DocumentSection"
-            },
-            "x-go-name": "Sections"
-          },
-          "templateId": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "TemplateId"
+              "type": "object",
+              "properties": {
+                "key": {
+                  "$ref": "#/components/schemas/V2DocumentSectionKeyEnum"
+                },
+                "text": {
+                  "type": "string"
+                }
+              }
+            }
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
+        }
       },
       "ResponseDocumentList": {
         "type": "object",
@@ -2813,157 +1818,141 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ResponseDocumentRead"
-            },
-            "x-go-name": "Data"
+            }
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
+        }
       },
       "ResponseDocumentRead": {
         "type": "object",
         "properties": {
           "documentId": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "DocumentId"
+            "type": "array",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
           },
           "documentName": {
-            "type": "string",
-            "x-go-name": "DocumentName"
+            "type": "string"
+          },
+          "templateId": {
+            "type": "array",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
           },
           "isStream": {
-            "type": "boolean",
-            "x-go-name": "IsStream"
+            "type": "boolean"
           },
           "sections": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/DocumentSection"
-            },
-            "x-go-name": "Sections"
-          },
-          "templateId": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "TemplateId"
+              "type": "object",
+              "properties": {
+                "key": {
+                  "$ref": "#/components/schemas/V2DocumentSectionKeyEnum"
+                },
+                "text": {
+                  "type": "string"
+                }
+              }
+            }
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
+        }
       },
       "ResponseFact": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "array",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
+          },
+          "text": {
+            "type": "string"
+          },
+          "group": {
+            "type": "string"
+          },
+          "groupId": {
+            "type": "array",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
+          },
+          "isDiscarded": {
+            "type": "boolean"
+          },
+          "source": {
+            "$ref": "#/components/schemas/V2SourceEnum"
+          },
+          "lastUpdated": {
+            "type": "integer"
+          },
           "evidence": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ResponseFactEvidence"
-            },
-            "x-go-name": "Evidence"
-          },
-          "group": {
-            "type": "string",
-            "x-go-name": "Group"
-          },
-          "groupId": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "GroupId"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "Id"
-          },
-          "isDiscarded": {
-            "type": "boolean",
-            "x-go-name": "IsDiscarded"
-          },
-          "lastUpdated": {
-            "type": "integer",
-            "format": "int64",
-            "x-go-name": "LastUpdated"
-          },
-          "source": {
-            "type": "string",
-            "enum": [
-              "core",
-              "system",
-              "user"
-            ],
-            "x-go-enum-desc": "core V2SourceCore  Coming from Corti\nsystem V2SourceSystem  Coming from tenant\nuser V2SourceUser",
-            "x-go-name": "Source"
-          },
-          "text": {
-            "type": "string",
-            "x-go-name": "Text"
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string"
+                },
+                "reference": {
+                  "type": "string"
+                },
+                "quote": {
+                  "type": "string"
+                }
+              }
+            }
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/fact"
+        }
       },
       "ResponseFactCreate": {
         "type": "object",
         "properties": {
-          "group": {
-            "type": "string",
-            "x-go-name": "Group"
-          },
-          "groupId": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "GroupId"
-          },
           "id": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "Id"
-          },
-          "isDiscarded": {
-            "type": "boolean",
-            "x-go-name": "IsDiscarded"
-          },
-          "source": {
-            "type": "string",
-            "enum": [
-              "core",
-              "system",
-              "user"
-            ],
-            "x-go-enum-desc": "core V2SourceCore  Coming from Corti\nsystem V2SourceSystem  Coming from tenant\nuser V2SourceUser",
-            "x-go-name": "Source"
+            "type": "array",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
           },
           "text": {
+            "type": "string"
+          },
+          "group": {
             "type": "string",
-            "x-go-name": "Text"
+            "example": "Others"
+          },
+          "groupId": {
+            "type": "array",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
+          },
+          "source": {
+            "$ref": "#/components/schemas/V2SourceEnum"
+          },
+          "isDiscarded": {
+            "type": "boolean"
           },
           "updatedAt": {
             "type": "string",
-            "format": "date-time",
-            "x-go-name": "UpdatedAt"
+            "format": "date-time"
           },
           "updatedAtTzOffset": {
             "type": "string",
-            "x-go-name": "UpdatedAtTzOffset"
+            "example": "+00:00"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/fact"
+        }
       },
       "ResponseFactEvidence": {
         "type": "object",
         "properties": {
-          "quote": {
-            "type": "string",
-            "x-go-name": "Quote"
+          "type": {
+            "type": "string"
           },
           "reference": {
-            "type": "string",
-            "x-go-name": "Reference"
+            "type": "string"
           },
-          "type": {
-            "type": "string",
-            "x-go-name": "Type"
+          "quote": {
+            "type": "string"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/fact"
+        }
       },
       "ResponseFactsCreate": {
         "type": "object",
@@ -2971,12 +1960,43 @@
           "facts": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ResponseFactCreate"
-            },
-            "x-go-name": "Facts"
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "array",
+                  "items": {},
+                  "$ref": "#/components/schemas/UUID"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "group": {
+                  "type": "string",
+                  "example": "Others"
+                },
+                "groupId": {
+                  "type": "array",
+                  "items": {},
+                  "$ref": "#/components/schemas/UUID"
+                },
+                "source": {
+                  "$ref": "#/components/schemas/V2SourceEnum"
+                },
+                "isDiscarded": {
+                  "type": "boolean"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "updatedAtTzOffset": {
+                  "type": "string",
+                  "example": "+00:00"
+                }
+              }
+            }
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/fact"
+        }
       },
       "ResponseFactsList": {
         "type": "object",
@@ -2984,135 +2004,116 @@
           "facts": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ResponseFact"
-            },
-            "x-go-name": "Facts"
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "array",
+                  "items": {},
+                  "$ref": "#/components/schemas/UUID"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "group": {
+                  "type": "string"
+                },
+                "groupId": {
+                  "type": "array",
+                  "items": {},
+                  "$ref": "#/components/schemas/UUID"
+                },
+                "isDiscarded": {
+                  "type": "boolean"
+                },
+                "source": {
+                  "$ref": "#/components/schemas/V2SourceEnum"
+                },
+                "lastUpdated": {
+                  "type": "integer"
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string"
+                      },
+                      "reference": {
+                        "type": "string"
+                      },
+                      "quote": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/fact"
+        }
       },
       "ResponseInteraction": {
         "type": "object",
         "properties": {
           "assignedUserId": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "AssignedUserId"
-          },
-          "createdAt": {
-            "type": "string",
-            "format": "date-time",
-            "x-go-name": "CreatedAt"
-          },
-          "createdAtTzoffset": {
-            "type": "string",
-            "x-go-name": "CreatedAtTzoffset"
+            "type": "array",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
           },
           "encounter": {
+            "type": "object",
             "$ref": "#/components/schemas/Encounter"
+          },
+          "patient": {
+            "type": "object",
+            "$ref": "#/components/schemas/Patient"
           },
           "endedAt": {
             "type": "string",
-            "format": "date-time",
-            "x-go-name": "EndedAt"
+            "format": "date-time"
           },
           "endedAtTzoffset": {
             "type": "string",
-            "x-go-name": "EndedAtTzoffset"
+            "example": "+00:00"
           },
-          "lastUpdated": {
+          "createdAt": {
             "type": "string",
-            "format": "date-time",
-            "x-go-name": "LastUpdated"
+            "format": "date-time"
           },
-          "patient": {
-            "$ref": "#/components/schemas/Patient"
+          "createdAtTzoffset": {
+            "type": "string",
+            "example": "+00:00"
           },
           "updatedAt": {
             "type": "string",
-            "format": "date-time",
-            "x-go-name": "UpdatedAt"
+            "format": "date-time"
           },
           "updatedAtTzoffset": {
             "type": "string",
-            "x-go-name": "UpdatedAtTzoffset"
+            "example": "+00:00"
           },
           "websocketUrl": {
+            "type": "string"
+          },
+          "lastUpdated": {
             "type": "string",
-            "x-go-name": "WebsocketUrl"
+            "format": "date-time"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
+        }
       },
       "ResponseInteractionCreate": {
         "type": "object",
         "properties": {
           "interactionId": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "InteractionId"
+            "type": "array",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
           },
           "websocketUrl": {
-            "type": "string",
-            "x-go-name": "WebsocketUrl"
+            "type": "string"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
-      },
-      "ResponseInteractionStreamFact": {
-        "type": "object",
-        "properties": {
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ResponseFact"
-            },
-            "x-go-name": "Data"
-          },
-          "type": {
-            "type": "object",
-            "example": "facts",
-            "x-go-name": "Type"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
-      },
-      "ResponseInteractionStreamTopic": {
-        "type": "object",
-        "properties": {
-          "data": {
-            "type": "array",
-            "description": "TBD: cortiTranscription.ResponseTopic",
-            "items": {
-              "type": "string"
-            },
-            "x-go-name": "Data"
-          },
-          "type": {
-            "type": "object",
-            "example": "topic",
-            "x-go-name": "Type"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
-      },
-      "ResponseInteractionStreamTranscript": {
-        "type": "object",
-        "properties": {
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ResponseTranscript"
-            },
-            "x-go-name": "Data"
-          },
-          "type": {
-            "type": "object",
-            "example": "transcript",
-            "x-go-name": "Type"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
+        }
       },
       "ResponseInteractions": {
         "type": "object",
@@ -3120,23 +2121,66 @@
           "interactions": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ResponseInteraction"
-            },
-            "x-go-name": "Interactions"
+              "type": "object",
+              "properties": {
+                "assignedUserId": {
+                  "type": "array",
+                  "items": {},
+                  "$ref": "#/components/schemas/UUID"
+                },
+                "encounter": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Encounter"
+                },
+                "patient": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Patient"
+                },
+                "endedAt": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "endedAtTzoffset": {
+                  "type": "string",
+                  "example": "+00:00"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "createdAtTzoffset": {
+                  "type": "string",
+                  "example": "+00:00"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "updatedAtTzoffset": {
+                  "type": "string",
+                  "example": "+00:00"
+                },
+                "websocketUrl": {
+                  "type": "string"
+                },
+                "lastUpdated": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
+        }
       },
       "ResponseRecordingCreate": {
         "type": "object",
         "properties": {
           "recordingId": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "RecordingId"
+            "type": "array",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/recording"
+        }
       },
       "ResponseRecordingList": {
         "type": "object",
@@ -3144,667 +2188,432 @@
           "recordings": {
             "type": "array",
             "items": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "x-go-name": "Recordings"
+              "$ref": "#/components/schemas/UUID"
+            }
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/recording"
+        }
       },
-      "ResponseTranscript": {
-        "type": "object",
-        "properties": {
-          "duration": {
-            "type": "number",
-            "format": "double",
-            "x-go-name": "Duration"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "Id"
-          },
-          "isFinal": {
-            "type": "boolean",
-            "x-go-name": "IsFinal"
-          },
-          "participant": {
-            "$ref": "#/components/schemas/ParticipantBase"
-          },
-          "start": {
-            "type": "number",
-            "format": "double",
-            "x-go-name": "Start"
-          },
-          "time": {
-            "$ref": "#/components/schemas/ResponseTranscriptTime"
-          },
-          "transcript": {
-            "type": "string",
-            "x-go-name": "Transcript"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/transcription"
+      "ResponseStreamTypeEnum": {
+        "type": "string",
+        "enum": [
+          "transcript",
+          "fact",
+          "topic"
+        ]
       },
       "ResponseTranscriptCreate": {
         "type": "object",
         "properties": {
-          "transcript": {
-            "$ref": "#/components/schemas/Transcript"
-          },
           "transcriptId": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "TranscriptId"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/transcription"
-      },
-      "ResponseTranscriptTime": {
-        "type": "object",
-        "properties": {
-          "end": {
-            "type": "string",
-            "format": "date-time",
-            "x-go-name": "End"
+            "type": "array",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
           },
-          "start": {
-            "type": "string",
-            "format": "date-time",
-            "x-go-name": "Start"
+          "transcript": {
+            "type": "object",
+            "$ref": "#/components/schemas/Transcript"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/transcription"
+        }
       },
       "StreamConfig": {
         "type": "object",
         "properties": {
-          "outputLocale": {
-            "type": "string",
-            "description": "BCP-47 determines output facts language",
-            "x-go-name": "OutputLocale"
-          },
           "specialtyId": {
-            "type": "string",
-            "description": "focus area of the interaction, default=\"\"",
-            "x-go-name": "SpecialtyId"
+            "type": "string"
+          },
+          "outputLocale": {
+            "type": "string"
           },
           "transcription": {
+            "type": "object",
             "$ref": "#/components/schemas/StreamTranscript"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/interaction"
+        }
       },
       "StreamTranscript": {
         "type": "object",
         "properties": {
-          "isDiarization": {
-            "type": "boolean",
-            "default": false,
-            "x-go-name": "IsDiarization"
+          "primaryLanguage": {
+            "type": "string"
           },
           "isDictation": {
-            "type": "boolean",
-            "description": "Spoken dictation commands will be converted to their corresponding",
-            "default": false,
-            "x-go-name": "IsDictation"
+            "type": "boolean"
           },
           "isMultichannel": {
-            "type": "boolean",
-            "default": false,
-            "x-go-name": "IsMultichannel"
+            "type": "boolean"
           },
           "participants": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ParticipantBase"
-            },
-            "x-go-name": "Participants"
+              "type": "object",
+              "required": [
+                "channel",
+                "role"
+              ],
+              "properties": {
+                "channel": {
+                  "type": "integer"
+                },
+                "role": {
+                  "$ref": "#/components/schemas/V2ParticipantRoleEnum"
+                }
+              }
+            }
           },
-          "primaryLanguage": {
-            "type": "string",
-            "description": "BCP-47, default=\"en\"",
-            "example": "en",
-            "x-go-name": "PrimaryLanguage"
+          "isDiarization": {
+            "type": "boolean"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/transcription"
+        }
       },
       "Transcript": {
         "type": "object",
         "properties": {
           "text": {
-            "type": "string",
-            "x-go-name": "Text"
+            "type": "string"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/transcription"
+        }
       },
-      "TranscriptRead": {
+      "UUID": {
+        "type": "string",
+        "items": {},
+        "format": "uuid"
+      },
+      "V2DocumentContext": {
+        "type": "string"
+      },
+      "V2DocumentContextEnum": {
+        "type": "string",
+        "enum": [
+          "fact",
+          "transcript",
+          "string"
+        ]
+      },
+      "V2DocumentSectionKey": {
+        "type": "string"
+      },
+      "V2DocumentSectionKeyEnum": {
+        "type": "string",
+        "enum": [
+          "medical_history",
+          "observations"
+        ]
+      },
+      "V2EncounterStatus": {
+        "type": "string"
+      },
+      "V2EncounterStatusEnum": {
+        "type": "string",
+        "enum": [
+          "planned",
+          "in-progress",
+          "on-hold",
+          "completed",
+          "cancelled",
+          "deleted"
+        ]
+      },
+      "V2EncounterType": {
+        "type": "string"
+      },
+      "V2EncounterTypeEnum": {
+        "type": "string",
+        "enum": [
+          "first_consultation",
+          "consultation",
+          "emergency",
+          "inpatient",
+          "outpatient"
+        ]
+      },
+      "V2Gender": {
+        "type": "string"
+      },
+      "V2GenderEnum": {
+        "type": "string",
+        "enum": [
+          "male",
+          "female",
+          "unknown",
+          "other"
+        ]
+      },
+      "V2ParticipantRole": {
+        "type": "string"
+      },
+      "V2ParticipantRoleEnum": {
+        "type": "string",
+        "enum": [
+          "doctor",
+          "patient"
+        ]
+      },
+      "V2Source": {
+        "type": "string"
+      },
+      "V2SourceEnum": {
+        "type": "string",
+        "enum": [
+          "core",
+          "system",
+          "user"
+        ]
+      },
+      "code.ResponseCodesList": {
         "type": "object",
         "properties": {
-          "participants": {
+          "data": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/ParticipantRead"
-            },
-            "x-go-name": "Participants"
-          },
-          "utterances": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/UtteranceRead"
-            },
-            "x-go-name": "Utterances"
+              "type": "object",
+              "properties": {
+                "system": {
+                  "type": "string",
+                  "example": "ICD-10"
+                },
+                "code": {
+                  "type": "string",
+                  "example": "T933"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "state": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/CodesState"
+                },
+                "additionalCodes": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "subsetName": {
+                        "type": "string",
+                        "example": "orsakskoder"
+                      },
+                      "code": {
+                        "type": "string",
+                        "example": "W0231"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "state": {
+                        "type": "object",
+                        "$ref": "#/components/schemas/CodesState"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/transcription"
+        }
       },
-      "UtteranceRead": {
+      "cortiDb.V2EncounterStatus": {
+        "type": "string"
+      },
+      "cortiDb.V2EncounterType": {
+        "type": "string"
+      },
+      "cortiDb.V2Gender": {
+        "type": "string"
+      },
+      "cortiDb.V2Source": {
+        "type": "string"
+      },
+      "cortiFact.ResponseFactCreate": {
         "type": "object",
         "properties": {
-          "duration": {
-            "type": "number",
-            "format": "double",
-            "x-go-name": "Duration"
-          },
           "id": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "Id"
-          },
-          "isFinal": {
-            "type": "boolean",
-            "x-go-name": "IsFinal"
-          },
-          "participantId": {
-            "type": "string",
-            "format": "uuid",
-            "x-go-name": "ParticipantId"
-          },
-          "start": {
-            "type": "number",
-            "format": "double",
-            "x-go-name": "Start"
+            "type": "array",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
           },
           "text": {
-            "type": "string",
-            "x-go-name": "Text"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/transcription"
-      },
-      "V2Alignment": {
-        "type": "object",
-        "properties": {
-          "Id": {
-            "type": "string",
-            "format": "uuid"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/db"
-      },
-      "V2Code": {
-        "type": "object",
-        "properties": {
-          "Code": {
             "type": "string"
           },
-          "Description": {
-            "type": "string"
-          },
-          "Id": {
+          "group": {
             "type": "string",
-            "format": "uuid"
+            "example": "Others"
           },
-          "System": {
-            "type": "string"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/db"
-      },
-      "V2Document": {
-        "type": "object",
-        "properties": {
-          "Context": {
-            "type": "string",
-            "enum": [
-              "fact",
-              "transcript",
-              "string"
-            ],
-            "x-go-enum-desc": "fact V2DocumentContextFact\ntranscript V2DocumentContextTranscript\nstring V2DocumentContextString"
+          "groupId": {
+            "type": "array",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
           },
-          "Id": {
-            "type": "string",
-            "format": "uuid"
+          "source": {
+            "$ref": "#/components/schemas/V2SourceEnum"
           },
-          "Interaction": {
-            "$ref": "#/components/schemas/V2Interaction"
-          },
-          "InteractionId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "Name": {
-            "type": "string"
-          },
-          "Template": {
-            "$ref": "#/components/schemas/V2DocumentTemplate"
-          },
-          "TemplateId": {
-            "type": "string",
-            "format": "uuid"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/db"
-      },
-      "V2DocumentSections": {
-        "type": "object",
-        "properties": {
-          "Document": {
-            "$ref": "#/components/schemas/V2Document"
-          },
-          "DocumentId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "Id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "Key": {
-            "type": "string",
-            "enum": [
-              "medical_history",
-              "observations"
-            ],
-            "x-go-enum-desc": "medical_history V2DocumentSectionKeyMedicalHistory\nobservations V2DocumentSectionKeyObservations"
-          },
-          "Text": {
-            "type": "string"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/db"
-      },
-      "V2DocumentTemplate": {
-        "type": "object",
-        "properties": {
-          "Id": {
-            "type": "string",
-            "format": "uuid"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/db"
-      },
-      "V2Fact": {
-        "type": "object",
-        "properties": {
-          "CreatedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "CreatedAtTzoffset": {
-            "type": "string"
-          },
-          "Group": {
-            "$ref": "#/components/schemas/V2FactGroup"
-          },
-          "GroupId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "Id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "Interaction": {
-            "$ref": "#/components/schemas/V2Interaction"
-          },
-          "InteractionId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "IsDiscarded": {
+          "isDiscarded": {
             "type": "boolean"
           },
-          "Source": {
-            "type": "string",
-            "enum": [
-              "core",
-              "system",
-              "user"
-            ],
-            "x-go-enum-desc": "core V2SourceCore  Coming from Corti\nsystem V2SourceSystem  Coming from tenant\nuser V2SourceUser"
-          },
-          "Text": {
-            "type": "string"
-          },
-          "UpdatedAt": {
+          "updatedAt": {
             "type": "string",
             "format": "date-time"
           },
-          "UpdatedAtTzoffset": {
-            "type": "string"
+          "updatedAtTzOffset": {
+            "type": "string",
+            "example": "+00:00"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/db"
+        }
       },
-      "V2FactGroup": {
+      "cortiFact.ResponseFactsList": {
         "type": "object",
         "properties": {
-          "Id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "Name": {
-            "type": "string"
-          },
-          "Specialty": {
-            "$ref": "#/components/schemas/V2Specialty"
-          },
-          "SpecialtyId": {
-            "type": "string",
-            "format": "uuid"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/db"
-      },
-      "V2Interaction": {
-        "type": "object",
-        "properties": {
-          "CreatedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "CreatedAtTzoffset": {
-            "type": "string"
-          },
-          "EncounterEndedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "EncounterEndedAtTzoffset": {
-            "type": "string"
-          },
-          "EncounterStartedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "EncounterStartedAtTzoffset": {
-            "type": "string"
-          },
-          "EncounterStatus": {
-            "type": "string",
-            "enum": [
-              "planned",
-              "in-progress",
-              "on-hold",
-              "completed",
-              "cancelled",
-              "deleted"
-            ],
-            "x-go-enum-desc": "planned V2EncounterStatusPlanned\nin-progress V2EncounterStatusInProgress\non-hold V2EncounterStatusOnHold\ncompleted V2EncounterStatusCompleted\ncancelled V2EncounterStatusCancelled\ndeleted V2EncounterStatusDeleted"
-          },
-          "EncounterType": {
-            "type": "string",
-            "enum": [
-              "first_consultation",
-              "consultation",
-              "emergency",
-              "inpatient",
-              "outpatient"
-            ],
-            "x-go-enum-desc": "first_consultation V2EncounterTypeFirstConsultation\nconsultation V2EncounterTypeConsultation\nemergency V2EncounterTypeEmergency\ninpatient V2EncounterTypeInpatient\noutpatient V2EncounterTypeOutpatient"
-          },
-          "EndedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "EndedAtTzoffset": {
-            "type": "string"
-          },
-          "ExternalId": {
-            "type": "string"
-          },
-          "Id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "IsStreamed": {
-            "type": "boolean"
-          },
-          "Patient": {
-            "$ref": "#/components/schemas/V2Patient"
-          },
-          "PatientId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "Status": {
-            "type": "string",
-            "enum": [
-              "planned",
-              "in-progress",
-              "on-hold",
-              "completed",
-              "cancelled"
-            ],
-            "x-go-enum-desc": "planned V2InteractionStatusPlanned\nin-progress V2InteractionStatusInProgress\non-hold V2InteractionStatusOnHold\ncompleted V2InteractionStatusCompleted\ncancelled V2InteractionStatusCancelled"
-          },
-          "Title": {
-            "type": "string"
-          },
-          "UpdatedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "UpdatedAtTzoffset": {
-            "type": "string"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/db"
-      },
-      "V2InteractionCode": {
-        "type": "object",
-        "properties": {
-          "Code": {
-            "$ref": "#/components/schemas/V2Code"
-          },
-          "CodeId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "Id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "Interaction": {
-            "$ref": "#/components/schemas/V2Interaction"
-          },
-          "InteractionId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "IsSelected": {
-            "type": "boolean"
-          },
-          "Source": {
-            "type": "string",
-            "enum": [
-              "core",
-              "system",
-              "user"
-            ],
-            "x-go-enum-desc": "core V2SourceCore  Coming from Corti\nsystem V2SourceSystem  Coming from tenant\nuser V2SourceUser"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/db"
-      },
-      "V2Participant": {
-        "type": "object",
-        "properties": {
-          "Channel": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "Id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "Role": {
-            "type": "string",
-            "enum": [
-              "doctor",
-              "patient"
-            ],
-            "x-go-enum-desc": "doctor V2ParticipantRoleDoctor\npatient V2ParticipantRolePatient"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/db"
-      },
-      "V2Patient": {
-        "type": "object",
-        "properties": {
-          "BirthDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "Gender": {
-            "type": "string",
-            "enum": [
-              "male",
-              "female",
-              "unknown",
-              "other"
-            ],
-            "x-go-enum-desc": "male V2GenderMale\nfemale V2GenderFemale\nunknown V2GenderUnknown\nother V2GenderOther"
-          },
-          "Id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "Identifier": {
-            "type": "string"
-          },
-          "Name": {
-            "type": "string"
-          },
-          "Pronouns": {
-            "type": "string"
-          }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/db"
-      },
-      "V2Recording": {
-        "type": "object",
-        "properties": {
-          "Data": {
+          "facts": {
             "type": "array",
             "items": {
-              "type": "integer",
-              "format": "uint8"
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "array",
+                  "items": {},
+                  "$ref": "#/components/schemas/UUID"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "group": {
+                  "type": "string"
+                },
+                "groupId": {
+                  "type": "array",
+                  "items": {},
+                  "$ref": "#/components/schemas/UUID"
+                },
+                "isDiscarded": {
+                  "type": "boolean"
+                },
+                "source": {
+                  "$ref": "#/components/schemas/V2SourceEnum"
+                },
+                "lastUpdated": {
+                  "type": "integer"
+                },
+                "evidence": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string"
+                      },
+                      "reference": {
+                        "type": "string"
+                      },
+                      "quote": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
             }
-          },
-          "Id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "Interaction": {
-            "$ref": "#/components/schemas/V2Interaction"
-          },
-          "InteractionId": {
-            "type": "string",
-            "format": "uuid"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/db"
+        }
       },
-      "V2Specialty": {
+      "transcription.ResponseTranscriptCreate": {
         "type": "object",
         "properties": {
-          "Id": {
-            "type": "string",
-            "format": "uuid"
+          "transcriptId": {
+            "type": "array",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
           },
-          "Name": {
-            "type": "string"
+          "transcript": {
+            "type": "object",
+            "$ref": "#/components/schemas/Transcript"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/db"
+        }
       },
-      "V2Transcript": {
+      "uuid.UUID": {
+        "type": "string",
+        "items": {},
+        "format": "uuid"
+      },
+      "ResponseTranscriptTime": {
         "type": "object",
         "properties": {
-          "Id": {
-            "type": "string",
-            "format": "uuid"
+          "start": {
+            "type": "number"
           },
-          "IsDiarization": {
-            "type": "boolean"
-          },
-          "IsDictation": {
-            "type": "boolean"
-          },
-          "IsMultichannel": {
-            "type": "boolean"
-          },
-          "PrimaryLanguage": {
-            "type": "string"
-          },
-          "Recording": {
-            "$ref": "#/components/schemas/V2Recording"
-          },
-          "RecordingId": {
-            "type": "string",
-            "format": "uuid"
+          "end": {
+            "type": "number"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/db"
+        }
       },
-      "V2Utterance": {
+      "ResponseTranscript": {
         "type": "object",
         "properties": {
-          "EndAt": {
-            "type": "string",
-            "format": "date-time"
+          "id": {
+            "type": "array",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
           },
-          "EndAtTzoffset": {
+          "start": {
+            "type": "number"
+          },
+          "duration": {
+            "type": "number"
+          },
+          "transcript": {
             "type": "string"
           },
-          "Id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "IsFinal": {
+          "isFinal": {
             "type": "boolean"
           },
-          "Participant": {
-            "$ref": "#/components/schemas/V2Participant"
+          "participant": {
+            "type": "object",
+            "$ref": "#/components/schemas/RequestParticipantCreate"
           },
-          "ParticipantId": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "StartAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "Text": {
-            "type": "string"
-          },
-          "Transcript": {
-            "$ref": "#/components/schemas/V2Transcript"
-          },
-          "TranscriptId": {
-            "type": "string",
-            "format": "uuid"
+          "time": {
+            "type": "object",
+            "$ref": "#/components/schemas/ResponseTranscriptTime"
           }
-        },
-        "x-go-package": "github.com/corticph/copilot-api/pkg/db"
+        }
+      },
+      "RequestInteractionStreamStatus": {
+        "type": "string",
+        "enum": [
+          "end",
+          "pause",
+          "resume"
+        ]
+      },
+      "ResponseInteractionStreamTranscript": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/ResponseStreamTypeEnum"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ResponseTranscript"
+          }
+        }
+      },
+      "ResponseInteractionStreamFact": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/ResponseStreamTypeEnum"
+          },
+          "data": {
+            "$ref": "#/components/schemas/ResponseFact"
+          }
+        }
+      },
+      "ResponseInteractionStreamTopic": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "$ref": "#/components/schemas/ResponseStreamTypeEnum"
+          },
+          "data": {
+            "type": "string"
+          }
+        }
       }
     }
-  },
-  "x-original-swagger-version": "2.0"
+  }
 }
