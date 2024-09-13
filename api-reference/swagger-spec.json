@@ -6,55 +6,19 @@
   },
   "servers": [
     {
-      "url": "/",
-      "description": "Default Server URL"
+      "url": "https://copilot.{region}.corti.app/",
+      "variables": {
+        "region": {
+          "default": "us",
+          "enum": [
+            "us",
+            "eu"
+          ]
+        }
+      }
     }
   ],
   "paths": {
-    "/private/v2/interactions/{id}/classification/binary/": {
-      "post": {
-        "responses": {
-          "200": {
-            "description": " ",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseClassificationCreate"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "classifications"
-        ],
-        "summary": "Create classification",
-        "description": " This endpoint is used for binary classification tasks where a boolean output is expected.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "UUID of the interaction",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "UUID of the interaction"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestClassificationCreate"
-              }
-            }
-          },
-          "required": true
-        }
-      }
-    },
     "/v2/interactions/": {
       "get": {
         "responses": {
@@ -170,12 +134,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "UUID of the interaction",
+            "description": "The interaction ID representing the context for the request.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "UUID of the interaction"
+              "description": "The interaction ID representing the context for the request."
             }
           }
         ]
@@ -202,12 +166,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "UUID of the interaction",
+            "description": "The interaction ID representing the context for the request.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "UUID of the interaction"
+              "description": "The interaction ID representing the context for the request."
             }
           }
         ],
@@ -244,660 +208,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "UUID of the interaction",
+            "description": "The interaction ID representing the context for the request.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "UUID of the interaction"
-            }
-          }
-        ]
-      }
-    },
-    "/v2/interactions/{id}/codes": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": " ",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseCodesList"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "codes"
-        ],
-        "summary": "List Codes",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "UUID of the interaction",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "UUID of the interaction"
-            }
-          }
-        ]
-      },
-      "post": {
-        "responses": {
-          "200": {
-            "description": " ",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseCodesList"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "codes"
-        ],
-        "summary": "Predict codes",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "UUID of the interaction",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "UUID of the interaction"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestCodesCreate"
-              }
-            }
-          },
-          "required": true
-        }
-      },
-      "patch": {
-        "responses": {
-          "200": {
-            "description": " ",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseCodesList"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "codes"
-        ],
-        "summary": "Select Codes",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "UUID of the interaction",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "UUID of the interaction"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestCodesUpdate"
-              }
-            }
-          },
-          "required": true
-        }
-      }
-    },
-    "/v2/interactions/{id}/documents": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": " ",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDocumentList"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "documents"
-        ],
-        "summary": "List documents",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "UUID of the interaction",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "UUID of the interaction"
-            }
-          }
-        ]
-      },
-      "post": {
-        "responses": {
-          "200": {
-            "description": " ",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDocumentCreate"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "documents"
-        ],
-        "summary": "Create document",
-        "description": " Generate document.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "UUID of the interaction",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "UUID of the interaction"
-            }
-          },
-          {
-            "name": "stream",
-            "in": "query",
-            "description": "If true the response happens via SSE sending back a full valid JSON always, however, the content within text may be incomplete.",
-            "example": "false",
-            "schema": {
-              "type": "boolean",
-              "format": "boolean",
-              "description": "If true the response happens via SSE sending back a full valid JSON always, however, the content within text may be incomplete."
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestDocumentCreate"
-              }
-            }
-          },
-          "required": true
-        }
-      }
-    },
-    "/v2/interactions/{id}/documents/{documentId}": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": " ",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDocumentRead"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "documents"
-        ],
-        "summary": "Get Document",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "UUID of the interaction",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "UUID of the interaction"
-            }
-          },
-          {
-            "name": "documentId",
-            "in": "path",
-            "description": "UUID of the interaction",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "UUID of the interaction"
-            }
-          },
-          {
-            "name": "context",
-            "in": "query",
-            "description": "If true the response contains the context used to generated the document, such as fact, transcript or string.",
-            "example": "false",
-            "schema": {
-              "type": "boolean",
-              "format": "boolean",
-              "description": "If true the response contains the context used to generated the document, such as fact, transcript or string."
-            }
-          }
-        ]
-      },
-      "patch": {
-        "responses": {
-          "200": {
-            "description": " ",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDocumentRead"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "documents"
-        ],
-        "summary": "Update Document",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "UUID of the interaction",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "UUID of the interaction"
-            }
-          },
-          {
-            "name": "documentId",
-            "in": "path",
-            "description": "UUID of the interaction",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "UUID of the interaction"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestDocumentUpdate"
-              }
-            }
-          },
-          "required": true
-        }
-      }
-    },
-    "/v2/interactions/{id}/facts": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": " ",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseFactsList"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "facts"
-        ],
-        "summary": "List Facts",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "UUID of the interaction",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "UUID of the interaction"
-            }
-          }
-        ]
-      },
-      "post": {
-        "responses": {
-          "200": {
-            "description": " ",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseFactsCreate"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "facts"
-        ],
-        "summary": "Create Facts",
-        "description": " When creating a Fact if the interaction status = “in progress” then the Client will receive the newly created fact over the WebSocket.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "UUID of the interaction",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "UUID of the interaction"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestFactsCreate"
-              }
-            }
-          },
-          "required": true
-        }
-      },
-      "put": {
-        "responses": {
-          "200": {
-            "description": " ",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseFactsList"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "facts"
-        ],
-        "summary": "Generate Facts",
-        "description": " Generate facts from provided transcript, replacing existing ones.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "UUID of the interaction",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "UUID of the interaction"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestFactGenerate"
-              }
-            }
-          },
-          "required": true
-        }
-      }
-    },
-    "/v2/interactions/{id}/facts/{factId}": {
-      "patch": {
-        "responses": {
-          "200": {
-            "description": " ",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseFactCreate"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "facts"
-        ],
-        "summary": "Update Fact",
-        "description": " When updating a `Fact` if the interaction `status = “in progress”` then the Client will receive the updated fact over the WebSocket. To discard a fact, simply set `discarded = true`",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "UUID of the interaction",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "UUID of the interaction"
-            }
-          },
-          {
-            "name": "factId",
-            "in": "path",
-            "description": "UUID of the fact",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "UUID of the fact"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestFactUpdate"
-              }
-            }
-          },
-          "required": true
-        }
-      }
-    },
-    "/v2/interactions/{id}/recordings": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": " ",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseRecordingList"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "recordings"
-        ],
-        "summary": "List Recordings",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "UUID of the interaction",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "UUID of the interaction"
-            }
-          }
-        ]
-      },
-      "post": {
-        "responses": {
-          "200": {
-            "description": " ",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseRecordingCreate"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "recordings"
-        ],
-        "summary": "Upload recording",
-        "description": " Accept only audio of max 60 minutes in length and 150MB in size.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "UUID of the interaction",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "UUID of the interaction"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "multipart/form-data": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "Recording": {
-                    "type": "string",
-                    "format": "binary",
-                    "description": "binary"
-                  }
-                }
-              }
-            }
-          },
-          "required": true
-        }
-      }
-    },
-    "/v2/interactions/{id}/recordings/{recordingId}": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": "binary",
-            "content": {
-              "text/plain": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "recordings"
-        ],
-        "summary": "Get Recording",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "UUID of the interaction",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "UUID of the interaction"
-            }
-          },
-          {
-            "name": "recordingId",
-            "in": "path",
-            "description": "UUID of the recording",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "UUID of the recording"
-            }
-          }
-        ]
-      },
-      "delete": {
-        "responses": {
-          "204": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NoContent"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "recordings"
-        ],
-        "summary": "Delete Recording",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "UUID of the interaction",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "UUID of the interaction"
-            }
-          },
-          {
-            "name": "recordingId",
-            "in": "path",
-            "description": "UUID of the recording",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "UUID of the recording"
+              "description": "The interaction ID representing the context for the request."
             }
           }
         ]
@@ -937,12 +253,26 @@
           {
             "name": "id",
             "in": "path",
-            "description": "UUID of the interaction",
+            "description": "The interaction ID representing the context for the request.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "UUID of the interaction"
+              "description": "The interaction ID representing the context for the request."
+            }
+          }
+        ],
+        "servers": [
+          {
+            "url": "wss://copilot.{region}.corti.app/",
+            "variables": {
+              "region": {
+                "default": "us",
+                "enum": [
+                  "us",
+                  "eu"
+                ]
+              }
             }
           }
         ]
@@ -1012,6 +342,654 @@
         ]
       }
     },
+    "/v2/interactions/{id}/facts": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseFactsList"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "facts"
+        ],
+        "summary": "List Facts",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          }
+        ]
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseFactsCreate"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "facts"
+        ],
+        "summary": "Create Facts",
+        "description": " When creating a Fact if the interaction status = \u201cin progress\u201d then the Client will receive the newly created fact over the WebSocket.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestFactsCreate"
+              }
+            }
+          },
+          "required": true
+        }
+      },
+      "put": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseFactsList"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "facts"
+        ],
+        "summary": "Generate Facts",
+        "description": " Generate facts from provided transcript, replacing existing ones.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestFactGenerate"
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/v2/interactions/{id}/facts/{factId}": {
+      "patch": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseFactCreate"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "facts"
+        ],
+        "summary": "Update Fact",
+        "description": " When updating a `Fact` if the interaction `status = \u201cin progress\u201d` then the Client will receive the updated fact over the WebSocket. To discard a fact, simply set `discarded = true`",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          },
+          {
+            "name": "factId",
+            "in": "path",
+            "description": "The fact ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The fact ID representing the context for the request."
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestFactUpdate"
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/v2/interactions/{id}/documents": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDocumentList"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "documents"
+        ],
+        "summary": "List documents",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          }
+        ]
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDocumentCreate"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "documents"
+        ],
+        "summary": "Create document",
+        "description": " Generate document.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          },
+          {
+            "name": "stream",
+            "in": "query",
+            "description": "If true the response happens via SSE sending back a full valid JSON always, however, the content within text may be incomplete.",
+            "example": "false",
+            "schema": {
+              "type": "boolean",
+              "format": "boolean",
+              "description": "If true the response happens via SSE sending back a full valid JSON always, however, the content within text may be incomplete."
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestDocumentCreate"
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/v2/interactions/{id}/documents/{documentId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDocumentRead"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "documents"
+        ],
+        "summary": "Get Document",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          },
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The document ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The document ID representing the context for the request."
+            }
+          },
+          {
+            "name": "context",
+            "in": "query",
+            "description": "If true the response contains the context used to generated the document, such as fact, transcript or string.",
+            "example": "false",
+            "schema": {
+              "type": "boolean",
+              "format": "boolean",
+              "description": "If true the response contains the context used to generated the document, such as fact, transcript or string."
+            }
+          }
+        ]
+      },
+      "patch": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDocumentRead"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "documents"
+        ],
+        "summary": "Update Document",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          },
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The document ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The document ID representing the context for the request."
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestDocumentUpdate"
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/v2/interactions/{id}/codes": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCodesList"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "codes"
+        ],
+        "summary": "List Codes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          }
+        ]
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCodesList"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "codes"
+        ],
+        "summary": "Predict codes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCodesCreate"
+              }
+            }
+          },
+          "required": true
+        }
+      },
+      "patch": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCodesList"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "codes"
+        ],
+        "summary": "Select Codes",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCodesUpdate"
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/v2/interactions/{id}/recordings": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseRecordingList"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "recordings"
+        ],
+        "summary": "List Recordings",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          }
+        ]
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseRecordingCreate"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "recordings"
+        ],
+        "summary": "Upload recording",
+        "description": " Accept only audio of max 60 minutes in length and 150MB in size.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "Recording": {
+                    "type": "string",
+                    "format": "binary",
+                    "description": "binary"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/v2/interactions/{id}/recordings/{recordingId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "binary",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "recordings"
+        ],
+        "summary": "Get Recording",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          },
+          {
+            "name": "recordingId",
+            "in": "path",
+            "description": "The recording ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The recording ID representing the context for the request."
+            }
+          }
+        ]
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoContent"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "recordings"
+        ],
+        "summary": "Delete Recording",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          },
+          {
+            "name": "recordingId",
+            "in": "path",
+            "description": "The recording ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The recording ID representing the context for the request."
+            }
+          }
+        ]
+      }
+    },
     "/v2/interactions/{id}/transcripts": {
       "post": {
         "responses": {
@@ -1035,12 +1013,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "UUID of the interaction",
+            "description": "The interaction ID representing the context for the request.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "UUID of the interaction"
+              "description": "The interaction ID representing the context for the request."
             }
           }
         ],
@@ -1078,26 +1056,308 @@
           {
             "name": "id",
             "in": "path",
-            "description": "UUID of the interaction",
+            "description": "The interaction ID representing the context for the request.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "UUID of the interaction"
+              "description": "The interaction ID representing the context for the request."
             }
           },
           {
             "name": "transcriptId",
             "in": "path",
-            "description": "UUID of the transcript",
+            "description": "The transcript ID representing the context for the request.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "UUID of the transcript"
+              "description": "The transcript ID representing the context for the request."
             }
           }
         ]
+      }
+    },
+    "/private/v2/align": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Alignment results with percentage and optionally aligned segments.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseAlign"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - The request was malformed or missing required parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoContent"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Authentication failed or user is not authorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoContent"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - An error occurred on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoContent"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "experimental"
+        ],
+        "summary": "Align Sections",
+        "description": " Compares a 'source' document with a 'target' document and returns a percentage alignment, optionally including aligned segments.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestAlign"
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/private/v2/interactions/{id}/classification/binary/": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseClassificationCreate"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "experimental"
+        ],
+        "summary": "Create classification",
+        "description": " This endpoint is used for binary classification tasks where a boolean output is expected.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestClassificationCreate"
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/private/v2/interactions/{id}/query": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "SSE streaming response with results from multiple tools. The initial response includes a thread ID for continuing the conversation. (`text/event-stream`)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseQuery"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - The request was malformed or missing required parameters.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoContent"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized - Authentication failed or user is not authorized.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoContent"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error - An error occurred on the server.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoContent"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "experimental"
+        ],
+        "summary": "Contextual Query Assistant",
+        "description": " Allows users to ask questions or make queries, which are processed in the context of a specific interaction. Multiple tools provide responses via SSE. A thread ID is returned with the initial query, which can be used to continue posting to the same thread in subsequent queries.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          },
+          {
+            "name": "threadId",
+            "in": "query",
+            "description": "The thread ID representing the context for the request.",
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The thread ID representing the context for the request."
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestQuery"
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/private/v2/tools/guidelines": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Returns a summary and a list of relevant sources.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseGuidelines"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "experimental"
+        ],
+        "summary": "Guidelines Tool API",
+        "description": " Processes a query and returns a summary along with relevant sources.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestGuidelines"
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/v2/tools/mentions": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Returns an array of mentions found in the reference texts.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMention"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "experimental"
+        ],
+        "summary": "Mentions Tool API",
+        "description": " Finds mentions of a query within a set of reference texts.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestMention"
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/v2/tools/question-prompts": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Returns an array of suggested questions.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseQuestionPrompts"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "experimental"
+        ],
+        "summary": "Question Prompts Tool API",
+        "description": " Provides a list of suggested questions based on a query and/or context.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestQuestionPrompts"
+              }
+            }
+          },
+          "required": true
+        }
       }
     }
   },
@@ -1120,6 +1380,38 @@
           "state": {
             "type": "object",
             "$ref": "#/components/schemas/CodesState"
+          }
+        }
+      },
+      "AlignedSegment": {
+        "type": "object",
+        "properties": {
+          "targetSegment": {
+            "type": "object",
+            "$ref": "#/components/schemas/TargetSegment"
+          },
+          "sourceReference": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "description": "The content of the matching segment in the source document."
+                },
+                "range": {
+                  "type": "array",
+                  "description": "Start and end indices of the segment in the source document.",
+                  "items": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          "alignmentPercentage": {
+            "type": "number",
+            "description": "Alignment percentage between the target and source segment."
           }
         }
       },
@@ -1175,10 +1467,12 @@
         ],
         "properties": {
           "type": {
+            "description": "The type of context data.",
             "$ref": "#/components/schemas/V2DocumentContextEnum"
           },
           "data": {
             "type": "array",
+            "description": "The actual data, which can be an array of Fact, a transcript, or a string.",
             "items": {
               "type": "object"
             }
@@ -1267,6 +1561,46 @@
           }
         }
       },
+      "MentionData": {
+        "type": "object",
+        "properties": {
+          "range": {
+            "type": "array",
+            "description": "Character range for document type.",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "time": {
+            "type": "array",
+            "description": "Time range in seconds for transcript type.",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "snippet": {
+            "type": "string",
+            "description": "Text snippet for the mention."
+          },
+          "documentId": {
+            "type": "array",
+            "description": "The document ID if applicable.",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
+          },
+          "utteranceId": {
+            "type": "array",
+            "description": "The utterance ID if applicable.",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp for transcript mentions."
+          }
+        }
+      },
       "NoContent": {
         "type": "object"
       },
@@ -1291,6 +1625,134 @@
           },
           "pronouns": {
             "type": "string"
+          }
+        }
+      },
+      "QueryData": {
+        "type": "object",
+        "properties": {
+          "summary": {
+            "type": "string",
+            "description": "For guidelines, a summary of the response."
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "favicon": {
+                  "type": "string",
+                  "description": "The favicon URL of the source."
+                },
+                "title": {
+                  "type": "string",
+                  "description": "The title of the source."
+                },
+                "url": {
+                  "type": "string",
+                  "description": "The URL of the source."
+                },
+                "type": {
+                  "type": "string",
+                  "description": "The type of the source (e.g., PDF, Web)."
+                },
+                "description": {
+                  "type": "string",
+                  "description": "A brief description of the source."
+                }
+              }
+            }
+          },
+          "mentions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "description": "The type of mention (e.g., transcript, document)."
+                },
+                "data": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/MentionData"
+                }
+              }
+            }
+          },
+          "response": {
+            "type": "string",
+            "description": "General chat response in markdown format."
+          },
+          "rewrittenText": {
+            "type": "string",
+            "description": "For document rewrites, the rewritten text in markdown format."
+          },
+          "queries": {
+            "type": "array",
+            "description": "Related or follow-up queries.",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "QueryMention": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "The type of mention (e.g., transcript, document)."
+          },
+          "data": {
+            "type": "object",
+            "$ref": "#/components/schemas/MentionData"
+          }
+        }
+      },
+      "QuerySource": {
+        "type": "object",
+        "properties": {
+          "favicon": {
+            "type": "string",
+            "description": "The favicon URL of the source."
+          },
+          "title": {
+            "type": "string",
+            "description": "The title of the source."
+          },
+          "url": {
+            "type": "string",
+            "description": "The URL of the source."
+          },
+          "type": {
+            "type": "string",
+            "description": "The type of the source (e.g., PDF, Web)."
+          },
+          "description": {
+            "type": "string",
+            "description": "A brief description of the source."
+          }
+        }
+      },
+      "RequestAlign": {
+        "type": "object",
+        "required": [
+          "sourceDocument",
+          "targetDocument"
+        ],
+        "properties": {
+          "sourceDocument": {
+            "type": "string",
+            "description": "The content of the source document."
+          },
+          "targetDocument": {
+            "type": "string",
+            "description": "The content of the target document."
+          },
+          "compareSegments": {
+            "type": "boolean",
+            "description": "Indicates if segments from the source should be compared with the target.",
+            "example": false
           }
         }
       },
@@ -1543,6 +2005,34 @@
           }
         }
       },
+      "RequestGuidelines": {
+        "type": "object",
+        "required": [
+          "query",
+          "context",
+          "sourceIds"
+        ],
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The text-based query from the user."
+          },
+          "context": {
+            "type": "array",
+            "description": "An array of contexts, such as documents or relevant segments.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sourceIds": {
+            "type": "array",
+            "description": "An array of source IDs to narrow down the search.",
+            "items": {
+              "$ref": "#/components/schemas/UUID"
+            }
+          }
+        }
+      },
       "RequestInteractionCreate": {
         "type": "object",
         "required": [
@@ -1596,6 +2086,26 @@
           }
         }
       },
+      "RequestMention": {
+        "type": "object",
+        "required": [
+          "query",
+          "referenceTexts"
+        ],
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The text-based query from the user."
+          },
+          "referenceTexts": {
+            "type": "array",
+            "description": "An array of reference texts where the mentions will be searched.",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "RequestParticipantCreate": {
         "type": "object",
         "required": [
@@ -1629,6 +2139,54 @@
           },
           "pronouns": {
             "type": "string"
+          }
+        }
+      },
+      "RequestQuery": {
+        "type": "object",
+        "required": [
+          "query"
+        ],
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "The text-based query from the user.",
+            "example": "What are the key points from the latest guidelines?"
+          },
+          "queryContext": {
+            "type": "string",
+            "description": "A specific document or focus context for the query.",
+            "example": "doc123"
+          },
+          "focusContexts": {
+            "type": "array",
+            "description": "A list of additional focus contexts or documents.",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "doc456",
+              "doc789"
+            ]
+          }
+        }
+      },
+      "RequestQuestionPrompts": {
+        "type": "object",
+        "required": [
+          "context"
+        ],
+        "properties": {
+          "context": {
+            "type": "array",
+            "description": "The context in which the query is being made.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "query": {
+            "type": "string",
+            "description": "The query for which the questions are being generated (optional)."
           }
         }
       },
@@ -1669,6 +2227,50 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/RequestParticipantCreate"
+            }
+          }
+        }
+      },
+      "ResponseAlign": {
+        "type": "object",
+        "properties": {
+          "alignmentPercentage": {
+            "type": "number",
+            "description": "Alignment percentage between the source and target documents."
+          },
+          "alignedSegments": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "targetSegment": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/TargetSegment"
+                },
+                "sourceReference": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "text": {
+                        "type": "string",
+                        "description": "The content of the matching segment in the source document."
+                      },
+                      "range": {
+                        "type": "array",
+                        "description": "Start and end indices of the segment in the source document.",
+                        "items": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                },
+                "alignmentPercentage": {
+                  "type": "number",
+                  "description": "Alignment percentage between the target and source segment."
+                }
+              }
             }
           }
         }
@@ -2053,6 +2655,21 @@
           }
         }
       },
+      "ResponseGuidelines": {
+        "type": "object",
+        "properties": {
+          "summary": {
+            "type": "string",
+            "description": "A summary of the response."
+          },
+          "sources": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuerySource"
+            }
+          }
+        }
+      },
       "ResponseInteraction": {
         "type": "object",
         "properties": {
@@ -2172,6 +2789,76 @@
           }
         }
       },
+      "ResponseMention": {
+        "type": "object",
+        "properties": {
+          "properties": {
+            "type": "string",
+            "description": "The type of mention (e.g., transcript, document)."
+          },
+          "range": {
+            "type": "array",
+            "description": "Character range for document type.",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "time": {
+            "type": "array",
+            "description": "Time range in seconds for transcript type.",
+            "items": {
+              "type": "integer"
+            }
+          },
+          "snippet": {
+            "type": "string",
+            "description": "Text snippet for the mention."
+          },
+          "documentId": {
+            "type": "array",
+            "description": "The document ID if applicable.",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
+          },
+          "utteranceId": {
+            "type": "array",
+            "description": "The utterance ID if applicable.",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp for transcript mentions."
+          }
+        }
+      },
+      "ResponseQuery": {
+        "type": "object",
+        "properties": {
+          "tool": {
+            "type": "string",
+            "description": "The tool providing the response (e.g., guidelines, mentions, general_chat, etc.)"
+          },
+          "data": {
+            "type": "object",
+            "description": "The response data specific to the tool.",
+            "$ref": "#/components/schemas/QueryData"
+          }
+        }
+      },
+      "ResponseQuestionPrompts": {
+        "type": "object",
+        "properties": {
+          "prompts": {
+            "type": "array",
+            "description": "An array of suggested questions.",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "ResponseRecordingCreate": {
         "type": "object",
         "properties": {
@@ -2212,6 +2899,22 @@
           "transcript": {
             "type": "object",
             "$ref": "#/components/schemas/Transcript"
+          }
+        }
+      },
+      "SourceReference": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "The content of the matching segment in the source document."
+          },
+          "range": {
+            "type": "array",
+            "description": "Start and end indices of the segment in the source document.",
+            "items": {
+              "type": "integer"
+            }
           }
         }
       },
@@ -2262,6 +2965,22 @@
           },
           "isDiarization": {
             "type": "boolean"
+          }
+        }
+      },
+      "TargetSegment": {
+        "type": "object",
+        "properties": {
+          "text": {
+            "type": "string",
+            "description": "The content of the target document segment."
+          },
+          "range": {
+            "type": "array",
+            "description": "Start and end indices of the segment in the target document.",
+            "items": {
+              "type": "integer"
+            }
           }
         }
       },
@@ -2615,5 +3334,28 @@
         }
       }
     }
-  }
+  },
+  "tags": [
+    {
+      "name": "interactions"
+    },
+    {
+      "name": "stream"
+    },
+    {
+      "name": "facts"
+    },
+    {
+      "name": "documents"
+    },
+    {
+      "name": "codes"
+    },
+    {
+      "name": "recordings"
+    },
+    {
+      "name": "transcripts"
+    }
+  ]
 }

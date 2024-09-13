@@ -54,12 +54,6 @@
         "get_started/authentication",
         "get_started/workflows"
       ]
-    },
-    {
-      "group": "API Documentation",
-      "pages": [
-        "api-reference"    
-          ]
     }
   ],
   "footerSocials": {
