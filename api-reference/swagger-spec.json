@@ -36,7 +36,7 @@
         "tags": [
           "interactions"
         ],
-        "summary": "List all interactions",
+        "summary": "List All Interactions",
         "description": " Lists all existing interactions.",
         "parameters": [
           {
@@ -97,7 +97,7 @@
         "tags": [
           "interactions"
         ],
-        "summary": "Create interaction",
+        "summary": "Create Interaction",
         "description": " Creates a new interaction.",
         "requestBody": {
           "content": {
@@ -128,7 +128,7 @@
         "tags": [
           "interactions"
         ],
-        "summary": "Get existing interaction",
+        "summary": "Get Existing Interaction",
         "description": " Gets an existing interaction.",
         "parameters": [
           {
@@ -160,7 +160,7 @@
         "tags": [
           "interactions"
         ],
-        "summary": "Update interaction",
+        "summary": "Update Interaction",
         "description": " Patches an existing interaction.",
         "parameters": [
           {
@@ -202,7 +202,7 @@
         "tags": [
           "interactions"
         ],
-        "summary": "Delete interaction",
+        "summary": "Delete Interaction",
         "description": " Deletes an existing interaction.",
         "parameters": [
           {
@@ -230,13 +230,16 @@
                   "$ref": "#/components/schemas/RequestInteractionStreamConfig",
                   "oneOf": [
                     {
+                      "title": "Transcript",
                       "$ref": "#/components/schemas/ResponseInteractionStreamTranscript"
                     },
                     {
+                      "title": "Facts",
                       "$ref": "#/components/schemas/ResponseInteractionStreamFact"
                     },
                     {
-                      "$ref": "#/components/schemas/ResponseInteractionStreamTopic"
+                      "title": "Documentation",
+                      "$ref": "#/components/schemas/ResponseInteractionStreamDocumentation"
                     }
                   ]
                 }
@@ -247,8 +250,8 @@
         "tags": [
           "stream"
         ],
-        "summary": "Stream interaction",
-        "description": " Extablish WSS connection. See placeholder `TRACE` method for client/server messages in the socket.",
+        "summary": "Stream Interaction",
+        "description": " Establish WSS connection. See placeholder `TRACE` method for client/server messages in the socket.",
         "parameters": [
           {
             "name": "id",
@@ -313,13 +316,16 @@
                 "schema": {
                   "oneOf": [
                     {
+                      "title": "Transcript",
                       "$ref": "#/components/schemas/ResponseInteractionStreamTranscript"
                     },
                     {
+                      "title": "Facts",
                       "$ref": "#/components/schemas/ResponseInteractionStreamFact"
                     },
                     {
-                      "$ref": "#/components/schemas/ResponseInteractionStreamTopic"
+                      "title": "Documentation",
+                      "$ref": "#/components/schemas/ResponseInteractionStreamDocumentation"
                     }
                   ]
                 }
@@ -531,7 +537,7 @@
         "tags": [
           "documents"
         ],
-        "summary": "List documents",
+        "summary": "List Documents",
         "parameters": [
           {
             "name": "id",
@@ -562,7 +568,7 @@
         "tags": [
           "documents"
         ],
-        "summary": "Create document",
+        "summary": "Create Document",
         "description": " Generate document.",
         "parameters": [
           {
@@ -755,7 +761,7 @@
         "tags": [
           "codes"
         ],
-        "summary": "Predict codes",
+        "summary": "Predict Codes",
         "parameters": [
           {
             "name": "id",
@@ -870,7 +876,7 @@
         "tags": [
           "recordings"
         ],
-        "summary": "Upload recording",
+        "summary": "Upload Recording",
         "description": " Accept only audio of max 60 minutes in length and 150MB in size.",
         "parameters": [
           {
@@ -1007,7 +1013,7 @@
         "tags": [
           "transcripts"
         ],
-        "summary": "Transcribe audio",
+        "summary": "Transcribe Audio",
         "description": " Time-out for this endpoint is 10 minutes.",
         "parameters": [
           {
@@ -1156,7 +1162,7 @@
         "tags": [
           "experimental"
         ],
-        "summary": "Create classification",
+        "summary": "Create Classification",
         "description": " This endpoint is used for binary classification tasks where a boolean output is expected.",
         "parameters": [
           {
@@ -1520,20 +1526,25 @@
         ],
         "properties": {
           "identifier": {
-            "type": "string"
+            "type": "string",
+            "description": "A unique identifier for the encounter, essential for tracking and referencing specific patient interactions."
           },
           "status": {
+            "description": "Indicates the current state of the encounter, crucial for understanding the progression and current state of care.",
             "$ref": "#/components/schemas/V2EncounterStatusEnum"
           },
           "type": {
+            "description": "The specific type of encounter, providing context about the nature and setting of the patient interaction.",
             "$ref": "#/components/schemas/V2EncounterTypeEnum"
           },
           "period": {
             "type": "object",
+            "description": "The time period during which the encounter takes place.",
             "$ref": "#/components/schemas/EncounterPeriod"
           },
           "title": {
-            "type": "string"
+            "type": "string",
+            "description": "A readable name for the interaction"
           }
         }
       },
@@ -1545,21 +1556,53 @@
         "properties": {
           "startedAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "The start date/time of the encounter. (UTC)"
           },
           "startedAtTzoffset": {
             "type": "string",
+            "description": "Timezone offset for startedAt",
             "example": "+00:00"
           },
           "endedAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "The end date/time of the encounter. (UTC)"
           },
           "endedAtTzoffset": {
             "type": "string",
+            "description": "Timezone offset for endedAt",
             "example": "+00:00"
           }
         }
+      },
+      "InteractionMode": {
+        "type": "object",
+        "required": [
+          "type"
+        ],
+        "properties": {
+          "type": {
+            "example": "facts",
+            "$ref": "#/components/schemas/InteractionModeTypeEnum"
+          },
+          "templateId": {
+            "type": "array",
+            "description": "The template the live documentation need to use.",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
+          }
+        }
+      },
+      "InteractionModeType": {
+        "type": "string"
+      },
+      "InteractionModeTypeEnum": {
+        "type": "string",
+        "enum": [
+          "facts",
+          "documentation"
+        ]
       },
       "MentionData": {
         "type": "object",
@@ -1611,20 +1654,25 @@
         ],
         "properties": {
           "identifier": {
-            "type": "string"
+            "type": "string",
+            "description": "FHIR reference to patient identifier."
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "FHIR reference to Text representation of the full name. Ensures the patient is referred by their name in the documentation."
           },
           "gender": {
+            "description": "FHIR reference to patient gender. Ensures the documentation is written with the correct pronouns.",
             "$ref": "#/components/schemas/V2GenderEnum"
           },
           "birthDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "FHIR reference to patient birth date."
           },
           "pronouns": {
-            "type": "string"
+            "type": "string",
+            "description": "FHIR reference to patient extension Individual Pronouns."
           }
         }
       },
@@ -2042,21 +2090,27 @@
         "properties": {
           "assignedUserId": {
             "type": "array",
+            "description": "A unique identifier for the medical professional.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "encounter": {
             "type": "object",
+            "description": "Details about the encounter.",
             "$ref": "#/components/schemas/Encounter"
           },
           "patient": {
             "type": "object",
+            "description": "Optional patient details.",
             "$ref": "#/components/schemas/Patient"
           }
         }
       },
       "RequestInteractionStreamConfig": {
         "type": "object",
+        "required": [
+          "type"
+        ],
         "properties": {
           "type": {
             "type": "string",
@@ -2885,7 +2939,8 @@
         "enum": [
           "transcript",
           "fact",
-          "topic"
+          "topic",
+          "documentation"
         ]
       },
       "ResponseTranscriptCreate": {
@@ -2920,30 +2975,48 @@
       },
       "StreamConfig": {
         "type": "object",
+        "required": [
+          "transcription"
+        ],
         "properties": {
           "specialtyId": {
-            "type": "string"
+            "type": "string",
+            "description": "Focus area of the interaction"
           },
           "outputLocale": {
-            "type": "string"
+            "type": "string",
+            "description": "BCP-47 determines output facts language"
           },
           "transcription": {
             "type": "object",
             "$ref": "#/components/schemas/StreamTranscript"
+          },
+          "mode": {
+            "type": "object",
+            "$ref": "#/components/schemas/InteractionMode"
           }
         }
       },
       "StreamTranscript": {
         "type": "object",
+        "required": [
+          "primaryLanguage",
+          "participants"
+        ],
         "properties": {
           "primaryLanguage": {
-            "type": "string"
+            "type": "string",
+            "description": "BCP-47",
+            "example": "en"
           },
           "isDictation": {
-            "type": "boolean"
+            "type": "boolean",
+            "example": false
           },
           "isMultichannel": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Transcribe each audio channel independently.",
+            "example": false
           },
           "participants": {
             "type": "array",
@@ -2964,7 +3037,9 @@
             }
           },
           "isDiarization": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Separates speakers in a single channel",
+            "example": false
           }
         }
       },
@@ -3292,6 +3367,48 @@
           }
         }
       },
+      "DocumentationEvidence": {
+        "type": "object",
+        "properties": {
+          "evidenceId": {
+            "type": "array",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
+          },
+          "type": {
+            "type": "string",
+            "example": "transcript"
+          },
+          "quote": {
+            "type": "string"
+          }
+        }
+      },
+      "ResponseDocumentation": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "array",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
+          },
+          "text": {
+            "type": "string"
+          },
+          "sectionId": {
+            "type": "array",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
+          },
+          "sectionTitle": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "object",
+            "$ref": "#/components/schemas/DocumentationEvidence"
+          }
+        }
+      },
       "RequestInteractionStreamStatus": {
         "type": "string",
         "enum": [
@@ -3322,14 +3439,17 @@
           }
         }
       },
-      "ResponseInteractionStreamTopic": {
+      "ResponseInteractionStreamDocumentation": {
         "type": "object",
         "properties": {
           "type": {
             "$ref": "#/components/schemas/ResponseStreamTypeEnum"
           },
           "data": {
-            "type": "string"
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResponseDocumentation"
+            }
           }
         }
       }
