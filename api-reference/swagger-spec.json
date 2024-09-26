@@ -31,6 +31,16 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -92,6 +102,16 @@
                 }
               }
             }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -120,6 +140,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseInteraction"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -152,6 +182,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseInteraction"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -194,6 +234,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/NoContent"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -862,12 +912,42 @@
       },
       "post": {
         "responses": {
-          "200": {
+          "201": {
             "description": " ",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseRecordingCreate"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -1573,6 +1653,29 @@
             "type": "string",
             "description": "Timezone offset for endedAt",
             "example": "+00:00"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "requestid": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "details": {
+            "type": "string"
+          },
+          "instance": {
+            "type": "string"
           }
         }
       },
@@ -3204,19 +3307,30 @@
           }
         }
       },
-      "cortiDb.V2EncounterStatus": {
-        "type": "string"
+      "copilotCommon.ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "requestid": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "details": {
+            "type": "string"
+          },
+          "instance": {
+            "type": "string"
+          }
+        }
       },
-      "cortiDb.V2EncounterType": {
-        "type": "string"
-      },
-      "cortiDb.V2Gender": {
-        "type": "string"
-      },
-      "cortiDb.V2Source": {
-        "type": "string"
-      },
-      "cortiFact.ResponseFactCreate": {
+      "copilotFact.ResponseFactCreate": {
         "type": "object",
         "properties": {
           "id": {
@@ -3252,7 +3366,7 @@
           }
         }
       },
-      "cortiFact.ResponseFactsList": {
+      "copilotFact.ResponseFactsList": {
         "type": "object",
         "properties": {
           "facts": {
@@ -3306,6 +3420,18 @@
             }
           }
         }
+      },
+      "copilotModels.V2EncounterStatus": {
+        "type": "string"
+      },
+      "copilotModels.V2EncounterType": {
+        "type": "string"
+      },
+      "copilotModels.V2Gender": {
+        "type": "string"
+      },
+      "copilotModels.V2Source": {
+        "type": "string"
       },
       "transcription.ResponseTranscriptCreate": {
         "type": "object",
