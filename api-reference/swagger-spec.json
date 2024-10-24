@@ -905,7 +905,7 @@
         }
       }
     },
-    "/v2/interactions/codes/{id}": {
+    "/v2/interactions/{id}/codes": {
       "get": {
         "responses": {
           "200": {
