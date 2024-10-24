@@ -467,7 +467,7 @@
           "facts"
         ],
         "summary": "Create Facts",
-        "description": " When creating a Fact if the interaction status = \u201cin progress\u201d then the Client will receive the newly created fact over the WebSocket.",
+        "description": " When creating a Fact if the interaction status = \"in progress\" then the Client will receive the newly created fact over the WebSocket.",
         "parameters": [
           {
             "name": "id",
@@ -553,7 +553,7 @@
           "facts"
         ],
         "summary": "Update Fact",
-        "description": " When updating a `Fact` if the interaction `status = \u201cin progress\u201d` then the Client will receive the updated fact over the WebSocket. To discard a fact, simply set `discarded = true`",
+        "description": " When updating a `Fact` if the interaction `status = \"in progress\"` then the Client will receive the updated fact over the WebSocket. To discard a fact, simply set `discarded = true`",
         "parameters": [
           {
             "name": "id",
@@ -1106,67 +1106,6 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/RequestCodesUpdate"
-              }
-            }
-          },
-          "required": true
-        }
-      }
-    },
-    "/v2/internal/codes": {
-      "post": {
-        "responses": {
-          "200": {
-            "description": " ",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseCodesInsert"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "codes"
-        ],
-        "summary": "[Internal] Insert codes",
-        "description": " Internal endpoint for inserting codes in bulk",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestCodesInsert"
               }
             }
           },
@@ -1905,31 +1844,6 @@
           }
         }
       },
-      "CodeInsert": {
-        "type": "object",
-        "required": [
-          "name",
-          "system",
-          "description"
-        ],
-        "properties": {
-          "name": {
-            "type": "string",
-            "example": "W0231"
-          },
-          "system": {
-            "type": "string",
-            "example": "ICD-10"
-          },
-          "description": {
-            "type": "string"
-          },
-          "subsetName": {
-            "type": "string",
-            "example": "orsakskoder"
-          }
-        }
-      },
       "CodesContext": {
         "type": "object",
         "required": [
@@ -2129,7 +2043,7 @@
             "$ref": "#/components/schemas/InteractionModeTypeEnum"
           },
           "templateId": {
-            "type": "array",
+            "type": "string",
             "description": "The template the live documentation need to use.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -2168,13 +2082,13 @@
             "description": "Text snippet for the mention."
           },
           "documentId": {
-            "type": "array",
+            "type": "string",
             "description": "The document ID if applicable.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "utteranceId": {
-            "type": "array",
+            "type": "string",
             "description": "The utterance ID if applicable.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -2356,7 +2270,7 @@
             }
           },
           "taskId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           }
@@ -2373,39 +2287,6 @@
             "type": "array",
             "items": {
               "type": "string"
-            }
-          }
-        }
-      },
-      "RequestCodesInsert": {
-        "type": "object",
-        "properties": {
-          "codes": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "required": [
-                "name",
-                "system",
-                "description"
-              ],
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "example": "W0231"
-                },
-                "system": {
-                  "type": "string",
-                  "example": "ICD-10"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "subsetName": {
-                  "type": "string",
-                  "example": "orsakskoder"
-                }
-              }
             }
           }
         }
@@ -2485,7 +2366,7 @@
             }
           },
           "templateId": {
-            "type": "array",
+            "type": "string",
             "description": "The ID of the template that informs on what kind of document is to be generated.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -2694,7 +2575,7 @@
         ],
         "properties": {
           "assignedUserId": {
-            "type": "array",
+            "type": "string",
             "description": "A unique identifier for the medical professional.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -2731,7 +2612,7 @@
         "type": "object",
         "properties": {
           "assignedUserId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -2866,7 +2747,7 @@
         ],
         "properties": {
           "recordingId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -2940,17 +2821,6 @@
           "result": {
             "type": "object",
             "$ref": "#/components/schemas/ClassificationResult"
-          }
-        }
-      },
-      "ResponseCodesInsert": {
-        "type": "object",
-        "properties": {
-          "codesInserted": {
-            "type": "integer"
-          },
-          "codesUpdated": {
-            "type": "integer"
           }
         }
       },
@@ -3063,7 +2933,7 @@
         "type": "object",
         "properties": {
           "documentId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -3071,7 +2941,7 @@
             "type": "string"
           },
           "templateId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -3098,7 +2968,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -3109,7 +2979,7 @@
             "type": "string"
           },
           "groupId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -3145,7 +3015,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -3157,7 +3027,7 @@
             "example": "Others"
           },
           "groupId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -3200,7 +3070,7 @@
               "type": "object",
               "properties": {
                 "id": {
-                  "type": "array",
+                  "type": "string",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
@@ -3212,7 +3082,7 @@
                   "example": "Others"
                 },
                 "groupId": {
-                  "type": "array",
+                  "type": "string",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
@@ -3244,7 +3114,7 @@
               "type": "object",
               "properties": {
                 "id": {
-                  "type": "array",
+                  "type": "string",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
@@ -3255,7 +3125,7 @@
                   "type": "string"
                 },
                 "groupId": {
-                  "type": "array",
+                  "type": "string",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
@@ -3309,12 +3179,12 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "assignedUserId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -3363,7 +3233,7 @@
         "type": "object",
         "properties": {
           "interactionId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -3381,12 +3251,12 @@
               "type": "object",
               "properties": {
                 "id": {
-                  "type": "array",
+                  "type": "string",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
                 "assignedUserId": {
-                  "type": "array",
+                  "type": "string",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
@@ -3460,13 +3330,13 @@
             "description": "Text snippet for the mention."
           },
           "documentId": {
-            "type": "array",
+            "type": "string",
             "description": "The document ID if applicable.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "utteranceId": {
-            "type": "array",
+            "type": "string",
             "description": "The utterance ID if applicable.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -3508,7 +3378,7 @@
         "type": "object",
         "properties": {
           "recordingId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           }
@@ -3538,7 +3408,7 @@
         "type": "object",
         "properties": {
           "transcriptId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -3761,7 +3631,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -3773,7 +3643,7 @@
             "example": "Others"
           },
           "groupId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -3802,7 +3672,7 @@
               "type": "object",
               "properties": {
                 "id": {
-                  "type": "array",
+                  "type": "string",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
@@ -3813,7 +3683,7 @@
                   "type": "string"
                 },
                 "groupId": {
-                  "type": "array",
+                  "type": "string",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
@@ -3864,7 +3734,7 @@
         "type": "object",
         "properties": {
           "transcriptId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -3894,7 +3764,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -3924,7 +3794,7 @@
         "type": "object",
         "properties": {
           "evidenceId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -3941,7 +3811,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -3949,7 +3819,7 @@
             "type": "string"
           },
           "sectionId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
