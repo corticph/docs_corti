@@ -93,7 +93,7 @@
       },
       "post": {
         "responses": {
-          "200": {
+          "201": {
             "description": " ",
             "content": {
               "application/json": {
@@ -103,7 +103,27 @@
               }
             }
           },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
             "description": "RFC9457",
             "content": {
               "application/json": {
@@ -582,12 +602,43 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
           "documents"
         ],
         "summary": "List Documents",
+        "description": " List Documents",
         "parameters": [
           {
             "name": "id",
@@ -604,12 +655,42 @@
       },
       "post": {
         "responses": {
-          "200": {
+          "201": {
             "description": " ",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ResponseDocumentCreate"
+                  "$ref": "#/components/schemas/ResponseDocumentRead"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -618,8 +699,8 @@
         "tags": [
           "documents"
         ],
-        "summary": "Create Document",
-        "description": " Generate document.",
+        "summary": "Generate Document",
+        "description": " Generate Document.",
         "parameters": [
           {
             "name": "id",
@@ -668,12 +749,43 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
           "documents"
         ],
         "summary": "Get Document",
+        "description": " Get Document.",
         "parameters": [
           {
             "name": "id",
@@ -721,6 +833,36 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
@@ -763,7 +905,7 @@
         }
       }
     },
-    "/v2/interactions/{id}/codes": {
+    "/v2/interactions/codes/{id}": {
       "get": {
         "responses": {
           "200": {
@@ -775,12 +917,43 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
           "codes"
         ],
-        "summary": "List Codes",
+        "summary": "List codes",
+        "description": " Get all codes associated with an interaction.",
         "parameters": [
           {
             "name": "id",
@@ -806,12 +979,43 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
           "codes"
         ],
-        "summary": "Predict Codes",
+        "summary": "Generate Codes",
+        "description": " Generate Codes.",
         "parameters": [
           {
             "name": "id",
@@ -829,7 +1033,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RequestCodesCreate"
+                "$ref": "#/components/schemas/RequestCodesPredict"
               }
             }
           },
@@ -847,12 +1051,43 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
           "codes"
         ],
-        "summary": "Select Codes",
+        "summary": "Select codes",
+        "description": " Mark provided codes as selected.",
         "parameters": [
           {
             "name": "id",
@@ -878,6 +1113,67 @@
         }
       }
     },
+    "/v2/internal/codes": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCodesInsert"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "codes"
+        ],
+        "summary": "[Internal] Insert codes",
+        "description": " Internal endpoint for inserting codes in bulk",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCodesInsert"
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
     "/v2/interactions/{id}/recordings": {
       "get": {
         "responses": {
@@ -887,6 +1183,36 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseRecordingList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -980,7 +1306,7 @@
                   "Recording": {
                     "type": "string",
                     "format": "binary",
-                    "description": "binary"
+                    "description": "Binary content of the recording file."
                   }
                 }
               }
@@ -994,11 +1320,51 @@
       "get": {
         "responses": {
           "200": {
-            "description": "binary",
+            "description": "Binary content of the recording file.",
             "content": {
               "text/plain": {
                 "schema": {
                   "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -1041,6 +1407,36 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/NoContent"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -1509,6 +1905,31 @@
           }
         }
       },
+      "CodeInsert": {
+        "type": "object",
+        "required": [
+          "name",
+          "system",
+          "description"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "W0231"
+          },
+          "system": {
+            "type": "string",
+            "example": "ICD-10"
+          },
+          "description": {
+            "type": "string"
+          },
+          "subsetName": {
+            "type": "string",
+            "example": "orsakskoder"
+          }
+        }
+      },
       "CodesContext": {
         "type": "object",
         "required": [
@@ -1554,22 +1975,36 @@
         "properties": {
           "type": {
             "description": "The type of context data.",
-            "$ref": "#/components/schemas/V2DocumentContextEnum"
+            "$ref": "#/components/schemas/V2DocumentContextTypeEnum"
           },
           "data": {
-            "type": "array",
-            "description": "The actual data, which can be an array of Fact, a transcript, or a string.",
-            "items": {
-              "type": "object"
-            }
+            "description": "The actual data, which can be a Fact[], a transcript, or a string.",
+            "$ref": "#/components/schemas/DocumentContextData"
           }
         }
+      },
+      "DocumentContextData": {
+        "oneOf": [
+          {
+            "title": "Array of facts",
+            "type": "array",
+            "$ref": "#/components/schemas/RequestFactCreate"
+          },
+          {
+            "title": "Transcript",
+            "type": "array",
+            "$ref": "#/components/schemas/Transcript"
+          },
+          {
+            "type": "string"
+          }
+        ]
       },
       "DocumentSection": {
         "type": "object",
         "properties": {
           "key": {
-            "$ref": "#/components/schemas/V2DocumentSectionKeyEnum"
+            "type": "string"
           },
           "text": {
             "type": "string"
@@ -1581,18 +2016,22 @@
         "properties": {
           "sectionIds": {
             "type": "array",
+            "description": "An array of section IDs.",
             "items": {
               "$ref": "#/components/schemas/UUID"
             }
           },
           "outputLanguage": {
-            "type": "string"
+            "type": "string",
+            "description": "The language in which the document will be generated."
           },
           "documentName": {
-            "type": "string"
+            "type": "string",
+            "description": "The name of the document."
           },
           "additionalInstructions": {
-            "type": "string"
+            "type": "string",
+            "description": "Any additional instructions to be considered during document generation."
           }
         }
       },
@@ -1933,12 +2372,45 @@
           "additionalCodes": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/AdditionalCode"
+              "type": "string"
             }
           }
         }
       },
-      "RequestCodesCreate": {
+      "RequestCodesInsert": {
+        "type": "object",
+        "properties": {
+          "codes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "name",
+                "system",
+                "description"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "W0231"
+                },
+                "system": {
+                  "type": "string",
+                  "example": "ICD-10"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "subsetName": {
+                  "type": "string",
+                  "example": "orsakskoder"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RequestCodesPredict": {
         "type": "object",
         "required": [
           "modelName",
@@ -1963,9 +2435,6 @@
       },
       "RequestCodesUpdate": {
         "type": "object",
-        "required": [
-          "finalCodes"
-        ],
         "properties": {
           "finalCodes": {
             "type": "array",
@@ -1979,7 +2448,7 @@
                 "additionalCodes": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/AdditionalCode"
+                    "type": "string"
                   }
                 }
               }
@@ -1995,20 +2464,40 @@
         ],
         "properties": {
           "context": {
-            "type": "object",
-            "$ref": "#/components/schemas/DocumentContext"
+            "type": "array",
+            "description": "An array of context objects.",
+            "items": {
+              "type": "object",
+              "required": [
+                "type",
+                "data"
+              ],
+              "properties": {
+                "type": {
+                  "description": "The type of context data.",
+                  "$ref": "#/components/schemas/V2DocumentContextTypeEnum"
+                },
+                "data": {
+                  "description": "The actual data, which can be a Fact[], a transcript, or a string.",
+                  "$ref": "#/components/schemas/DocumentContextData"
+                }
+              }
+            }
           },
           "templateId": {
             "type": "array",
+            "description": "The ID of the template that informs on what kind of document is to be generated.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "template": {
             "type": "object",
+            "description": "Template details if the template should be generated during the request. Overrides templateId.",
             "$ref": "#/components/schemas/DocumentTemplate"
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "An optional name for the document."
           },
           "modelName": {
             "type": "string",
@@ -2016,18 +2505,32 @@
           }
         }
       },
+      "RequestDocumentSectionUpdate": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          }
+        }
+      },
       "RequestDocumentUpdate": {
         "type": "object",
         "properties": {
-          "documentId": {
-            "type": "array",
-            "items": {},
-            "$ref": "#/components/schemas/UUID"
-          },
           "sections": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/DocumentSection"
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
@@ -2187,7 +2690,6 @@
       "RequestInteractionCreate": {
         "type": "object",
         "required": [
-          "assignedUserId",
           "encounter"
         ],
         "properties": {
@@ -2441,10 +2943,21 @@
           }
         }
       },
+      "ResponseCodesInsert": {
+        "type": "object",
+        "properties": {
+          "codesInserted": {
+            "type": "integer"
+          },
+          "codesUpdated": {
+            "type": "integer"
+          }
+        }
+      },
       "ResponseCodesList": {
         "type": "object",
         "properties": {
-          "data": {
+          "codes": {
             "type": "array",
             "items": {
               "type": "object",
@@ -2535,41 +3048,6 @@
           }
         }
       },
-      "ResponseDocumentCreate": {
-        "type": "object",
-        "properties": {
-          "isStream": {
-            "type": "boolean"
-          },
-          "documentId": {
-            "type": "array",
-            "items": {},
-            "$ref": "#/components/schemas/UUID"
-          },
-          "documentName": {
-            "type": "string"
-          },
-          "templateId": {
-            "type": "array",
-            "items": {},
-            "$ref": "#/components/schemas/UUID"
-          },
-          "sections": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "key": {
-                  "$ref": "#/components/schemas/V2DocumentSectionKeyEnum"
-                },
-                "text": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      },
       "ResponseDocumentList": {
         "type": "object",
         "properties": {
@@ -2606,7 +3084,7 @@
               "type": "object",
               "properties": {
                 "key": {
-                  "$ref": "#/components/schemas/V2DocumentSectionKeyEnum"
+                  "type": "string"
                 },
                 "text": {
                   "type": "string"
@@ -2830,6 +3308,11 @@
       "ResponseInteraction": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "array",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
+          },
           "assignedUserId": {
             "type": "array",
             "items": {},
@@ -2897,6 +3380,11 @@
             "items": {
               "type": "object",
               "properties": {
+                "id": {
+                  "type": "array",
+                  "items": {},
+                  "$ref": "#/components/schemas/UUID"
+                },
                 "assignedUserId": {
                   "type": "array",
                   "items": {},
@@ -3175,25 +3663,15 @@
         "items": {},
         "format": "uuid"
       },
-      "V2DocumentContext": {
+      "V2DocumentContextType": {
         "type": "string"
       },
-      "V2DocumentContextEnum": {
+      "V2DocumentContextTypeEnum": {
         "type": "string",
         "enum": [
           "fact",
           "transcript",
           "string"
-        ]
-      },
-      "V2DocumentSectionKey": {
-        "type": "string"
-      },
-      "V2DocumentSectionKeyEnum": {
-        "type": "string",
-        "enum": [
-          "medical_history",
-          "observations"
         ]
       },
       "V2EncounterStatus": {
@@ -3255,57 +3733,6 @@
           "system",
           "user"
         ]
-      },
-      "code.ResponseCodesList": {
-        "type": "object",
-        "properties": {
-          "data": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "system": {
-                  "type": "string",
-                  "example": "ICD-10"
-                },
-                "code": {
-                  "type": "string",
-                  "example": "T933"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "state": {
-                  "type": "object",
-                  "$ref": "#/components/schemas/CodesState"
-                },
-                "additionalCodes": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "subsetName": {
-                        "type": "string",
-                        "example": "orsakskoder"
-                      },
-                      "code": {
-                        "type": "string",
-                        "example": "W0231"
-                      },
-                      "description": {
-                        "type": "string"
-                      },
-                      "state": {
-                        "type": "object",
-                        "$ref": "#/components/schemas/CodesState"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
       },
       "copilotCommon.ErrorResponse": {
         "type": "object",
