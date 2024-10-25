@@ -93,7 +93,7 @@
       },
       "post": {
         "responses": {
-          "200": {
+          "201": {
             "description": " ",
             "content": {
               "application/json": {
@@ -103,7 +103,27 @@
               }
             }
           },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
           "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
             "description": "RFC9457",
             "content": {
               "application/json": {
@@ -447,7 +467,7 @@
           "facts"
         ],
         "summary": "Create Facts",
-        "description": " When creating a Fact if the interaction status = \u201cin progress\u201d then the Client will receive the newly created fact over the WebSocket.",
+        "description": " When creating a Fact if the interaction status = \"in progress\" then the Client will receive the newly created fact over the WebSocket.",
         "parameters": [
           {
             "name": "id",
@@ -533,7 +553,7 @@
           "facts"
         ],
         "summary": "Update Fact",
-        "description": " When updating a `Fact` if the interaction `status = \u201cin progress\u201d` then the Client will receive the updated fact over the WebSocket. To discard a fact, simply set `discarded = true`",
+        "description": " When updating a `Fact` if the interaction `status = \"in progress\"` then the Client will receive the updated fact over the WebSocket. To discard a fact, simply set `discarded = true`",
         "parameters": [
           {
             "name": "id",
@@ -582,12 +602,43 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
           "documents"
         ],
         "summary": "List Documents",
+        "description": " List Documents",
         "parameters": [
           {
             "name": "id",
@@ -604,12 +655,42 @@
       },
       "post": {
         "responses": {
-          "200": {
+          "201": {
             "description": " ",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ResponseDocumentCreate"
+                  "$ref": "#/components/schemas/ResponseDocumentRead"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -618,8 +699,8 @@
         "tags": [
           "documents"
         ],
-        "summary": "Create Document",
-        "description": " Generate document.",
+        "summary": "Generate Document",
+        "description": " Generate Document.",
         "parameters": [
           {
             "name": "id",
@@ -668,12 +749,43 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
           "documents"
         ],
         "summary": "Get Document",
+        "description": " Get Document.",
         "parameters": [
           {
             "name": "id",
@@ -718,6 +830,36 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseDocumentRead"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -775,12 +917,43 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
           "codes"
         ],
-        "summary": "List Codes",
+        "summary": "List codes",
+        "description": " Get all codes associated with an interaction.",
         "parameters": [
           {
             "name": "id",
@@ -806,12 +979,43 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
           "codes"
         ],
-        "summary": "Predict Codes",
+        "summary": "Generate Codes",
+        "description": " Generate Codes.",
         "parameters": [
           {
             "name": "id",
@@ -829,7 +1033,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RequestCodesCreate"
+                "$ref": "#/components/schemas/RequestCodesPredict"
               }
             }
           },
@@ -847,12 +1051,43 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           }
         },
         "tags": [
           "codes"
         ],
-        "summary": "Select Codes",
+        "summary": "Select codes",
+        "description": " Mark provided codes as selected.",
         "parameters": [
           {
             "name": "id",
@@ -887,6 +1122,36 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ResponseRecordingList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -980,7 +1245,7 @@
                   "Recording": {
                     "type": "string",
                     "format": "binary",
-                    "description": "binary"
+                    "description": "Binary content of the recording file."
                   }
                 }
               }
@@ -994,11 +1259,51 @@
       "get": {
         "responses": {
           "200": {
-            "description": "binary",
+            "description": "Binary content of the recording file.",
             "content": {
               "text/plain": {
                 "schema": {
                   "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -1041,6 +1346,36 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/NoContent"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -1554,22 +1889,36 @@
         "properties": {
           "type": {
             "description": "The type of context data.",
-            "$ref": "#/components/schemas/V2DocumentContextEnum"
+            "$ref": "#/components/schemas/V2DocumentContextTypeEnum"
           },
           "data": {
-            "type": "array",
-            "description": "The actual data, which can be an array of Fact, a transcript, or a string.",
-            "items": {
-              "type": "object"
-            }
+            "description": "The actual data, which can be a Fact[], a transcript, or a string.",
+            "$ref": "#/components/schemas/DocumentContextData"
           }
         }
+      },
+      "DocumentContextData": {
+        "oneOf": [
+          {
+            "title": "Array of facts",
+            "type": "array",
+            "$ref": "#/components/schemas/RequestFactCreate"
+          },
+          {
+            "title": "Transcript",
+            "type": "array",
+            "$ref": "#/components/schemas/Transcript"
+          },
+          {
+            "type": "string"
+          }
+        ]
       },
       "DocumentSection": {
         "type": "object",
         "properties": {
           "key": {
-            "$ref": "#/components/schemas/V2DocumentSectionKeyEnum"
+            "type": "string"
           },
           "text": {
             "type": "string"
@@ -1581,18 +1930,22 @@
         "properties": {
           "sectionIds": {
             "type": "array",
+            "description": "An array of section IDs.",
             "items": {
               "$ref": "#/components/schemas/UUID"
             }
           },
           "outputLanguage": {
-            "type": "string"
+            "type": "string",
+            "description": "The language in which the document will be generated."
           },
           "documentName": {
-            "type": "string"
+            "type": "string",
+            "description": "The name of the document."
           },
           "additionalInstructions": {
-            "type": "string"
+            "type": "string",
+            "description": "Any additional instructions to be considered during document generation."
           }
         }
       },
@@ -1690,7 +2043,7 @@
             "$ref": "#/components/schemas/InteractionModeTypeEnum"
           },
           "templateId": {
-            "type": "array",
+            "type": "string",
             "description": "The template the live documentation need to use.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -1729,13 +2082,13 @@
             "description": "Text snippet for the mention."
           },
           "documentId": {
-            "type": "array",
+            "type": "string",
             "description": "The document ID if applicable.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "utteranceId": {
-            "type": "array",
+            "type": "string",
             "description": "The utterance ID if applicable.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -1917,7 +2270,7 @@
             }
           },
           "taskId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           }
@@ -1933,12 +2286,12 @@
           "additionalCodes": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/AdditionalCode"
+              "type": "string"
             }
           }
         }
       },
-      "RequestCodesCreate": {
+      "RequestCodesPredict": {
         "type": "object",
         "required": [
           "modelName",
@@ -1963,9 +2316,6 @@
       },
       "RequestCodesUpdate": {
         "type": "object",
-        "required": [
-          "finalCodes"
-        ],
         "properties": {
           "finalCodes": {
             "type": "array",
@@ -1979,7 +2329,7 @@
                 "additionalCodes": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/AdditionalCode"
+                    "type": "string"
                   }
                 }
               }
@@ -1995,20 +2345,40 @@
         ],
         "properties": {
           "context": {
-            "type": "object",
-            "$ref": "#/components/schemas/DocumentContext"
+            "type": "array",
+            "description": "An array of context objects.",
+            "items": {
+              "type": "object",
+              "required": [
+                "type",
+                "data"
+              ],
+              "properties": {
+                "type": {
+                  "description": "The type of context data.",
+                  "$ref": "#/components/schemas/V2DocumentContextTypeEnum"
+                },
+                "data": {
+                  "description": "The actual data, which can be a Fact[], a transcript, or a string.",
+                  "$ref": "#/components/schemas/DocumentContextData"
+                }
+              }
+            }
           },
           "templateId": {
-            "type": "array",
+            "type": "string",
+            "description": "The ID of the template that informs on what kind of document is to be generated.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "template": {
             "type": "object",
+            "description": "Template details if the template should be generated during the request. Overrides templateId.",
             "$ref": "#/components/schemas/DocumentTemplate"
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "An optional name for the document."
           },
           "modelName": {
             "type": "string",
@@ -2016,18 +2386,32 @@
           }
         }
       },
+      "RequestDocumentSectionUpdate": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          }
+        }
+      },
       "RequestDocumentUpdate": {
         "type": "object",
         "properties": {
-          "documentId": {
-            "type": "array",
-            "items": {},
-            "$ref": "#/components/schemas/UUID"
-          },
           "sections": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/DocumentSection"
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
@@ -2187,12 +2571,11 @@
       "RequestInteractionCreate": {
         "type": "object",
         "required": [
-          "assignedUserId",
           "encounter"
         ],
         "properties": {
           "assignedUserId": {
-            "type": "array",
+            "type": "string",
             "description": "A unique identifier for the medical professional.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -2229,7 +2612,7 @@
         "type": "object",
         "properties": {
           "assignedUserId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -2364,7 +2747,7 @@
         ],
         "properties": {
           "recordingId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -2444,7 +2827,7 @@
       "ResponseCodesList": {
         "type": "object",
         "properties": {
-          "data": {
+          "codes": {
             "type": "array",
             "items": {
               "type": "object",
@@ -2535,41 +2918,6 @@
           }
         }
       },
-      "ResponseDocumentCreate": {
-        "type": "object",
-        "properties": {
-          "isStream": {
-            "type": "boolean"
-          },
-          "documentId": {
-            "type": "array",
-            "items": {},
-            "$ref": "#/components/schemas/UUID"
-          },
-          "documentName": {
-            "type": "string"
-          },
-          "templateId": {
-            "type": "array",
-            "items": {},
-            "$ref": "#/components/schemas/UUID"
-          },
-          "sections": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "key": {
-                  "$ref": "#/components/schemas/V2DocumentSectionKeyEnum"
-                },
-                "text": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      },
       "ResponseDocumentList": {
         "type": "object",
         "properties": {
@@ -2585,7 +2933,7 @@
         "type": "object",
         "properties": {
           "documentId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -2593,7 +2941,7 @@
             "type": "string"
           },
           "templateId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -2606,7 +2954,7 @@
               "type": "object",
               "properties": {
                 "key": {
-                  "$ref": "#/components/schemas/V2DocumentSectionKeyEnum"
+                  "type": "string"
                 },
                 "text": {
                   "type": "string"
@@ -2620,7 +2968,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -2631,7 +2979,7 @@
             "type": "string"
           },
           "groupId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -2667,7 +3015,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -2679,7 +3027,7 @@
             "example": "Others"
           },
           "groupId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -2722,7 +3070,7 @@
               "type": "object",
               "properties": {
                 "id": {
-                  "type": "array",
+                  "type": "string",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
@@ -2734,7 +3082,7 @@
                   "example": "Others"
                 },
                 "groupId": {
-                  "type": "array",
+                  "type": "string",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
@@ -2766,7 +3114,7 @@
               "type": "object",
               "properties": {
                 "id": {
-                  "type": "array",
+                  "type": "string",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
@@ -2777,7 +3125,7 @@
                   "type": "string"
                 },
                 "groupId": {
-                  "type": "array",
+                  "type": "string",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
@@ -2830,8 +3178,13 @@
       "ResponseInteraction": {
         "type": "object",
         "properties": {
+          "id": {
+            "type": "string",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
+          },
           "assignedUserId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -2880,7 +3233,7 @@
         "type": "object",
         "properties": {
           "interactionId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -2897,8 +3250,13 @@
             "items": {
               "type": "object",
               "properties": {
+                "id": {
+                  "type": "string",
+                  "items": {},
+                  "$ref": "#/components/schemas/UUID"
+                },
                 "assignedUserId": {
-                  "type": "array",
+                  "type": "string",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
@@ -2972,13 +3330,13 @@
             "description": "Text snippet for the mention."
           },
           "documentId": {
-            "type": "array",
+            "type": "string",
             "description": "The document ID if applicable.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "utteranceId": {
-            "type": "array",
+            "type": "string",
             "description": "The utterance ID if applicable.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -3020,7 +3378,7 @@
         "type": "object",
         "properties": {
           "recordingId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           }
@@ -3050,7 +3408,7 @@
         "type": "object",
         "properties": {
           "transcriptId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -3175,25 +3533,15 @@
         "items": {},
         "format": "uuid"
       },
-      "V2DocumentContext": {
+      "V2DocumentContextType": {
         "type": "string"
       },
-      "V2DocumentContextEnum": {
+      "V2DocumentContextTypeEnum": {
         "type": "string",
         "enum": [
           "fact",
           "transcript",
           "string"
-        ]
-      },
-      "V2DocumentSectionKey": {
-        "type": "string"
-      },
-      "V2DocumentSectionKeyEnum": {
-        "type": "string",
-        "enum": [
-          "medical_history",
-          "observations"
         ]
       },
       "V2EncounterStatus": {
@@ -3256,57 +3604,6 @@
           "user"
         ]
       },
-      "code.ResponseCodesList": {
-        "type": "object",
-        "properties": {
-          "data": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "system": {
-                  "type": "string",
-                  "example": "ICD-10"
-                },
-                "code": {
-                  "type": "string",
-                  "example": "T933"
-                },
-                "description": {
-                  "type": "string"
-                },
-                "state": {
-                  "type": "object",
-                  "$ref": "#/components/schemas/CodesState"
-                },
-                "additionalCodes": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "subsetName": {
-                        "type": "string",
-                        "example": "orsakskoder"
-                      },
-                      "code": {
-                        "type": "string",
-                        "example": "W0231"
-                      },
-                      "description": {
-                        "type": "string"
-                      },
-                      "state": {
-                        "type": "object",
-                        "$ref": "#/components/schemas/CodesState"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "copilotCommon.ErrorResponse": {
         "type": "object",
         "properties": {
@@ -3334,7 +3631,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -3346,7 +3643,7 @@
             "example": "Others"
           },
           "groupId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -3375,7 +3672,7 @@
               "type": "object",
               "properties": {
                 "id": {
-                  "type": "array",
+                  "type": "string",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
@@ -3386,7 +3683,7 @@
                   "type": "string"
                 },
                 "groupId": {
-                  "type": "array",
+                  "type": "string",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
@@ -3437,7 +3734,7 @@
         "type": "object",
         "properties": {
           "transcriptId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -3467,7 +3764,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -3497,7 +3794,7 @@
         "type": "object",
         "properties": {
           "evidenceId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -3514,7 +3811,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -3522,7 +3819,7 @@
             "type": "string"
           },
           "sectionId": {
-            "type": "array",
+            "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
