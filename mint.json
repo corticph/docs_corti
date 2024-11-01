@@ -29,13 +29,17 @@
     {
       "name": "API Reference",
       "url": "api-reference"
+    },
+    {
+      "name": "Updates",
+      "url": "release-notes"
     }
   ],
   "anchors": [
 
     {
       "name": "API Reference",
-      "openapi": "/api-reference/swagger-spec.json",
+      "openapi": "/api-reference/workflowsagger-spec.json",
       "url": "api-reference",
       "icon": "square-terminal"
     }
@@ -54,12 +58,6 @@
         "get_started/authentication",
         "get_started/workflows"
       ]
-    },
-    {
-      "group": "API Documentation",
-      "pages": [
-        "api-reference"    
-          ]
     }
   ],
   "footerSocials": {
