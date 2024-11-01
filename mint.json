@@ -39,7 +39,7 @@
 
     {
       "name": "API Reference",
-      "openapi": "/api-reference/workflowsagger-spec.json",
+      "openapi": "/api-reference/swagger-spec.json",
       "url": "api-reference",
       "icon": "square-terminal"
     }
