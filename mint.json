@@ -29,6 +29,10 @@
     {
       "name": "API Reference",
       "url": "api-reference"
+    },
+    {
+      "name": "Updates",
+      "url": "release-notes"
     }
   ],
   "anchors": [
@@ -56,10 +60,11 @@
       ]
     },
     {
-      "group": "API Documentation",
+      "group": "Updates",
       "pages": [
-        "api-reference"    
-          ]
+        "release-notes/overview",
+        "release-notes/api-updates"
+      ]
     }
   ],
   "footerSocials": {
