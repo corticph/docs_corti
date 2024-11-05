@@ -58,6 +58,13 @@
         "get_started/authentication",
         "get_started/workflows"
       ]
+    },
+    {
+      "group": "Updates",
+      "pages": [
+        "release-notes/overview",
+        "release-notes/api-updates"
+      ]
     }
   ],
   "footerSocials": {
