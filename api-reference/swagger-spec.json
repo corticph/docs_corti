@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "https://copilot.{region}.corti.app/",
+      "url": "https://copilot.{region}.corti.app/v2/",
       "variables": {
         "region": {
           "default": "us",
@@ -19,7 +19,7 @@
     }
   ],
   "paths": {
-    "/v2/interactions/": {
+    "/interactions/": {
       "get": {
         "responses": {
           "200": {
@@ -151,7 +151,7 @@
         }
       }
     },
-    "/v2/interactions/{id}": {
+    "/interactions/{id}": {
       "get": {
         "responses": {
           "200": {
@@ -289,7 +289,7 @@
         ]
       }
     },
-    "/v2/interactions/{id}/stream": {
+    "/interactions/{id}/stream": {
       "get": {
         "responses": {
           "101": {
@@ -337,7 +337,7 @@
         ],
         "servers": [
           {
-            "url": "wss://copilot.{region}.corti.app/",
+            "url": "wss://copilot.{region}.corti.app/v2/",
             "variables": {
               "region": {
                 "default": "us",
@@ -418,7 +418,7 @@
         ]
       }
     },
-    "/v2/interactions/{id}/facts": {
+    "/interactions/{id}/facts": {
       "get": {
         "responses": {
           "200": {
@@ -535,7 +535,7 @@
         }
       }
     },
-    "/v2/interactions/{id}/facts/{factId}": {
+    "/interactions/{id}/facts/{factId}": {
       "patch": {
         "responses": {
           "200": {
@@ -590,7 +590,7 @@
         }
       }
     },
-    "/v2/interactions/{id}/documents": {
+    "/interactions/{id}/documents": {
       "get": {
         "responses": {
           "200": {
@@ -737,7 +737,7 @@
         }
       }
     },
-    "/v2/interactions/{id}/documents/{documentId}": {
+    "/interactions/{id}/documents/{documentId}": {
       "get": {
         "responses": {
           "200": {
@@ -903,9 +903,81 @@
           },
           "required": true
         }
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoContent"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "documents"
+        ],
+        "summary": "Delete Document",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          },
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The document ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The document ID representing the context for the request."
+            }
+          }
+        ]
       }
     },
-    "/v2/interactions/{id}/codes": {
+    "/interactions/{id}/codes": {
       "get": {
         "responses": {
           "200": {
@@ -1113,7 +1185,7 @@
         }
       }
     },
-    "/v2/interactions/{id}/recordings": {
+    "/interactions/{id}/recordings": {
       "get": {
         "responses": {
           "200": {
@@ -1255,7 +1327,7 @@
         }
       }
     },
-    "/v2/interactions/{id}/recordings/{recordingId}": {
+    "/interactions/{id}/recordings/{recordingId}": {
       "get": {
         "responses": {
           "200": {
@@ -1411,51 +1483,7 @@
         ]
       }
     },
-    "/v2/interactions/{id}/transcripts": {
-      "post": {
-        "responses": {
-          "200": {
-            "description": " ",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseTranscriptCreate"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "transcripts"
-        ],
-        "summary": "Transcribe Audio",
-        "description": " Time-out for this endpoint is 10 minutes.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "The interaction ID representing the context for the request.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The interaction ID representing the context for the request."
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestTranscriptCreate"
-              }
-            }
-          },
-          "required": true
-        }
-      }
-    },
-    "/v2/interactions/{id}/transcripts/{transcriptId}": {
+    "/interactions/{id}/transcripts/{transcriptId}": {
       "get": {
         "responses": {
           "200": {
@@ -1497,6 +1525,77 @@
             }
           }
         ]
+      }
+    },
+    "/v2/interactions/{id}/transcripts": {
+      "post": {
+        "responses": {
+          "201": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseTranscriptCreate"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "transcripts"
+        ],
+        "summary": "Create Transcript",
+        "description": " Creates a new transcript",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestTranscriptCreate"
+              }
+            }
+          },
+          "required": true
+        }
       }
     },
     "/private/v2/align": {
@@ -1719,7 +1818,7 @@
         }
       }
     },
-    "/v2/tools/mentions": {
+    "/tools/mentions": {
       "post": {
         "responses": {
           "200": {
@@ -1750,7 +1849,7 @@
         }
       }
     },
-    "/v2/tools/question-prompts": {
+    "/tools/question-prompts": {
       "post": {
         "responses": {
           "200": {
@@ -1892,7 +1991,7 @@
             "$ref": "#/components/schemas/V2DocumentContextTypeEnum"
           },
           "data": {
-            "description": "The actual data, which can be a Fact[], a transcript, or a string.",
+            "description": "The actual data, which can be an array of facts, a transcript, or a string.",
             "$ref": "#/components/schemas/DocumentContextData"
           }
         }
@@ -1900,16 +1999,19 @@
       "DocumentContextData": {
         "oneOf": [
           {
-            "title": "Array of facts",
+            "title": "Facts",
             "type": "array",
-            "$ref": "#/components/schemas/RequestFactCreate"
+            "items": {
+              "$ref": "#/components/schemas/RequestFactCreate"
+            }
           },
           {
             "title": "Transcript",
-            "type": "array",
+            "type": "object",
             "$ref": "#/components/schemas/Transcript"
           },
           {
+            "title": "Text",
             "type": "string"
           }
         ]
@@ -1920,8 +2022,14 @@
           "key": {
             "type": "string"
           },
+          "name": {
+            "type": "string"
+          },
           "text": {
             "type": "string"
+          },
+          "sort": {
+            "type": "integer"
           }
         }
       },
@@ -1935,9 +2043,12 @@
               "$ref": "#/components/schemas/UUID"
             }
           },
-          "outputLanguage": {
-            "type": "string",
-            "description": "The language in which the document will be generated."
+          "sectionKeys": {
+            "type": "array",
+            "description": "An array of section keys.",
+            "items": {
+              "type": "string"
+            }
           },
           "documentName": {
             "type": "string",
@@ -2341,7 +2452,9 @@
         "type": "object",
         "required": [
           "context",
-          "templateId"
+          "templateId",
+          "templateKey",
+          "outputLanguage"
         ],
         "properties": {
           "context": {
@@ -2359,7 +2472,7 @@
                   "$ref": "#/components/schemas/V2DocumentContextTypeEnum"
                 },
                 "data": {
-                  "description": "The actual data, which can be a Fact[], a transcript, or a string.",
+                  "description": "The actual data, which can be an array of facts, a transcript, or a string.",
                   "$ref": "#/components/schemas/DocumentContextData"
                 }
               }
@@ -2370,6 +2483,10 @@
             "description": "The ID of the template that informs on what kind of document is to be generated.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
+          },
+          "templateKey": {
+            "type": "string",
+            "description": "The key of the template that informs on what kind of document is to be generated."
           },
           "template": {
             "type": "object",
@@ -2383,6 +2500,10 @@
           "modelName": {
             "type": "string",
             "example": "\"model_name (Latest)\" | \"model_name_version\""
+          },
+          "outputLanguage": {
+            "type": "string",
+            "description": "The language in which the document will be generated. (BCP-47)"
           }
         }
       },
@@ -2400,6 +2521,10 @@
       "RequestDocumentUpdate": {
         "type": "object",
         "properties": {
+          "name": {
+            "type": "string",
+            "description": "An optional name for the document."
+          },
           "sections": {
             "type": "array",
             "items": {
@@ -2657,7 +2782,7 @@
             "type": "integer"
           },
           "role": {
-            "$ref": "#/components/schemas/V2ParticipantRoleEnum"
+            "$ref": "#/components/schemas/V2TranscriptParticipantRoleEnum"
           }
         }
       },
@@ -2940,10 +3065,8 @@
           "documentName": {
             "type": "string"
           },
-          "templateId": {
-            "type": "string",
-            "items": {},
-            "$ref": "#/components/schemas/UUID"
+          "templateRef": {
+            "type": "string"
           },
           "isStream": {
             "type": "boolean"
@@ -2956,8 +3079,14 @@
                 "key": {
                   "type": "string"
                 },
+                "name": {
+                  "type": "string"
+                },
                 "text": {
                   "type": "string"
+                },
+                "sort": {
+                  "type": "integer"
                 }
               }
             }
@@ -3348,6 +3477,40 @@
           }
         }
       },
+      "ResponseMetadataCreate": {
+        "type": "object",
+        "properties": {
+          "participantsRoles": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "channel": {
+                  "type": "integer",
+                  "description": "The audio channel associated with the participant."
+                },
+                "role": {
+                  "description": "The role of the participant (e.g., doctor, patient).",
+                  "$ref": "#/components/schemas/V2TranscriptParticipantRoleEnum"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ResponseParticipantCreate": {
+        "type": "object",
+        "properties": {
+          "channel": {
+            "type": "integer",
+            "description": "The audio channel associated with the participant."
+          },
+          "role": {
+            "description": "The role of the participant (e.g., doctor, patient).",
+            "$ref": "#/components/schemas/V2TranscriptParticipantRoleEnum"
+          }
+        }
+      },
       "ResponseQuery": {
         "type": "object",
         "properties": {
@@ -3412,9 +3575,15 @@
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
-          "transcript": {
+          "metadata": {
             "type": "object",
-            "$ref": "#/components/schemas/Transcript"
+            "$ref": "#/components/schemas/ResponseMetadataCreate"
+          },
+          "transcripts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Transcript"
+            }
           }
         }
       },
@@ -3492,7 +3661,7 @@
                   "type": "integer"
                 },
                 "role": {
-                  "$ref": "#/components/schemas/V2ParticipantRoleEnum"
+                  "$ref": "#/components/schemas/V2TranscriptParticipantRoleEnum"
                 }
               }
             }
@@ -3523,8 +3692,23 @@
       "Transcript": {
         "type": "object",
         "properties": {
+          "channel": {
+            "type": "integer"
+          },
+          "participant": {
+            "type": "integer"
+          },
           "text": {
-            "type": "string"
+            "type": "string",
+            "description": "phrase/utterance"
+          },
+          "start": {
+            "type": "number",
+            "description": "Start time for phrase/utterance"
+          },
+          "end": {
+            "type": "number",
+            "description": "End time for phrase/utterance"
           }
         }
       },
@@ -3539,7 +3723,7 @@
       "V2DocumentContextTypeEnum": {
         "type": "string",
         "enum": [
-          "fact",
+          "facts",
           "transcript",
           "string"
         ]
@@ -3583,9 +3767,6 @@
           "other"
         ]
       },
-      "V2ParticipantRole": {
-        "type": "string"
-      },
       "V2ParticipantRoleEnum": {
         "type": "string",
         "enum": [
@@ -3602,6 +3783,16 @@
           "core",
           "system",
           "user"
+        ]
+      },
+      "V2TranscriptParticipantRole": {
+        "type": "string"
+      },
+      "V2TranscriptParticipantRoleEnum": {
+        "type": "string",
+        "enum": [
+          "doctor",
+          "patient"
         ]
       },
       "copilotCommon.ErrorResponse": {
@@ -3730,19 +3921,8 @@
       "copilotModels.V2Source": {
         "type": "string"
       },
-      "transcription.ResponseTranscriptCreate": {
-        "type": "object",
-        "properties": {
-          "transcriptId": {
-            "type": "string",
-            "items": {},
-            "$ref": "#/components/schemas/UUID"
-          },
-          "transcript": {
-            "type": "object",
-            "$ref": "#/components/schemas/Transcript"
-          }
-        }
+      "copilotModels.V2TranscriptParticipantRole": {
+        "type": "string"
       },
       "uuid.UUID": {
         "type": "string",
