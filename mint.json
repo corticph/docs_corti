@@ -75,6 +75,11 @@
   "integrations": {
     "intercom": "y30epli4"
   },
+  "analytics": {
+    "gtm": {
+        "tagId": "GTM-MR3DSSF2"
+    }
+  },
   "feedback": {
 	"thumbsRating": true
   }
