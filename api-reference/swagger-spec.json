@@ -466,7 +466,7 @@
         "tags": [
           "facts"
         ],
-        "summary": "Create Facts",
+        "summary": "Add Facts",
         "description": " When creating a Fact if the interaction status = \"in progress\" then the Client will receive the newly created fact over the WebSocket.",
         "parameters": [
           {
@@ -543,7 +543,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ResponseFactCreate"
+                  "$ref": "#/components/schemas/ResponseFactUpdate"
                 }
               }
             }
@@ -1483,51 +1483,7 @@
         ]
       }
     },
-    "/interactions/{id}/transcripts/{transcriptId}": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": " ",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseTranscriptCreate"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "transcripts"
-        ],
-        "summary": "Get Transcript",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "The interaction ID representing the context for the request.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The interaction ID representing the context for the request."
-            }
-          },
-          {
-            "name": "transcriptId",
-            "in": "path",
-            "description": "The transcript ID representing the context for the request.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The transcript ID representing the context for the request."
-            }
-          }
-        ]
-      }
-    },
-    "/v2/interactions/{id}/transcripts": {
+    "/interactions/{id}/transcripts": {
       "post": {
         "responses": {
           "201": {
@@ -1586,6 +1542,19 @@
         ],
         "summary": "Create Transcript",
         "description": " Creates a new transcript",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1596,6 +1565,90 @@
           },
           "required": true
         }
+      }
+    },
+    "/interactions/{id}/transcripts/{transcriptId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseTranscriptCreate"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "transcripts"
+        ],
+        "summary": "Get Transcript",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          },
+          {
+            "name": "transcriptId",
+            "in": "path",
+            "description": "The transcript ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The transcript ID representing the context for the request."
+            }
+          }
+        ]
       }
     },
     "/private/v2/align": {
@@ -2002,7 +2055,7 @@
             "title": "Facts",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/RequestFactCreate"
+              "$ref": "#/components/schemas/FactContext"
             }
           },
           {
@@ -2140,6 +2193,25 @@
           },
           "instance": {
             "type": "string"
+          }
+        }
+      },
+      "FactContext": {
+        "type": "object",
+        "required": [
+          "text",
+          "source"
+        ],
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "group": {
+            "type": "string",
+            "example": "Others"
+          },
+          "source": {
+            "$ref": "#/components/schemas/V2SourceEnum"
           }
         }
       },
@@ -2589,8 +2661,7 @@
       "RequestFactCreate": {
         "type": "object",
         "required": [
-          "text",
-          "source"
+          "text"
         ],
         "properties": {
           "text": {
@@ -2619,10 +2690,11 @@
       },
       "RequestFactUpdate": {
         "type": "object",
+        "required": [
+          "text",
+          "source"
+        ],
         "properties": {
-          "isDiscarded": {
-            "type": "boolean"
-          },
           "text": {
             "type": "string"
           },
@@ -2632,6 +2704,9 @@
           },
           "source": {
             "$ref": "#/components/schemas/V2SourceEnum"
+          },
+          "isDiscarded": {
+            "type": "boolean"
           }
         }
       },
@@ -2646,8 +2721,7 @@
             "items": {
               "type": "object",
               "required": [
-                "text",
-                "source"
+                "text"
               ],
               "properties": {
                 "text": {
@@ -2885,7 +2959,7 @@
           "isMultichannel": {
             "type": "boolean"
           },
-          "isDiarization": {
+          "shouldDiarize": {
             "type": "boolean"
           },
           "participants": {
@@ -3057,12 +3131,12 @@
       "ResponseDocumentRead": {
         "type": "object",
         "properties": {
-          "documentId": {
+          "id": {
             "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
-          "documentName": {
+          "name": {
             "type": "string"
           },
           "templateRef": {
@@ -3118,8 +3192,21 @@
           "source": {
             "$ref": "#/components/schemas/V2SourceEnum"
           },
-          "lastUpdated": {
-            "type": "integer"
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAtTzOffset": {
+            "type": "string",
+            "example": "+00:00"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAtTzOffset": {
+            "type": "string",
+            "example": "+00:00"
           },
           "evidence": {
             "type": "array",
@@ -3187,6 +3274,50 @@
           },
           "quote": {
             "type": "string"
+          }
+        }
+      },
+      "ResponseFactUpdate": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
+          },
+          "text": {
+            "type": "string"
+          },
+          "group": {
+            "type": "string",
+            "example": "Others"
+          },
+          "groupId": {
+            "type": "string",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
+          },
+          "source": {
+            "$ref": "#/components/schemas/V2SourceEnum"
+          },
+          "isDiscarded": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAtTzOffset": {
+            "type": "string",
+            "example": "+00:00"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAtTzOffset": {
+            "type": "string",
+            "example": "+00:00"
           }
         }
       },
@@ -3264,8 +3395,21 @@
                 "source": {
                   "$ref": "#/components/schemas/V2SourceEnum"
                 },
-                "lastUpdated": {
-                  "type": "integer"
+                "createdAt": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "createdAtTzOffset": {
+                  "type": "string",
+                  "example": "+00:00"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "updatedAtTzOffset": {
+                  "type": "string",
+                  "example": "+00:00"
                 },
                 "evidence": {
                   "type": "array",
@@ -3815,97 +3959,6 @@
           },
           "instance": {
             "type": "string"
-          }
-        }
-      },
-      "copilotFact.ResponseFactCreate": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "items": {},
-            "$ref": "#/components/schemas/UUID"
-          },
-          "text": {
-            "type": "string"
-          },
-          "group": {
-            "type": "string",
-            "example": "Others"
-          },
-          "groupId": {
-            "type": "string",
-            "items": {},
-            "$ref": "#/components/schemas/UUID"
-          },
-          "source": {
-            "$ref": "#/components/schemas/V2SourceEnum"
-          },
-          "isDiscarded": {
-            "type": "boolean"
-          },
-          "updatedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updatedAtTzOffset": {
-            "type": "string",
-            "example": "+00:00"
-          }
-        }
-      },
-      "copilotFact.ResponseFactsList": {
-        "type": "object",
-        "properties": {
-          "facts": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "items": {},
-                  "$ref": "#/components/schemas/UUID"
-                },
-                "text": {
-                  "type": "string"
-                },
-                "group": {
-                  "type": "string"
-                },
-                "groupId": {
-                  "type": "string",
-                  "items": {},
-                  "$ref": "#/components/schemas/UUID"
-                },
-                "isDiscarded": {
-                  "type": "boolean"
-                },
-                "source": {
-                  "$ref": "#/components/schemas/V2SourceEnum"
-                },
-                "lastUpdated": {
-                  "type": "integer"
-                },
-                "evidence": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "type": {
-                        "type": "string"
-                      },
-                      "reference": {
-                        "type": "string"
-                      },
-                      "quote": {
-                        "type": "string"
-                      }
-                    }
-                  }
-                }
-              }
-            }
           }
         }
       },
