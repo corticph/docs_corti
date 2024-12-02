@@ -1483,7 +1483,7 @@
         ]
       }
     },
-    "/v2/interactions/{id}/transcripts": {
+    "/interactions/{id}/transcripts": {
       "post": {
         "responses": {
           "201": {
@@ -1542,6 +1542,19 @@
         ],
         "summary": "Create Transcript",
         "description": " Creates a new transcript",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1554,7 +1567,7 @@
         }
       }
     },
-    "/v2/interactions/{id}/transcripts/{transcriptId}": {
+    "/interactions/{id}/transcripts/{transcriptId}": {
       "get": {
         "responses": {
           "200": {
@@ -3118,12 +3131,12 @@
       "ResponseDocumentRead": {
         "type": "object",
         "properties": {
-          "documentId": {
+          "id": {
             "type": "string",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
-          "documentName": {
+          "name": {
             "type": "string"
           },
           "templateRef": {
