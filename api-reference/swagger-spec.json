@@ -491,48 +491,6 @@
           },
           "required": true
         }
-      },
-      "put": {
-        "responses": {
-          "200": {
-            "description": " ",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseFactsList"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "facts"
-        ],
-        "summary": "Generate Facts",
-        "description": " Generate facts from provided transcript, replacing existing ones.",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "The interaction ID representing the context for the request.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The interaction ID representing the context for the request."
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestFactGenerate"
-              }
-            }
-          },
-          "required": true
-        }
       }
     },
     "/interactions/{id}/facts/{factId}": {
@@ -2676,18 +2634,6 @@
           }
         }
       },
-      "RequestFactGenerate": {
-        "type": "object",
-        "required": [
-          "transcript"
-        ],
-        "properties": {
-          "transcript": {
-            "type": "object",
-            "$ref": "#/components/schemas/Transcript"
-          }
-        }
-      },
       "RequestFactUpdate": {
         "type": "object",
         "required": [
@@ -3726,7 +3672,27 @@
           "transcripts": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Transcript"
+              "type": "object",
+              "properties": {
+                "channel": {
+                  "type": "integer"
+                },
+                "participant": {
+                  "type": "integer"
+                },
+                "text": {
+                  "type": "string",
+                  "description": "phrase/utterance"
+                },
+                "start": {
+                  "type": "number",
+                  "description": "Start time for phrase/utterance"
+                },
+                "end": {
+                  "type": "number",
+                  "description": "End time for phrase/utterance"
+                }
+              }
             }
           }
         }
