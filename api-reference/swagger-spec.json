@@ -6,13 +6,14 @@
   },
   "servers": [
     {
-      "url": "https://api.{region}.corti.app/v2/",
+      "url": "https://api.{environment}.corti.app/v2/",
       "variables": {
-        "region": {
+        "environment": {
           "default": "us",
           "enum": [
             "us",
-            "eu"
+            "eu",
+            "beta-eu"
           ]
         }
       }
@@ -337,13 +338,14 @@
         ],
         "servers": [
           {
-            "url": "wss://api.{region}.corti.app/v2/",
+            "url": "wss://api.{environment}.corti.app/v2/",
             "variables": {
-              "region": {
+              "environment": {
                 "default": "us",
                 "enum": [
                   "us",
-                  "eu"
+                  "eu",
+                  "beta-eu"
                 ]
               }
             }
