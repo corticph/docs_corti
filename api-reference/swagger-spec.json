@@ -1,18 +1,19 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "Corti Copilot API",
+    "title": "Corti API",
     "version": "2.0.0"
   },
   "servers": [
     {
-      "url": "https://copilot.{region}.corti.app/v2/",
+      "url": "https://api.{environment}.corti.app/v2/",
       "variables": {
-        "region": {
-          "default": "us",
+        "environment": {
+          "default": "beta-eu",
           "enum": [
             "us",
-            "eu"
+            "eu",
+            "beta-eu"
           ]
         }
       }
@@ -337,13 +338,14 @@
         ],
         "servers": [
           {
-            "url": "wss://copilot.{region}.corti.app/v2/",
+            "url": "wss://api.{environment}.corti.app/v2/",
             "variables": {
-              "region": {
-                "default": "us",
+              "environment": {
+                "default": "beta-eu",
                 "enum": [
                   "us",
-                  "eu"
+                  "eu",
+                  "beta-eu"
                 ]
               }
             }
@@ -486,6 +488,48 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/RequestFactsCreate"
+              }
+            }
+          },
+          "required": true
+        }
+      },
+      "patch": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseFactsUpdate"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "facts"
+        ],
+        "summary": "Update Facts",
+        "description": " When updating a Facts if the interaction `status = \"in progress\"` then the Client will receive the updated fact over the WebSocket.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestFactsUpdate"
               }
             }
           },
@@ -1442,6 +1486,77 @@
       }
     },
     "/interactions/{id}/transcripts": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseTranscriptListAll"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "transcripts"
+        ],
+        "summary": "List Transcripts",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          }
+        ]
+      },
       "post": {
         "responses": {
           "201": {
@@ -1583,6 +1698,88 @@
           "transcripts"
         ],
         "summary": "Get Transcript",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          },
+          {
+            "name": "transcriptId",
+            "in": "path",
+            "description": "The transcript ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The transcript ID representing the context for the request."
+            }
+          }
+        ]
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "transcripts"
+        ],
+        "summary": "Delete Transcript",
         "parameters": [
           {
             "name": "id",
@@ -2539,12 +2736,21 @@
       },
       "RequestDocumentSectionUpdate": {
         "type": "object",
+        "required": [
+          "key"
+        ],
         "properties": {
           "key": {
             "type": "string"
           },
+          "name": {
+            "type": "string"
+          },
           "text": {
             "type": "string"
+          },
+          "sort": {
+            "type": "integer"
           }
         }
       },
@@ -2559,12 +2765,21 @@
             "type": "array",
             "items": {
               "type": "object",
+              "required": [
+                "key"
+              ],
               "properties": {
                 "key": {
                   "type": "string"
                 },
+                "name": {
+                  "type": "string"
+                },
                 "text": {
                   "type": "string"
+                },
+                "sort": {
+                  "type": "integer"
                 }
               }
             }
@@ -2682,6 +2897,61 @@
                 }
               }
             }
+          }
+        }
+      },
+      "RequestFactsUpdate": {
+        "type": "object",
+        "required": [
+          "facts"
+        ],
+        "properties": {
+          "facts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "factId"
+              ],
+              "properties": {
+                "factId": {
+                  "type": "string",
+                  "items": {},
+                  "$ref": "#/components/schemas/UUID"
+                },
+                "isDiscarded": {
+                  "type": "boolean"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "group": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "RequestFactsUpdateSingle": {
+        "type": "object",
+        "required": [
+          "factId"
+        ],
+        "properties": {
+          "factId": {
+            "type": "string",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
+          },
+          "isDiscarded": {
+            "type": "boolean"
+          },
+          "text": {
+            "type": "string"
+          },
+          "group": {
+            "type": "string"
           }
         }
       },
@@ -3379,6 +3649,102 @@
           }
         }
       },
+      "ResponseFactsUpdate": {
+        "type": "object",
+        "properties": {
+          "facts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "items": {},
+                  "$ref": "#/components/schemas/UUID"
+                },
+                "text": {
+                  "type": "string"
+                },
+                "group": {
+                  "type": "string",
+                  "example": "Others"
+                },
+                "groupId": {
+                  "type": "string",
+                  "items": {},
+                  "$ref": "#/components/schemas/UUID"
+                },
+                "source": {
+                  "$ref": "#/components/schemas/V2SourceEnum"
+                },
+                "isDiscarded": {
+                  "type": "boolean"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "createdAtTzOffset": {
+                  "type": "string",
+                  "example": "+00:00"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "updatedAtTzOffset": {
+                  "type": "string",
+                  "example": "+00:00"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ResponseFactsUpdateSingle": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
+          },
+          "text": {
+            "type": "string"
+          },
+          "group": {
+            "type": "string",
+            "example": "Others"
+          },
+          "groupId": {
+            "type": "string",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
+          },
+          "source": {
+            "$ref": "#/components/schemas/V2SourceEnum"
+          },
+          "isDiscarded": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "createdAtTzOffset": {
+            "type": "string",
+            "example": "+00:00"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAtTzOffset": {
+            "type": "string",
+            "example": "+00:00"
+          }
+        }
+      },
       "ResponseGuidelines": {
         "type": "object",
         "properties": {
@@ -3694,6 +4060,40 @@
                 }
               }
             }
+          }
+        }
+      },
+      "ResponseTranscriptListAll": {
+        "type": "object",
+        "properties": {
+          "transcripts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "transcriptId": {
+                  "type": "string",
+                  "items": {},
+                  "$ref": "#/components/schemas/UUID"
+                },
+                "transcriptSample": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ResponseTranscriptListAllSingle": {
+        "type": "object",
+        "properties": {
+          "transcriptId": {
+            "type": "string",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
+          },
+          "transcriptSample": {
+            "type": "string"
           }
         }
       },
