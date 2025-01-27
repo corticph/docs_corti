@@ -5,26 +5,46 @@
     "dark": "/logo/corti_dark.svg",
     "light": "/logo/corti_light.svg"
   },
-  "favicon": "/logo/favicon-docs.png",
+  "favicon": "/logo/favicon-docs.svg",
+  "theme": "venus",
+  "layout": "topnav",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "primary": "#A55639",
+    "light": "#A55639",
+    "dark": "#C26E4F",
+    "background": {
+      "light": "#FFFFFF",
+      "dark": "#000000"
+    },
     "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
+      "from": "#A55639",
+      "to": "#C26E4F"
+    }
+  },
+  "sidebar": {
+    "items": "card"
+  },
+
+  "font": {
+    "headings": {
+      "family": "Inter",
+      "weight": 600
+    },
+    "body": {
+      "family": "Inter",
+      "weight": 400
     }
   },
   "topbarLinks": [
     {
       "name": "Support",
       "url": "https://help.corti.ai"
-    },
-    {
-      "name": "Legacy Documentation",
-      "url": "https://docs-legacy.corti.ai"
     }
   ],
+  "topbarCtaButton": {
+    "name": "Get Started",
+    "url": "https://www.corti.ai/"
+  },
   "tabs": [
     {
       "name": "API Reference",
@@ -36,7 +56,6 @@
     }
   ],
   "anchors": [
-
     {
       "name": "API Reference",
       "openapi": "/api-reference/swagger-spec.json",
@@ -47,40 +66,32 @@
   "navigation": [
     {
       "group": "About Corti API",
-      "pages": [
-        "about/introduction",
-        "about/ai_platform"
-      ]
+      "pages": ["about/introduction", "about/ai_platform"]
     },
     {
       "group": "Get Started",
-      "pages": [
-        "get_started/authentication",
-        "get_started/workflows"
-      ]
+      "pages": ["get_started/authentication", "get_started/workflows"]
     },
     {
       "group": "Updates",
-      "pages": [
-        "release-notes/overview",
-        "release-notes/api-updates"
-      ]
+      "pages": ["release-notes/overview", "release-notes/api-updates"]
     }
   ],
-  "footerSocials": {
-    "x": "https://x.com/corti_ai",
-    "github": "https://github.com/corticph",
-    "linkedin": "https://www.linkedin.com/company/corti"
-  },
+    "footerSocials": {
+      "website": "https://www.corti.ai",
+      "x": "https://x.com/corti_ai",
+      "github": "https://github.com/corticph",
+      "linkedin": "https://www.linkedin.com/company/corti"
+    },
   "integrations": {
     "intercom": "y30epli4"
   },
   "analytics": {
     "gtm": {
-        "tagId": "GTM-MR3DSSF2"
+      "tagId": "GTM-MR3DSSF2"
     }
   },
   "feedback": {
-	"thumbsRating": true
+    "thumbsRating": true
   }
 }
