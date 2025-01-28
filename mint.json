@@ -70,7 +70,7 @@
     },
     {
       "group": "Get Started",
-      "pages": ["get_started/authentication", "get_started/workflows"]
+      "pages": ["get_started/getaccess","get_started/authentication", "get_started/workflows"]
     },
     {
       "group": "Updates",
