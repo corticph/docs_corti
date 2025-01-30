@@ -11,6 +11,10 @@ Authentication to the API on all environments is governed by OAuth 2.0. This aut
   <Step title="Request an access token">
     To acquire an access token, make a request to the authURL provided to you.
 
+    ```javascript auth URL
+    https://keycloak.{environment}.corti.app/realms/{Tenant-Name}/protocol/openid-connect/token
+    ```
+
     The full request body looks like this:
 
     ```jsx Client Credentials request body
@@ -19,6 +23,8 @@ Authentication to the API on all environments is governed by OAuth 2.0. This aut
     client_id: "the-provided-client-id"
     client_secret: "********"
     ```
+
+    <Tip>For the test environment `beta-eu`, the Tenant-Name is `copiloteu`.</Tip>
   </Step>
   <Step title="Your access token">
     It will return you an `access_token`
@@ -30,7 +36,15 @@ Authentication to the API on all environments is governed by OAuth 2.0. This aut
     As you can see, the access token expires after 300s/5min. By default as per oAuth standards, no refresh token is used in this flow. There are many available modules to manage monitoring expiry and acquiring a new access token. However, a refresh token can be enabled if needed.
   </Step>
   <Step title="Make an API request">
-    Subsequently you use the access_token to authenticate any API request. In your `Request Header` you also need to include the `Tenant-Name` parameter
+    Subsequently you use the access_token to authenticate any API request.
+
+    ```javascript base URL API
+    https://api.{environment}.corti.app/v2
+    ```
+    
+    
+    In your `Request Header` you also need to include the `Tenant-Name` parameter
+    <Tip>For the test environment `beta-eu`, the Tenant-Name is `copiloteu`.</Tip>
 
     ```jsx API call request header
     Tenant-Name: <tenantname>
