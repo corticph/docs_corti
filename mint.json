@@ -1,5 +1,10 @@
 {
   "$schema": "https://mintlify.com/schema.json",
+  "api": {
+    "auth": {
+      "method": "bearer"
+    }
+  },
   "name": "Corti API Documentation",
   "logo": {
     "dark": "/logo/corti_dark.svg",
