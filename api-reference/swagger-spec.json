@@ -61,6 +61,9 @@
         "description": " Lists all existing interactions.",
         "parameters": [
           {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
             "name": "pageSize",
             "in": "query",
             "description": " ",
@@ -160,6 +163,11 @@
         ],
         "summary": "Create Interaction",
         "description": " Creates a new interaction.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -213,6 +221,9 @@
         "description": " Gets an existing interaction.",
         "parameters": [
           {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
             "name": "id",
             "in": "path",
             "description": "The interaction ID representing the context for the request.",
@@ -264,6 +275,9 @@
         "summary": "Update Interaction",
         "description": " Patches an existing interaction.",
         "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
           {
             "name": "id",
             "in": "path",
@@ -327,6 +341,9 @@
         "description": " Deletes an existing interaction.",
         "parameters": [
           {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
             "name": "id",
             "in": "path",
             "description": "The interaction ID representing the context for the request.",
@@ -384,6 +401,9 @@
         "summary": "Stream Interaction",
         "description": " Establish WSS connection. See placeholder `TRACE` method for client/server messages in the socket.",
         "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
           {
             "name": "id",
             "in": "path",
@@ -514,6 +534,9 @@
         "summary": "List Facts",
         "parameters": [
           {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
             "name": "id",
             "in": "path",
             "description": "The interaction ID representing the context for the request.",
@@ -555,6 +578,9 @@
         "summary": "Add Facts",
         "description": " When creating a Fact if the interaction status = \"in progress\" then the Client will receive the newly created fact over the WebSocket.",
         "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
           {
             "name": "id",
             "in": "path",
@@ -607,6 +633,9 @@
         "summary": "Update Facts",
         "description": " When updating a Facts if the interaction `status = \"in progress\"` then the Client will receive the updated fact over the WebSocket.",
         "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
           {
             "name": "id",
             "in": "path",
@@ -661,6 +690,9 @@
         "summary": "Update Fact",
         "description": " When updating a `Fact` if the interaction `status = \"in progress\"` then the Client will receive the updated fact over the WebSocket. To discard a fact, simply set `discarded = true`",
         "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
           {
             "name": "id",
             "in": "path",
@@ -757,6 +789,9 @@
         "description": " List Documents",
         "parameters": [
           {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
             "name": "id",
             "in": "path",
             "description": "The interaction ID representing the context for the request.",
@@ -828,6 +863,9 @@
         "summary": "Generate Document",
         "description": " Generate Document.",
         "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
           {
             "name": "id",
             "in": "path",
@@ -941,6 +979,9 @@
         "description": " Get Document.",
         "parameters": [
           {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
             "name": "id",
             "in": "path",
             "description": "The interaction ID representing the context for the request.",
@@ -1034,6 +1075,9 @@
         "summary": "Update Document",
         "parameters": [
           {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
             "name": "id",
             "in": "path",
             "description": "The interaction ID representing the context for the request.",
@@ -1126,6 +1170,9 @@
         "summary": "Delete Document",
         "parameters": [
           {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
             "name": "id",
             "in": "path",
             "description": "The interaction ID representing the context for the request.",
@@ -1211,6 +1258,9 @@
         "description": " Get all codes associated with an interaction.",
         "parameters": [
           {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
             "name": "id",
             "in": "path",
             "description": "The interaction ID representing the context for the request.",
@@ -1293,6 +1343,9 @@
         "description": " Generate Codes.",
         "parameters": [
           {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
             "name": "id",
             "in": "path",
             "description": "The interaction ID representing the context for the request.",
@@ -1374,6 +1427,9 @@
         "summary": "Select codes",
         "description": " Mark provided codes as selected.",
         "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
           {
             "name": "id",
             "in": "path",
@@ -1458,6 +1514,9 @@
         "summary": "List Recordings",
         "parameters": [
           {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
             "name": "id",
             "in": "path",
             "description": "The interaction ID representing the context for the request.",
@@ -1529,6 +1588,9 @@
         "summary": "Upload Recording",
         "description": " Accept only audio of max 60 minutes in length and 150MB in size.",
         "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
           {
             "name": "id",
             "in": "path",
@@ -1630,6 +1692,9 @@
         "summary": "Get Recording",
         "parameters": [
           {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
             "name": "id",
             "in": "path",
             "description": "The interaction ID representing the context for the request.",
@@ -1711,6 +1776,9 @@
         ],
         "summary": "Delete Recording",
         "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
           {
             "name": "id",
             "in": "path",
@@ -1806,6 +1874,9 @@
         "summary": "List Transcripts",
         "parameters": [
           {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
             "name": "id",
             "in": "path",
             "description": "The interaction ID representing the context for the request.",
@@ -1887,6 +1958,9 @@
         "summary": "Create Transcript",
         "description": " Creates a new transcript",
         "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
           {
             "name": "id",
             "in": "path",
@@ -1981,6 +2055,9 @@
         "summary": "Get Transcript",
         "parameters": [
           {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
             "name": "id",
             "in": "path",
             "description": "The interaction ID representing the context for the request.",
@@ -2073,6 +2150,9 @@
         "summary": "Delete Transcript",
         "parameters": [
           {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
             "name": "id",
             "in": "path",
             "description": "The interaction ID representing the context for the request.",
@@ -2115,7 +2195,12 @@
           "docs"
         ],
         "summary": "Swagger JSON",
-        "description": " JSON representation of the API documentation."
+        "description": " JSON representation of the API documentation.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          }
+        ]
       }
     }
   },
@@ -2214,6 +2299,15 @@
           },
           "source": {
             "$ref": "#/components/schemas/V2SourceEnum"
+          }
+        }
+      },
+      "CommonHeaders": {
+        "type": "object",
+        "properties": {
+          "Tenant-Name": {
+            "type": "string",
+            "example": "copiloteu"
           }
         }
       },
@@ -4512,6 +4606,17 @@
               "$ref": "#/components/schemas/ResponseDocumentation"
             }
           }
+        }
+      }
+    },
+    "parameters": {
+      "Tenant-Name": {
+        "name": "Tenant-Name",
+        "in": "header",
+        "example": "copiloteu",
+        "schema": {
+          "type": "string",
+          "example": "copiloteu"
         }
       }
     }
