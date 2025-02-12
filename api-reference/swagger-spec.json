@@ -66,21 +66,21 @@
           {
             "name": "pageSize",
             "in": "query",
-            "description": " ",
+            "description": "The number of interactions to return. For example, a pageSize of 10 will return a maximum of 10 interactions.",
             "schema": {
               "type": "integer",
               "format": "int64",
-              "description": " "
+              "description": "The number of interactions to return. For example, a pageSize of 10 will return a maximum of 10 interactions."
             }
           },
           {
             "name": "index",
             "in": "query",
-            "description": " ",
+            "description": "The number of interactions to skip. For example, index=2 with pageSize=10 will skip the first 10 interactions and return 11-20.",
             "schema": {
               "type": "integer",
               "format": "int64",
-              "description": " "
+              "description": "The number of interactions to skip. For example, index=2 with pageSize=10 will skip the first 10 interactions and return 11-20."
             }
           },
           {
@@ -3648,6 +3648,28 @@
           "resume"
         ]
       },
+      "RequestTranscriptAnonymize": {
+        "type": "object",
+        "properties": {
+          "inputLanguage": {
+            "type": "string"
+          },
+          "transcript": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "string"
+                },
+                "role": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
       "RequestTranscriptCreate": {
         "type": "object",
         "required": [
@@ -4521,6 +4543,17 @@
           "documentation"
         ]
       },
+      "ResponseTranscriptAnonymize": {
+        "type": "object",
+        "properties": {
+          "anonymized": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Utterance"
+            }
+          }
+        }
+      },
       "ResponseTranscriptCreate": {
         "type": "object",
         "properties": {
@@ -4725,6 +4758,17 @@
         "type": "string",
         "items": {},
         "format": "uuid"
+      },
+      "Utterance": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          }
+        }
       },
       "V2DocumentContextType": {
         "type": "string"
