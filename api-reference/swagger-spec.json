@@ -1605,16 +1605,12 @@
         ],
         "requestBody": {
           "content": {
-            "multipart/form-data": {
+            "application/octet-stream": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "Recording": {
-                    "type": "string",
-                    "format": "binary",
-                    "description": "Binary content of the recording file."
-                  }
-                }
+                "type": "string",
+                "format": "binary",
+                "description": "Recording",
+                "title": "Recording"
               }
             }
           },
