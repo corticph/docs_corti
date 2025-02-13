@@ -42,7 +42,7 @@ const disablePlayground = () => {
             continue;
         }
 
-        button.disabled = true;
+        button.style.display = "none";
         return true;
     }
 };
