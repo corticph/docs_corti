@@ -58,7 +58,7 @@
           "interactions"
         ],
         "summary": "List All Interactions",
-        "description": " Lists all existing interactions.",
+        "description": " Lists all existing interactions. Results can be filtered by encounter status and patient ID.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -86,11 +86,11 @@
           {
             "name": "encounterStatus",
             "in": "query",
-            "description": "The status of the encounter. To fetch for multiple status pass the same parameter again.",
+            "description": "The status of the encounter. To filter on multiple statuses, pass the same parameter again (e.g. encounterStatus=in-progress&encounterStatus=completed). The options are: planned, in-progress, on-hold, completed, cancelled, deleted.",
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The status of the encounter. To fetch for multiple status pass the same parameter again."
+              "description": "The status of the encounter. To filter on multiple statuses, pass the same parameter again (e.g. encounterStatus=in-progress&encounterStatus=completed). The options are: planned, in-progress, on-hold, completed, cancelled, deleted."
             }
           },
           {
@@ -2173,11 +2173,11 @@
         ]
       }
     },
-    "/docs/": {
+    "/swagger": {
       "get": {
         "responses": {
           "200": {
-            "description": " ",
+            "description": "JSON representation of the API documentation",
             "content": {
               "text/plain": {
                 "schema": {
@@ -2188,7 +2188,7 @@
           }
         },
         "tags": [
-          "docs"
+          "swagger"
         ],
         "summary": "Swagger JSON",
         "description": " JSON representation of the API documentation.",
@@ -2719,16 +2719,20 @@
         "type": "object",
         "properties": {
           "key": {
-            "type": "string"
+            "type": "string",
+            "description": "Document section key"
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name or heading of the document section within the generated document"
           },
           "text": {
-            "type": "string"
+            "type": "string",
+            "description": "Contents of the document section within the generated document"
           },
           "sort": {
-            "type": "integer"
+            "type": "integer",
+            "description": "Order of the document section within the generated document"
           }
         }
       },
@@ -2850,13 +2854,16 @@
         ],
         "properties": {
           "text": {
-            "type": "string"
+            "type": "string",
+            "description": "The text of the fact."
           },
           "group": {
             "type": "string",
+            "description": "The group to which the fact belongs.",
             "example": "Others"
           },
           "source": {
+            "description": "The source of the fact. 'USER' refers to facts provided by the user, while 'SYSTEM' refers to system-generated facts (e.g., EHR).",
             "$ref": "#/components/schemas/V2SourceEnum"
           }
         }
@@ -3417,7 +3424,8 @@
                   "type": "string"
                 },
                 "group": {
-                  "type": "string"
+                  "type": "string",
+                  "example": "Others"
                 }
               }
             }
@@ -3442,7 +3450,8 @@
             "type": "string"
           },
           "group": {
-            "type": "string"
+            "type": "string",
+            "example": "Others"
           }
         }
       },
@@ -3862,34 +3871,42 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "Unique ID of the generated document",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Name of the generated document"
           },
           "templateRef": {
-            "type": "string"
+            "type": "string",
+            "description": "Reference for the used template"
           },
           "isStream": {
             "type": "boolean"
           },
           "sections": {
             "type": "array",
+            "description": "Individual document sections",
             "items": {
               "type": "object",
               "properties": {
                 "key": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "Document section key"
                 },
                 "name": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "Name or heading of the document section within the generated document"
                 },
                 "text": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "Contents of the document section within the generated document"
                 },
                 "sort": {
-                  "type": "integer"
+                  "type": "integer",
+                  "description": "Order of the document section within the generated document"
                 }
               }
             }
@@ -4278,11 +4295,13 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "Unique identifier for the interaction",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "assignedUserId": {
             "type": "string",
+            "description": "A unique identifier for the medical professional",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -4352,11 +4371,13 @@
               "properties": {
                 "id": {
                   "type": "string",
+                  "description": "Unique identifier for the interaction",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
                 "assignedUserId": {
                   "type": "string",
+                  "description": "A unique identifier for the medical professional",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
