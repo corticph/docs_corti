@@ -1,5 +1,5 @@
 // skippable values in lowercase
-const tags = ["stream", "experimental"];
+const tags = ["stream"];
 const patterns = ["stream", "wss"];
 
 const watchContainer = () => {
