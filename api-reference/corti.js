@@ -76,6 +76,60 @@ const watchDocumentsContextTypeContainer = () => {
     observer.observe(target.parentNode.parentNode, { childList: true });
 };
 
+const watchPlaygroundContainer = () => {
+    const observer = new MutationObserver((mutations, observer) => {
+        for (const mut of mutations) {
+            if (mut.type !== "childList") {
+                continue;
+            }
+            patchBugDocumentsPlayground(mut.target);
+        }
+    });
+    if (!observer) {
+        console.error("Failed to create playground observer");
+        return;
+    }
+
+    const target = findPlaygroundButton();
+    if (!target) {
+        console.error("Missing playground button");
+        return;
+    }
+    observer.observe(target.parentNode.parentNode, { childList: true });
+};
+
+const watchDocumentsPlaygroundContextTypeContainer = (
+    target, contextPatch
+) => {
+    const observer = new MutationObserver((mutations, observer) => {
+        for (const mut of mutations) {
+            if (mut.type !== "childList") {
+                continue;
+            }
+
+            for (const type of mut.target.querySelectorAll('[title="data"]')) {
+                for (const select of type.getElementsByTagName("select")) {
+                    patchContextDataDropdown(select, contextPatch);
+
+                    // parent overlay thingy patch
+                    select.parentNode.children[0].textContent = (
+                        select.getElementsByTagName("option")[0].textContent
+                    );
+
+                    console.log(mut.target.getElementsByClassName("grid"));
+                }
+                return;
+            }
+        }
+    });
+    if (!observer) {
+        console.error("Failed to create content observer");
+        return;
+    }
+
+    observer.observe(target, { childList: true });
+};
+
 const findContentArea = () => {
     const area = document.getElementById("content-area");
     if (!area) {
@@ -84,11 +138,13 @@ const findContentArea = () => {
     return area;
 };
 
-const disablePlayground = () => {
+const findPlaygroundButton = () => {
+    let area;
     try {
-        const area = findContentArea();
+        area = findContentArea();
     } catch (exc) {
         console.error(exc);
+        return;
     }
 
     const flexContainer = area.closest("div.flex");
@@ -102,9 +158,19 @@ const disablePlayground = () => {
             continue;
         }
 
-        button.style.display = "none";
-        return true;
+        return button;
     }
+};
+
+const disablePlayground = () => {
+    const button = findPlaygroundButton();
+    if (!button) {
+        console.error("Missing playground button");
+        return;
+    }
+
+    button.style.display = "none";
+    return true;
 };
 
 const disablePlaygrounds = () => {
@@ -164,6 +230,22 @@ const shouldSkipDocumentsPatch = (pattern) => {
     }
 };
 
+const patchContextDataDropdown = (select, patchDict) => {
+    const options = Array.from(
+        select.getElementsByTagName("option")
+    ).entries();
+
+    for (const [idx, option] of options) {
+        const optionPatch = patchDict[idx];
+        if (!optionPatch) {
+            console.error(`Missing patch for context option ${idx}`);
+            return;
+        }
+
+        option.textContent = optionPatch;
+    }
+};
+
 const patchBugDocuments = () => {
     const docPatch = patches["documents"];
     if (!docPatch) {
@@ -181,6 +263,12 @@ const patchBugDocuments = () => {
         return;
     }
 
+    const contextPatch = docPatch["contextData"];
+    if (!contextPatch) {
+        console.error("Missing patch for Documents context");
+        return;
+    }
+
     const data = document.getElementById("body-context-data");
     if (!data) {
         console.error("Missing #body-context-data");
@@ -188,24 +276,61 @@ const patchBugDocuments = () => {
     }
 
     for (const select of data.getElementsByTagName("select")) {
-        const options = Array.from(
-            select.getElementsByTagName("option")
-        ).entries();
+        patchContextDataDropdown(select, contextPatch);
+    }
+};
 
-        for (const [idx, option] of options) {
-            const contextPatch = docPatch["contextData"];
-            if (!contextPatch) {
-                console.error("Missing patch for Documents context");
+const patchBugDocumentsPlayground = (playground) => {
+    if (!playground) {
+        const button = findPlaygroundButton();
+        if (!button) {
+            console.error("Missing playground");
+            return;
+        }
+        playground = button.parentNode.parentNode;
+    }
+
+    if (playground.children.length <= 1) {
+        return;
+    }
+
+    const docPatch = patches["documents"];
+    if (!docPatch) {
+        console.error("Missing patch for Documents");
+        return;
+    }
+
+    const pattern = docPatch["headPattern"];
+    if (!docPatch) {
+        console.error("Missing header pattern check for Documents playground");
+        return;
+    }
+
+    const popup = Array.from(playground.children).toReversed()[0];
+    for (const head of popup.getElementsByClassName("text-base")) {
+        if (!head.textContent.toLowerCase().includes(pattern)) {
+            return;
+        }
+    }
+
+    const contextPatch = docPatch["contextData"];
+    if (!contextPatch) {
+        console.error("Missing patch for Documents context");
+        return;
+    }
+
+    for (const ctx of popup.querySelectorAll('[title="context"]')) {
+        let levels = 5;
+        let target = ctx;
+        while (target.getElementsByClassName("items-start").length == 0) {
+            target = target.parentNode
+            levels--;
+            if (levels <= 0) {
                 return;
             }
-
-            const optionPatch = contextPatch[idx];
-            if (!optionPatch) {
-                console.error(`Missing patch for context option ${idx}`);
-                return;
-            }
-
-            option.textContent = optionPatch;
+        }
+        for (const grid of target.getElementsByClassName("items-start")) {
+            watchDocumentsPlaygroundContextTypeContainer(grid, contextPatch);
         }
     }
 };
@@ -213,6 +338,8 @@ const patchBugDocuments = () => {
 window.addEventListener("load", () => {
     disablePlaygrounds();
     patchBugDocuments();
+    patchBugDocumentsPlayground();
     watchContentContainer();
+    watchPlaygroundContainer();
     watchDocumentsContextTypeContainer();
-})
+});
