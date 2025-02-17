@@ -1,0 +1,82 @@
+---
+title: Working with Templates
+description: "Learn how to build documents with Templates"
+---
+
+### Overview
+
+Templates in the Corti API allow users to specify the output of medical
+documents generated from various inputs, such as transcripts or other medical
+documents. They enable the definition of a specific sections, structure,
+language, and writing style for documentation, ensuring consistency and clarity
+in medical reporting.
+
+### Key Features of Templates
+
+1. **Flexible Template Selection**: Work with multiple templates to accommodate
+   different documentation needs.
+2. **Customizable Formats**: Templates can be tailored for various medical
+   specialties, enabling the generation of clinical notes, referral letters,
+   discharge summaries, and more.
+3. **Seamless Integration**: The Templates API works in conjunction with the
+   Documents API to automate the creation of structured medical documentation.
+4. **Template Management**: Users can retrieve and review a list of available
+   pre-configured templates via the Templates API. Each template is assigned a
+   unique templateKey, which is required to generate documents. The API ensures
+   access control by allowing users to view only the templates assigned to them.
+5. **Automated Document Generation**: By specifying a templateKey, users can
+   generate well-structured documents with predefined formatting and language
+   consistency.
+
+### Requesting a New Template
+
+To request a new template, follow these steps:
+
+1. **Visit** the [Corti Help Center](https://help.corti.ai).
+2. **Use the Chat Feature** to contact our support team.
+3. **Follow the Prompts** to request a new documentation template.
+4. **Provide Details**: Include any specific formatting, language, or structural
+   preferences required for the template.
+5. Our team will process your request and provide updates on its status.
+
+### Retrieving Available Templates
+
+Before generating a document, users must retrieve a list of available templates
+to identify the appropriate `templateKey`. Use a `GET /templates` request to
+fetch all templates assigned to your organization.
+
+### Using Templates to Generate Documents
+
+<Card>
+ ```mermaid
+       sequenceDiagram
+       participant Client
+       participant Public API
+
+       Client->>Client: Makes final edits to facts
+       Client->>Public API: POST /documents with final facts list and templateKey
+       Public API-->>Client: Return document
+
+       Client ->> Public API: PATCH /interactions/:interactionId "completed"
+       Public API -->> Client: 200, interaction
+    ```
+
+</Card>
+
+### Steps to Generate a Document
+
+1. **Review and Finalize Data**: After the live session, the client can review
+   and make final edits to the facts collected during the interaction. These
+   finalized facts will be used to generate the document.
+2. **Make a POST Request**: Send a `POST` request to the
+   `/interactions/:interactionId/documents` endpoint with the finalized facts
+   and the `templateKey` in the request payload. The templateKey defines the
+   format of the output document.
+3. **Process the Request**: The API processes the submitted data, applying the
+   specified template to generate the structured document.
+4. **Retrieve the Document**: If the request is successful, the API returns a
+   `200 OK` status along with the formatted document.
+5. **Mark Interaction as Completed**: Once the document is generated, the client
+   should update the interaction’s status by sending a `PATCH` request to
+   `/interactions/:interactionId`, setting the interaction state to
+   `"completed"`.
