@@ -57,5 +57,12 @@ Authentication to the API on all environments is governed by OAuth 2.0. This aut
     Tenant-Name: <tenantname>
     Authorization: Bearer <access_token>
     ```
+
+    <Note>To authenticate when opening a websocket, the access_token needs to be passed in as URL parameter in addition to the Tenant-Name already part of the url returned upon creating an interaction.</Note>
+    ```javascript URL to open authenticated websocket
+    wss://api.beta-eu.corti.app/v2/interactions/{interactionId}/stream?tenant-name=copiloteu&token=Bearer {access_token}
+    ```
+
+
   </Step>
 </Steps>
