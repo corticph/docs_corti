@@ -36,10 +36,10 @@ Authentication to the API on all environments is governed by OAuth 2.0. This aut
     As you can see, the access token expires after 300s/5min. By default as per oAuth standards, no refresh token is used in this flow. There are many available modules to manage monitoring expiry and acquiring a new access token. However, a refresh token can be enabled if needed.
   </Step>
   <Step title="Make an API request">
-    Subsequently you use the access_token to authenticate any API request. The base URL is dependent on the environment:
+    Subsequently you use the access_token to authenticate any API request. The baseURL is dependent on the environment:
 
-    ```javascript base URL API
-    https://api.{environment}.corti.app/v2
+    ```javascript baseURL API
+    api.{environment}.corti.app/v2
     ```
     
     So if you for example are on the beta-eu environment and want to create an interaction as the starting point for any other workflow operations your URL will look like this:
@@ -57,5 +57,12 @@ Authentication to the API on all environments is governed by OAuth 2.0. This aut
     Tenant-Name: <tenantname>
     Authorization: Bearer <access_token>
     ```
+
+    <Note>To authenticate when opening a websocket, the access_token needs to be passed in as URL parameter in addition to the Tenant-Name already part of the url returned upon creating an interaction.</Note>
+    ```javascript wss url with access_token appended
+    {wss://url returned}&token=Bearer {access_token}
+    ```
+
+
   </Step>
 </Steps>
