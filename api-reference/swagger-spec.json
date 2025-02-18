@@ -2254,7 +2254,7 @@
           }
         },
         "tags": [
-          "experimental"
+          "inquiry"
         ],
         "summary": "Align Sections",
         "description": " Compares a 'source' document with a 'target' document and returns a percentage alignment, optionally including aligned segments.",
@@ -2300,7 +2300,7 @@
           }
         },
         "tags": [
-          "experimental"
+          "inquiry"
         ],
         "summary": "Create Classification",
         "description": " This endpoint is used for binary classification tasks where a boolean output is expected.",
@@ -2387,7 +2387,7 @@
           }
         },
         "tags": [
-          "experimental"
+          "inquiry"
         ],
         "summary": "Contextual Query Assistant",
         "description": " Allows users to ask questions or make queries, which are processed in the context of a specific interaction. Multiple tools provide responses via SSE. A thread ID is returned with the initial query, which can be used to continue posting to the same thread in subsequent queries.",
@@ -2454,7 +2454,7 @@
           }
         },
         "tags": [
-          "experimental"
+          "inquiry"
         ],
         "summary": "Guidelines Tool API",
         "description": " Processes a query and returns a summary along with relevant sources.",
@@ -2500,7 +2500,7 @@
           }
         },
         "tags": [
-          "experimental"
+          "inquiry"
         ],
         "summary": "Mentions Tool API",
         "description": " Finds mentions of a query within a set of reference texts.",
@@ -2546,7 +2546,7 @@
           }
         },
         "tags": [
-          "experimental"
+          "inquiry"
         ],
         "summary": "Question Prompts Tool API",
         "description": " Provides a list of suggested questions based on a query and/or context.",
