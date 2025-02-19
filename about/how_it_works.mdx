@@ -30,7 +30,7 @@ Through the structured flow of **Interactions**, and the power of **Streaming** 
         - **Relevance and Precision**: Facts are distilled from the conversation in real-time, ensuring that every crucial piece of information is captured as the interaction unfolds.
         - **Customizability**: Clinicians can easily add, remove, or modify facts to ensure that the documentation reflects the true nature of the interaction.
         - **Integration with Documentation**: These facts form the building blocks of clinical documents, ensuring that every relevant detail is included without overwhelming the clinician with unnecessary information.
-        </card>
+        </Card>
     </Accordion> 
     <Accordion title="Streams">
         The streams endpoint enables **real-time** workflows, designed for scenarios requiring immediate processing and feedback during live interactions. It works by establishing a WebSocket connection after initializing an interaction through the `/interactions` endpoint. Once connected, the client streams audio packets to the API, which responds with live transcripts and fact updates in real-time. This continuous data flow allows for instantaneous capture and processing of information, making it ideal for situations where immediate action is crucial. The stream can be updated with new facts during the interaction, and it concludes when the client sends an "end" message, formally closing the live session.
