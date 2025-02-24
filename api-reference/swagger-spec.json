@@ -434,7 +434,7 @@
       },
       "trace": {
         "summary": "WSS client/server messages.",
-        "description": "Due to OpenAPI limitation this is a dummy placeholder for the client/server messages in WSS stream.",
+        "description": " Due to limitations of this documentation site, this is a dummy placeholder for the client/server messages in WSS stream.",
         "tags": [
           "stream"
         ],
@@ -532,6 +532,7 @@
           "facts"
         ],
         "summary": "List Facts",
+        "description": " Lists all Facts for an existing interaction.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -576,7 +577,7 @@
           "facts"
         ],
         "summary": "Add Facts",
-        "description": " When creating a Fact if the interaction status = \"in progress\" then the Client will receive the newly created fact over the WebSocket.",
+        "description": " Add Facts to an existing interaction. If the interaction status = \"in progress\" when adding a Fact, then the Client will receive the newly created Fact over the WebSocket.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -786,7 +787,7 @@
           "documents"
         ],
         "summary": "List Documents",
-        "description": " List Documents",
+        "description": " Get all Documents associated with an interaction.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -861,7 +862,7 @@
           "documents"
         ],
         "summary": "Generate Document",
-        "description": " Generate Document.",
+        "description": " Generate a Document for an interaction. The template defines the Document structure and content, where Document content is derived from an array of facts, a transcript, or a text string associated with the interaction.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -976,7 +977,7 @@
           "documents"
         ],
         "summary": "Get Document",
-        "description": " Get Document.",
+        "description": " Retrieve a Document associated with an interaction.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -1073,6 +1074,7 @@
           "documents"
         ],
         "summary": "Update Document",
+        "description": " Update content of a Document associated with an interaction.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -1168,6 +1170,7 @@
           "documents"
         ],
         "summary": "Delete Document",
+        "description": " Delete a Document associated with an interaction.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -1255,7 +1258,7 @@
           "codes"
         ],
         "summary": "List codes",
-        "description": " Get all codes associated with an interaction.",
+        "description": " Get all billing codes associated with an interaction.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -1340,7 +1343,7 @@
           "codes"
         ],
         "summary": "Generate Codes",
-        "description": " Generate Codes.",
+        "description": " Generate billing codes for an interaction using a document associated with the interaction or a text string.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -1425,7 +1428,7 @@
           "codes"
         ],
         "summary": "Select codes",
-        "description": " Mark provided codes as selected.",
+        "description": " Select billing codes generated for an interaction.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -1512,6 +1515,7 @@
           "recordings"
         ],
         "summary": "List Recordings",
+        "description": " Get all Recordings associated with an interaction.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -1586,7 +1590,7 @@
           "recordings"
         ],
         "summary": "Upload Recording",
-        "description": " Accept only audio of max 60 minutes in length and 150MB in size.",
+        "description": " Upload an audio file. Files must be either mp3, wav, m4a, or webm format, and less than or equal to 60 minutes in length and 150MB in size.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -1686,6 +1690,7 @@
           "recordings"
         ],
         "summary": "Get Recording",
+        "description": " Retrieve an audio recording associated with an interaction.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -1771,6 +1776,7 @@
           "recordings"
         ],
         "summary": "Delete Recording",
+        "description": " Delete an audio recording associated with an interaction.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -1868,6 +1874,7 @@
           "transcripts"
         ],
         "summary": "List Transcripts",
+        "description": " Get all Transcripts associated with an interaction.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -1952,7 +1959,7 @@
           "transcripts"
         ],
         "summary": "Create Transcript",
-        "description": " Creates a new transcript",
+        "description": " Create a transcript for an audio recording associated with an interaction.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -2049,6 +2056,7 @@
           "transcripts"
         ],
         "summary": "Get Transcript",
+        "description": " Retrieve a transcript associated with an interaction.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -2144,6 +2152,7 @@
           "transcripts"
         ],
         "summary": "Delete Transcript",
+        "description": " Delete a transcript associated with an interaction.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -2177,7 +2186,7 @@
       "get": {
         "responses": {
           "200": {
-            "description": "JSON representation of the API documentation",
+            "description": " JSON representation of the API documentation.",
             "content": {
               "text/plain": {
                 "schema": {
@@ -2191,7 +2200,7 @@
           "swagger"
         ],
         "summary": "Swagger JSON",
-        "description": " JSON representation of the API documentation.",
+        "description": " Get a JSON representation of the API documentation.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -2203,7 +2212,7 @@
       "post": {
         "responses": {
           "200": {
-            "description": "Alignment results with percentage and optionally aligned segments.",
+            "description": " Alignment results with percentage and optionally aligned segments.",
             "content": {
               "application/json": {
                 "schema": {
@@ -2257,7 +2266,7 @@
           "experimental"
         ],
         "summary": "Align Sections",
-        "description": " Compares a 'source' document with a 'target' document and returns a percentage alignment, optionally including aligned segments.",
+        "description": " Compare a 'source' document with a 'target' document and return a percentage alignment, optionally including aligned segments.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -2390,7 +2399,7 @@
           "experimental"
         ],
         "summary": "Contextual Query Assistant",
-        "description": " Allows users to ask questions or make queries, which are processed in the context of a specific interaction. Multiple tools provide responses via SSE. A thread ID is returned with the initial query, which can be used to continue posting to the same thread in subsequent queries.",
+        "description": " Ask questions in context of a specific interaction. Multiple tools provide responses via server sent events (SSE). Use the thread ID returned with the initial query to continue posting to the same thread in subsequent queries.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -2457,7 +2466,7 @@
           "experimental"
         ],
         "summary": "Guidelines Tool API",
-        "description": " Processes a query and returns a summary along with relevant sources.",
+        "description": " Ask questions against expert knowledge bases, with ability to input contextual information from the interaction. A summary along with relevant sources are provided in the response.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -2503,7 +2512,7 @@
           "experimental"
         ],
         "summary": "Mentions Tool API",
-        "description": " Finds mentions of a query within a set of reference texts.",
+        "description": " Finds mentions of specific content within defined reference texts.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
