@@ -577,7 +577,7 @@
           "facts"
         ],
         "summary": "Add Facts",
-        "description": " Adds new facts to an interaction. If the interaction status = \"in progress\", the newly created facts will be streamed to the client via WebSocket.",
+        "description": " Adds new facts to an interaction.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
