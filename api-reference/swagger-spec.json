@@ -86,11 +86,11 @@
           {
             "name": "encounterStatus",
             "in": "query",
-            "description": "The status of the encounter. To filter on multiple statuses, pass the same parameter again (e.g. encounterStatus=in-progress&encounterStatus=completed). The options are: planned, in-progress, on-hold, completed, cancelled, deleted.",
+            "description": "The status of the encounter. To filter on multiple statuses, pass the same parameter again.",
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The status of the encounter. To filter on multiple statuses, pass the same parameter again (e.g. encounterStatus=in-progress&encounterStatus=completed). The options are: planned, in-progress, on-hold, completed, cancelled, deleted."
+              "description": "The status of the encounter. To filter on multiple statuses, pass the same parameter again."
             }
           },
           {
@@ -108,7 +108,7 @@
       "post": {
         "responses": {
           "201": {
-            "description": " ",
+            "description": "Returns the newly created interaction with its assigned ID and WebSocket URL for real-time data streaming.",
             "content": {
               "application/json": {
                 "schema": {
@@ -184,7 +184,7 @@
       "get": {
         "responses": {
           "200": {
-            "description": " ",
+            "description": "Returns the requested interaction with all associated details.",
             "content": {
               "application/json": {
                 "schema": {
@@ -218,7 +218,7 @@
           "interactions"
         ],
         "summary": "Get Existing Interaction",
-        "description": " Gets an existing interaction.",
+        "description": " Retrieves a previously recorded interaction by its unique identifier (interaction ID).",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -226,12 +226,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The interaction ID representing the context for the request.",
+            "description": "The unique identifier of the interaction to retrieve.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The interaction ID representing the context for the request."
+              "description": "The unique identifier of the interaction to retrieve."
             }
           }
         ]
@@ -239,7 +239,7 @@
       "patch": {
         "responses": {
           "200": {
-            "description": " ",
+            "description": "A request body containing the fields to update within the interaction.",
             "content": {
               "application/json": {
                 "schema": {
@@ -273,7 +273,7 @@
           "interactions"
         ],
         "summary": "Update Interaction",
-        "description": " Patches an existing interaction.",
+        "description": " Modifies an existing interaction by updating specific fields without overwriting the entire record.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -281,12 +281,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The interaction ID representing the context for the request.",
+            "description": "The unique identifier of the interaction to update.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The interaction ID representing the context for the request."
+              "description": "The unique identifier of the interaction to update."
             }
           }
         ],
@@ -304,7 +304,7 @@
       "delete": {
         "responses": {
           "204": {
-            "description": "",
+            "description": "The interaction was successfully deleted. No response body is returned.",
             "content": {
               "application/json": {
                 "schema": {
@@ -346,12 +346,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The interaction ID representing the context for the request.",
+            "description": "The unique identifier of the interaction to delete.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The interaction ID representing the context for the request."
+              "description": "The unique identifier of the interaction to delete."
             }
           }
         ]
@@ -508,7 +508,7 @@
       "get": {
         "responses": {
           "200": {
-            "description": " ",
+            "description": "Returns a list of facts associated with the specified interaction.",
             "content": {
               "application/json": {
                 "schema": {
@@ -532,6 +532,7 @@
           "facts"
         ],
         "summary": "List Facts",
+        "description": " Retrieves a list of facts for a given interaction.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -539,12 +540,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The interaction ID representing the context for the request.",
+            "description": "The unique identifier of the interaction for which facts should be retrieved.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The interaction ID representing the context for the request."
+              "description": "The unique identifier of the interaction for which facts should be retrieved."
             }
           }
         ]
@@ -552,7 +553,7 @@
       "post": {
         "responses": {
           "200": {
-            "description": " ",
+            "description": "Returns the created facts, including their unique identifiers and associated metadata.",
             "content": {
               "application/json": {
                 "schema": {
@@ -576,7 +577,7 @@
           "facts"
         ],
         "summary": "Add Facts",
-        "description": " When creating a Fact if the interaction status = \"in progress\" then the Client will receive the newly created fact over the WebSocket.",
+        "description": " Adds new facts to an interaction.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -584,12 +585,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The interaction ID representing the context for the request.",
+            "description": "The unique identifier of the interaction to which the facts belong.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The interaction ID representing the context for the request."
+              "description": "The unique identifier of the interaction to which the facts belong."
             }
           }
         ],
@@ -607,7 +608,7 @@
       "patch": {
         "responses": {
           "200": {
-            "description": " ",
+            "description": "Returns the list of successfully updated facts.",
             "content": {
               "application/json": {
                 "schema": {
@@ -631,7 +632,7 @@
           "facts"
         ],
         "summary": "Update Facts",
-        "description": " When updating a Facts if the interaction `status = \"in progress\"` then the Client will receive the updated fact over the WebSocket.",
+        "description": " Updates multiple facts associated with an interaction. If the interaction `status = \"in progress\"`, the updated facts will be sent to the client over WebSocket.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -639,12 +640,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The interaction ID representing the context for the request.",
+            "description": "The unique identifier of the interaction for which facts are being updated.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The interaction ID representing the context for the request."
+              "description": "The unique identifier of the interaction for which facts are being updated."
             }
           }
         ],
@@ -664,7 +665,7 @@
       "patch": {
         "responses": {
           "200": {
-            "description": " ",
+            "description": "Returns the updated fact, including updated fields.",
             "content": {
               "application/json": {
                 "schema": {
@@ -688,7 +689,7 @@
           "facts"
         ],
         "summary": "Update Fact",
-        "description": " When updating a `Fact` if the interaction `status = \"in progress\"` then the Client will receive the updated fact over the WebSocket. To discard a fact, simply set `discarded = true`",
+        "description": " Updates an existing fact within a specific interaction. If the interaction `status = \"in progress\"`, the updated fact will be sent to the client via WebSocket. To discard a fact, simply set `discarded = true`.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -696,23 +697,23 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The interaction ID representing the context for the request.",
+            "description": "The unique identifier of the interaction to which the fact belongs.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The interaction ID representing the context for the request."
+              "description": "The unique identifier of the interaction to which the fact belongs."
             }
           },
           {
             "name": "factId",
             "in": "path",
-            "description": "The fact ID representing the context for the request.",
+            "description": "The unique identifier of the fact to update.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The fact ID representing the context for the request."
+              "description": "The unique identifier of the fact to update."
             }
           }
         ],
@@ -1458,7 +1459,7 @@
       "get": {
         "responses": {
           "200": {
-            "description": " ",
+            "description": "Returns a list of recording IDs for the interaction.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1512,6 +1513,7 @@
           "recordings"
         ],
         "summary": "List Recordings",
+        "description": " Retrieve a list of recordings for a given interaction.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -1519,12 +1521,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The interaction ID representing the context for the request.",
+            "description": "The unique identifier of the interaction for which recordings should be retrieved.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The interaction ID representing the context for the request."
+              "description": "The unique identifier of the interaction for which recordings should be retrieved."
             }
           }
         ]
@@ -1532,7 +1534,7 @@
       "post": {
         "responses": {
           "201": {
-            "description": " ",
+            "description": "Returns the recording ID in the response.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1586,7 +1588,7 @@
           "recordings"
         ],
         "summary": "Upload Recording",
-        "description": " Accept only audio of max 60 minutes in length and 150MB in size.",
+        "description": " Upload a recording for a given interaction. There is a maximum limit of 60 minutes in length and 150MB in size for recordings.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -1594,12 +1596,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The interaction ID representing the context for the request.",
+            "description": "The unique identifier of the interaction for which recording should be attributed.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The interaction ID representing the context for the request."
+              "description": "The unique identifier of the interaction for which recording should be attributed."
             }
           }
         ],
@@ -1686,6 +1688,7 @@
           "recordings"
         ],
         "summary": "Get Recording",
+        "description": " Retrieve a specific recording for a given interaction.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -1693,23 +1696,23 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The interaction ID representing the context for the request.",
+            "description": "The unique identifier of the interaction for which the recording should be retrieved.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The interaction ID representing the context for the request."
+              "description": "The unique identifier of the interaction for which the recording should be retrieved."
             }
           },
           {
             "name": "recordingId",
             "in": "path",
-            "description": "The recording ID representing the context for the request.",
+            "description": "The unique identifier of the recording to be retrieved.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The recording ID representing the context for the request."
+              "description": "The unique identifier of the recording to be retrieved."
             }
           }
         ]
@@ -1771,6 +1774,7 @@
           "recordings"
         ],
         "summary": "Delete Recording",
+        "description": " Delete a specific recording for a given interaction.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -1778,23 +1782,23 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The interaction ID representing the context for the request.",
+            "description": "The unique identifier of the interaction for which the recording should be deleted from.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The interaction ID representing the context for the request."
+              "description": "The unique identifier of the interaction for which the recording should be deleted from."
             }
           },
           {
             "name": "recordingId",
             "in": "path",
-            "description": "The recording ID representing the context for the request.",
+            "description": "The unique identifier of the recording to be deleted.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The recording ID representing the context for the request."
+              "description": "The unique identifier of the recording to be deleted."
             }
           }
         ]
@@ -1804,7 +1808,7 @@
       "get": {
         "responses": {
           "200": {
-            "description": " ",
+            "description": "Returns a list of transcripts associated with the interaction.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1868,6 +1872,7 @@
           "transcripts"
         ],
         "summary": "List Transcripts",
+        "description": " Retrieves a list of transcripts for a given interaction.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -1875,12 +1880,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The interaction ID representing the context for the request.",
+            "description": "The unique identifier of the interaction for which transcripts should be retrieved.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The interaction ID representing the context for the request."
+              "description": "The unique identifier of the interaction for which transcripts should be retrieved."
             }
           }
         ]
@@ -1888,7 +1893,7 @@
       "post": {
         "responses": {
           "201": {
-            "description": " ",
+            "description": "Returns the generated transcript, including participant roles and timestamps for each utterance.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1952,7 +1957,7 @@
           "transcripts"
         ],
         "summary": "Create Transcript",
-        "description": " Creates a new transcript",
+        "description": " Creates a new transcript for an interaction.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -1960,12 +1965,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The interaction ID representing the context for the request.",
+            "description": "The unique identifier of the interaction for which the transcript is created.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The interaction ID representing the context for the request."
+              "description": "The unique identifier of the interaction for which the transcript is created."
             }
           }
         ],
@@ -1985,7 +1990,7 @@
       "get": {
         "responses": {
           "200": {
-            "description": " ",
+            "description": "",
             "content": {
               "application/json": {
                 "schema": {
@@ -2049,6 +2054,7 @@
           "transcripts"
         ],
         "summary": "Get Transcript",
+        "description": " Retrieves the transcript for a specific interaction.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -2056,23 +2062,23 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The interaction ID representing the context for the request.",
+            "description": "The unique identifier of the interaction containing the transcript.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The interaction ID representing the context for the request."
+              "description": "The unique identifier of the interaction containing the transcript."
             }
           },
           {
             "name": "transcriptId",
             "in": "path",
-            "description": "The transcript ID representing the context for the request.",
+            "description": "The unique identifier of the transcript to retrieve.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The transcript ID representing the context for the request."
+              "description": "The unique identifier of the transcript to retrieve."
             }
           }
         ]
@@ -2144,6 +2150,7 @@
           "transcripts"
         ],
         "summary": "Delete Transcript",
+        "description": " Deletes a specific transcript associated with an interaction.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -2151,23 +2158,23 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The interaction ID representing the context for the request.",
+            "description": "The unique identifier of the interaction to which the transcript belongs.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The interaction ID representing the context for the request."
+              "description": "The unique identifier of the interaction to which the transcript belongs."
             }
           },
           {
             "name": "transcriptId",
             "in": "path",
-            "description": "The transcript ID representing the context for the request.",
+            "description": "The unique identifier of the transcript to delete.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The transcript ID representing the context for the request."
+              "description": "The unique identifier of the transcript to delete."
             }
           }
         ]
@@ -2671,6 +2678,7 @@
         "properties": {
           "Tenant-Name": {
             "type": "string",
+            "description": "Identifies a distinct entity within Corti's multi-tenant system. Ensures correct routing and authentication of the request.",
             "example": "copiloteu"
           }
         }
@@ -2951,10 +2959,10 @@
           },
           "name": {
             "type": "string",
-            "description": "FHIR reference to Text representation of the full name. Ensures the patient is referred by their name in the documentation."
+            "description": "FHIR reference to Text representation of the full name."
           },
           "gender": {
-            "description": "FHIR reference to patient gender. Ensures the documentation is written with the correct pronouns.",
+            "description": "FHIR reference to patient gender.",
             "$ref": "#/components/schemas/V2GenderEnum"
           },
           "birthDate": {
@@ -3292,18 +3300,22 @@
         "properties": {
           "startedAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "The UTC timestamp indicating when the encounter started."
           },
           "startedAtTzoffset": {
             "type": "string",
+            "description": "The timezone offset for the start time.",
             "example": "+00:00"
           },
           "endedAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "The UTC timestamp indicating when the encounter ended."
           },
           "endedAtTzoffset": {
             "type": "string",
+            "description": "The timezone offset for the end time.",
             "example": "+00:00"
           }
         }
@@ -3312,20 +3324,25 @@
         "type": "object",
         "properties": {
           "identifier": {
-            "type": "string"
+            "type": "string",
+            "description": "A unique identifier for the encounter."
           },
           "status": {
+            "description": "The current status of the encounter.",
             "$ref": "#/components/schemas/V2EncounterStatusEnum"
           },
           "type": {
+            "description": "The type of encounter.",
             "$ref": "#/components/schemas/V2EncounterTypeEnum"
           },
           "period": {
             "type": "object",
+            "description": "Details of when the encounter took place, including start and optional end timestamps with timezone offsets.",
             "$ref": "#/components/schemas/RequestEncounterPeriodUpdate"
           },
           "title": {
-            "type": "string"
+            "type": "string",
+            "description": "A title providing context about the encounter."
           }
         }
       },
@@ -3336,13 +3353,16 @@
         ],
         "properties": {
           "text": {
-            "type": "string"
+            "type": "string",
+            "description": "The text content of the fact."
           },
           "group": {
             "type": "string",
-            "example": "Others"
+            "description": "The key identifying the group to which the fact belongs.",
+            "example": "other"
           },
           "source": {
+            "description": "The origin of the fact, such as 'USER' or 'SYSTEM'.",
             "$ref": "#/components/schemas/V2SourceEnum"
           }
         }
@@ -3355,17 +3375,21 @@
         ],
         "properties": {
           "text": {
-            "type": "string"
+            "type": "string",
+            "description": "The updated text of the fact."
           },
           "group": {
             "type": "string",
-            "example": "Others"
+            "description": "The updated group key for the fact.",
+            "example": "other"
           },
           "source": {
+            "description": "The updated origin of the fact.",
             "$ref": "#/components/schemas/V2SourceEnum"
           },
           "isDiscarded": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Indicates whether the fact should be marked as discarded."
           }
         }
       },
@@ -3377,6 +3401,7 @@
         "properties": {
           "facts": {
             "type": "array",
+            "description": "A list of facts to be created.",
             "items": {
               "type": "object",
               "required": [
@@ -3384,13 +3409,16 @@
               ],
               "properties": {
                 "text": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "The text content of the fact."
                 },
                 "group": {
                   "type": "string",
-                  "example": "Others"
+                  "description": "The key identifying the group to which the fact belongs.",
+                  "example": "other"
                 },
                 "source": {
+                  "description": "The origin of the fact, such as 'USER' or 'SYSTEM'.",
                   "$ref": "#/components/schemas/V2SourceEnum"
                 }
               }
@@ -3406,6 +3434,7 @@
         "properties": {
           "facts": {
             "type": "array",
+            "description": "A list of facts to be updated.",
             "items": {
               "type": "object",
               "required": [
@@ -3414,18 +3443,22 @@
               "properties": {
                 "factId": {
                   "type": "string",
+                  "description": "The unique identifier of the fact to be updated.",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
                 "isDiscarded": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "description": "Indicates whether the fact should be discarded."
                 },
                 "text": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "The updated text content of the fact."
                 },
                 "group": {
                   "type": "string",
-                  "example": "Others"
+                  "description": "The updated group key for the fact.",
+                  "example": "other"
                 }
               }
             }
@@ -3440,18 +3473,22 @@
         "properties": {
           "factId": {
             "type": "string",
+            "description": "The unique identifier of the fact to be updated.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "isDiscarded": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Indicates whether the fact should be discarded."
           },
           "text": {
-            "type": "string"
+            "type": "string",
+            "description": "The updated text content of the fact."
           },
           "group": {
             "type": "string",
-            "example": "Others"
+            "description": "The updated group key for the fact.",
+            "example": "other"
           }
         }
       },
@@ -3491,7 +3528,7 @@
         "properties": {
           "assignedUserId": {
             "type": "string",
-            "description": "A unique identifier for the medical professional.",
+            "description": "A unique identifier for the medical professional responsible for this interaction.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -3528,15 +3565,18 @@
         "properties": {
           "assignedUserId": {
             "type": "string",
+            "description": "The unique identifier of the medical professional responsible for this interaction.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "encounter": {
             "type": "object",
+            "description": "Details of the encounter being updated.",
             "$ref": "#/components/schemas/RequestEncounterUpdate"
           },
           "patient": {
             "type": "object",
+            "description": "Patient-related updates.",
             "$ref": "#/components/schemas/RequestPatientUpdate"
           }
         }
@@ -3569,7 +3609,8 @@
         ],
         "properties": {
           "channel": {
-            "type": "integer"
+            "type": "integer",
+            "description": "The audio channel to associate with a participant role."
           },
           "role": {
             "$ref": "#/components/schemas/V2TranscriptParticipantRoleEnum"
@@ -3580,20 +3621,25 @@
         "type": "object",
         "properties": {
           "identifier": {
-            "type": "string"
+            "type": "string",
+            "description": "FHIR reference to patient identifier."
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "FHIR reference to Text representation of the full name."
           },
           "gender": {
+            "description": "FHIR reference to patient gender.",
             "$ref": "#/components/schemas/V2GenderEnum"
           },
           "birthDate": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "FHIR reference to patient birth date."
           },
           "pronouns": {
-            "type": "string"
+            "type": "string",
+            "description": "FHIR reference to patient extension Individual Pronouns."
           }
         }
       },
@@ -3685,26 +3731,36 @@
         "properties": {
           "recordingId": {
             "type": "string",
+            "description": "The unique identifier for the recording.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "primaryLanguage": {
-            "type": "string"
+            "type": "string",
+            "description": "The primary spoken language of the recording in BCP-47 format (e.g., 'en', 'de-CH')."
           },
           "isDictation": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Indicates whether spoken dictation commands should be converted to punctuation (e.g., 'comma' → ',')."
           },
           "isMultichannel": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "If true, each audio channel is transcribed separately."
           },
           "shouldDiarize": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "If true, separates speakers within an audio channel returning incrementing ids for transcript segments."
           },
           "participants": {
             "type": "array",
+            "description": "An array of participants, each specifying a role and an assigned audio channel in the recording. Leave empty when shouldDiarize: true",
             "items": {
               "$ref": "#/components/schemas/RequestParticipantCreate"
             }
+          },
+          "modelName": {
+            "type": "string",
+            "example": "\"model_name (Latest)\" | \"model_name_version\""
           }
         }
       },
@@ -3918,40 +3974,51 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "The unique identifier of the fact.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "text": {
-            "type": "string"
+            "type": "string",
+            "description": "The text content of the fact."
           },
           "group": {
-            "type": "string"
+            "type": "string",
+            "description": "The key identifying the group to which the fact belongs.",
+            "example": "other"
           },
           "groupId": {
             "type": "string",
+            "description": "The unique identifier of the group to which the fact belongs.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "isDiscarded": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Indicates whether the fact has been marked as discarded."
           },
           "source": {
+            "description": "The origin of the fact.",
             "$ref": "#/components/schemas/V2SourceEnum"
           },
           "createdAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "The timestamp when the fact was created."
           },
           "createdAtTzOffset": {
             "type": "string",
+            "description": "The timezone offset for the creation timestamp.",
             "example": "+00:00"
           },
           "updatedAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "The timestamp when the fact was last updated."
           },
           "updatedAtTzOffset": {
             "type": "string",
+            "description": "The timezone offset for the last update timestamp.",
             "example": "+00:00"
           },
           "evidence": {
@@ -3960,13 +4027,16 @@
               "type": "object",
               "properties": {
                 "type": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "The category of evidence."
                 },
                 "reference": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "A reference that supports the fact."
                 },
                 "quote": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "A direct excerpt or phrase extracted from the reference source that justifies the fact."
                 }
               }
             }
@@ -3978,33 +4048,41 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "The unique identifier of the newly created fact.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "text": {
-            "type": "string"
+            "type": "string",
+            "description": "The textual content of the created fact."
           },
           "group": {
             "type": "string",
-            "example": "Others"
+            "description": "The group key categorizing the fact.",
+            "example": "other"
           },
           "groupId": {
             "type": "string",
+            "description": "The unique identifier of the group to which the fact belongs.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "source": {
+            "description": "The origin of the fact, such as 'USER' or 'SYSTEM'.",
             "$ref": "#/components/schemas/V2SourceEnum"
           },
           "isDiscarded": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Indicates whether the fact has been marked as discarded."
           },
           "updatedAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "The timestamp when the fact was last updated."
           },
           "updatedAtTzOffset": {
             "type": "string",
+            "description": "The timezone offset for the last update timestamp.",
             "example": "+00:00"
           }
         }
@@ -4013,13 +4091,16 @@
         "type": "object",
         "properties": {
           "type": {
-            "type": "string"
+            "type": "string",
+            "description": "The category of evidence."
           },
           "reference": {
-            "type": "string"
+            "type": "string",
+            "description": "A reference that supports the fact."
           },
           "quote": {
-            "type": "string"
+            "type": "string",
+            "description": "A direct excerpt or phrase extracted from the reference source that justifies the fact."
           }
         }
       },
@@ -4028,41 +4109,51 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "The unique identifier of the fact.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "text": {
-            "type": "string"
+            "type": "string",
+            "description": "The updated text content of the fact."
           },
           "group": {
             "type": "string",
-            "example": "Others"
+            "description": "The updated group key to which the fact belongs.",
+            "example": "other"
           },
           "groupId": {
             "type": "string",
+            "description": "The unique identifier of the associated group.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "source": {
+            "description": "The updated origin of the fact.",
             "$ref": "#/components/schemas/V2SourceEnum"
           },
           "isDiscarded": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Indicates whether the fact is marked as discarded."
           },
           "createdAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "The original timestamp when the fact was created."
           },
           "createdAtTzOffset": {
             "type": "string",
+            "description": "The timezone offset for the creation timestamp.",
             "example": "+00:00"
           },
           "updatedAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "The timestamp when the fact was last updated."
           },
           "updatedAtTzOffset": {
             "type": "string",
+            "description": "The timezone offset for the last update timestamp.",
             "example": "+00:00"
           }
         }
@@ -4072,38 +4163,47 @@
         "properties": {
           "facts": {
             "type": "array",
+            "description": "A list of successfully created facts.",
             "items": {
               "type": "object",
               "properties": {
                 "id": {
                   "type": "string",
+                  "description": "The unique identifier of the newly created fact.",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
                 "text": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "The textual content of the created fact."
                 },
                 "group": {
                   "type": "string",
-                  "example": "Others"
+                  "description": "The group key categorizing the fact.",
+                  "example": "other"
                 },
                 "groupId": {
                   "type": "string",
+                  "description": "The unique identifier of the group to which the fact belongs.",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
                 "source": {
+                  "description": "The origin of the fact, such as 'USER' or 'SYSTEM'.",
                   "$ref": "#/components/schemas/V2SourceEnum"
                 },
                 "isDiscarded": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "description": "Indicates whether the fact has been marked as discarded."
                 },
                 "updatedAt": {
                   "type": "string",
-                  "format": "date-time"
+                  "format": "date-time",
+                  "description": "The timestamp when the fact was last updated."
                 },
                 "updatedAtTzOffset": {
                   "type": "string",
+                  "description": "The timezone offset for the last update timestamp.",
                   "example": "+00:00"
                 }
               }
@@ -4116,45 +4216,57 @@
         "properties": {
           "facts": {
             "type": "array",
+            "description": "A list of facts associated with the interaction.",
             "items": {
               "type": "object",
               "properties": {
                 "id": {
                   "type": "string",
+                  "description": "The unique identifier of the fact.",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
                 "text": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "The text content of the fact."
                 },
                 "group": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "The key identifying the group to which the fact belongs.",
+                  "example": "other"
                 },
                 "groupId": {
                   "type": "string",
+                  "description": "The unique identifier of the group to which the fact belongs.",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
                 "isDiscarded": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "description": "Indicates whether the fact has been marked as discarded."
                 },
                 "source": {
+                  "description": "The origin of the fact.",
                   "$ref": "#/components/schemas/V2SourceEnum"
                 },
                 "createdAt": {
                   "type": "string",
-                  "format": "date-time"
+                  "format": "date-time",
+                  "description": "The timestamp when the fact was created."
                 },
                 "createdAtTzOffset": {
                   "type": "string",
+                  "description": "The timezone offset for the creation timestamp.",
                   "example": "+00:00"
                 },
                 "updatedAt": {
                   "type": "string",
-                  "format": "date-time"
+                  "format": "date-time",
+                  "description": "The timestamp when the fact was last updated."
                 },
                 "updatedAtTzOffset": {
                   "type": "string",
+                  "description": "The timezone offset for the last update timestamp.",
                   "example": "+00:00"
                 },
                 "evidence": {
@@ -4163,13 +4275,16 @@
                     "type": "object",
                     "properties": {
                       "type": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The category of evidence."
                       },
                       "reference": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "A reference that supports the fact."
                       },
                       "quote": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "A direct excerpt or phrase extracted from the reference source that justifies the fact."
                       }
                     }
                   }
@@ -4184,46 +4299,57 @@
         "properties": {
           "facts": {
             "type": "array",
+            "description": "A list of updated facts.",
             "items": {
               "type": "object",
               "properties": {
                 "id": {
                   "type": "string",
+                  "description": "The unique identifier of the updated fact.",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
                 "text": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "The updated text content of the fact."
                 },
                 "group": {
                   "type": "string",
-                  "example": "Others"
+                  "description": "The updated group key to which the fact belongs.",
+                  "example": "other"
                 },
                 "groupId": {
                   "type": "string",
+                  "description": "The unique identifier of the associated group.",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
                 "source": {
+                  "description": "The updated origin of the fact.",
                   "$ref": "#/components/schemas/V2SourceEnum"
                 },
                 "isDiscarded": {
-                  "type": "boolean"
+                  "type": "boolean",
+                  "description": "Indicates whether the fact is marked as discarded."
                 },
                 "createdAt": {
                   "type": "string",
-                  "format": "date-time"
+                  "format": "date-time",
+                  "description": "The original timestamp when the fact was created."
                 },
                 "createdAtTzOffset": {
                   "type": "string",
+                  "description": "The timezone offset for the creation timestamp.",
                   "example": "+00:00"
                 },
                 "updatedAt": {
                   "type": "string",
-                  "format": "date-time"
+                  "format": "date-time",
+                  "description": "The timestamp when the fact was last updated."
                 },
                 "updatedAtTzOffset": {
                   "type": "string",
+                  "description": "The timezone offset for the last update timestamp.",
                   "example": "+00:00"
                 }
               }
@@ -4236,41 +4362,51 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "The unique identifier of the updated fact.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "text": {
-            "type": "string"
+            "type": "string",
+            "description": "The updated text content of the fact."
           },
           "group": {
             "type": "string",
-            "example": "Others"
+            "description": "The updated group key to which the fact belongs.",
+            "example": "other"
           },
           "groupId": {
             "type": "string",
+            "description": "The unique identifier of the associated group.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "source": {
+            "description": "The updated origin of the fact.",
             "$ref": "#/components/schemas/V2SourceEnum"
           },
           "isDiscarded": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Indicates whether the fact is marked as discarded."
           },
           "createdAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "The original timestamp when the fact was created."
           },
           "createdAtTzOffset": {
             "type": "string",
+            "description": "The timezone offset for the creation timestamp.",
             "example": "+00:00"
           },
           "updatedAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "The timestamp when the fact was last updated."
           },
           "updatedAtTzOffset": {
             "type": "string",
+            "description": "The timezone offset for the last update timestamp.",
             "example": "+00:00"
           }
         }
@@ -4295,55 +4431,64 @@
         "properties": {
           "id": {
             "type": "string",
-            "description": "Unique identifier for the interaction",
+            "description": "Unique identifier for the interaction.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "assignedUserId": {
             "type": "string",
-            "description": "A unique identifier for the medical professional",
+            "description": "A unique identifier for the medical professional responsible for this interaction.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "encounter": {
             "type": "object",
+            "description": "Information about the encounter, including type, status, and timing.",
             "$ref": "#/components/schemas/Encounter"
           },
           "patient": {
             "type": "object",
+            "description": "Details about the patient involved in the interaction, if applicable.",
             "$ref": "#/components/schemas/Patient"
           },
           "endedAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "The timestamp when the interaction concluded (UTC)."
           },
           "endedAtTzoffset": {
             "type": "string",
+            "description": "Timezone offset for the end timestamp.",
             "example": "+00:00"
           },
           "createdAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "The timestamp when the interaction was started (UTC)."
           },
           "createdAtTzoffset": {
             "type": "string",
+            "description": "Timezone offset for the creation timestamp.",
             "example": "+00:00"
           },
           "updatedAt": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "The timestamp when the interaction was last modified (UTC)."
           },
           "updatedAtTzoffset": {
             "type": "string",
+            "description": "Timezone offset for the updated timestamp.",
             "example": "+00:00"
           },
           "websocketUrl": {
             "type": "string",
-            "description": "append to this url your token, in the form: /interactions/{interactionID}/streams?token=Bearer token-value-here"
+            "description": "WebSocket URL for streaming real-time interactions. Append a token in the format: /interactions/{interactionID}/streams?token=Bearer token-value-here"
           },
           "lastUpdated": {
             "type": "string",
-            "format": "date-time"
+            "format": "date-time",
+            "description": "The timestamp indicating the last recorded update for this interaction."
           }
         }
       },
@@ -4352,12 +4497,13 @@
         "properties": {
           "interactionId": {
             "type": "string",
+            "description": "Unique identifier for the interaction.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "websocketUrl": {
             "type": "string",
-            "description": "append to this url your token, in the form: /interactions/{interactionID}/streams?token=Bearer token-value-here"
+            "description": "WebSocket URL for streaming real-time interactions. Append a token in the format: /interactions/{interactionID}/streams?token=Bearer token-value-here"
           }
         }
       },
@@ -4371,55 +4517,64 @@
               "properties": {
                 "id": {
                   "type": "string",
-                  "description": "Unique identifier for the interaction",
+                  "description": "Unique identifier for the interaction.",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
                 "assignedUserId": {
                   "type": "string",
-                  "description": "A unique identifier for the medical professional",
+                  "description": "A unique identifier for the medical professional responsible for this interaction.",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
                 "encounter": {
                   "type": "object",
+                  "description": "Information about the encounter, including type, status, and timing.",
                   "$ref": "#/components/schemas/Encounter"
                 },
                 "patient": {
                   "type": "object",
+                  "description": "Details about the patient involved in the interaction, if applicable.",
                   "$ref": "#/components/schemas/Patient"
                 },
                 "endedAt": {
                   "type": "string",
-                  "format": "date-time"
+                  "format": "date-time",
+                  "description": "The timestamp when the interaction concluded (UTC)."
                 },
                 "endedAtTzoffset": {
                   "type": "string",
+                  "description": "Timezone offset for the end timestamp.",
                   "example": "+00:00"
                 },
                 "createdAt": {
                   "type": "string",
-                  "format": "date-time"
+                  "format": "date-time",
+                  "description": "The timestamp when the interaction was started (UTC)."
                 },
                 "createdAtTzoffset": {
                   "type": "string",
+                  "description": "Timezone offset for the creation timestamp.",
                   "example": "+00:00"
                 },
                 "updatedAt": {
                   "type": "string",
-                  "format": "date-time"
+                  "format": "date-time",
+                  "description": "The timestamp when the interaction was last modified (UTC)."
                 },
                 "updatedAtTzoffset": {
                   "type": "string",
+                  "description": "Timezone offset for the updated timestamp.",
                   "example": "+00:00"
                 },
                 "websocketUrl": {
                   "type": "string",
-                  "description": "append to this url your token, in the form: /interactions/{interactionID}/streams?token=Bearer token-value-here"
+                  "description": "WebSocket URL for streaming real-time interactions. Append a token in the format: /interactions/{interactionID}/streams?token=Bearer token-value-here"
                 },
                 "lastUpdated": {
                   "type": "string",
-                  "format": "date-time"
+                  "format": "date-time",
+                  "description": "The timestamp indicating the last recorded update for this interaction."
                 }
               }
             }
@@ -4483,7 +4638,7 @@
                   "description": "The audio channel associated with the participant."
                 },
                 "role": {
-                  "description": "The role of the participant (e.g., doctor, patient).",
+                  "description": "The role of the participant.",
                   "$ref": "#/components/schemas/V2TranscriptParticipantRoleEnum"
                 }
               }
@@ -4499,7 +4654,7 @@
             "description": "The audio channel associated with the participant."
           },
           "role": {
-            "description": "The role of the participant (e.g., doctor, patient).",
+            "description": "The role of the participant.",
             "$ref": "#/components/schemas/V2TranscriptParticipantRoleEnum"
           }
         }
@@ -4535,6 +4690,7 @@
         "properties": {
           "recordingId": {
             "type": "string",
+            "description": "The unique identifier for the created recording.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           }
@@ -4545,6 +4701,7 @@
         "properties": {
           "recordings": {
             "type": "array",
+            "description": "A list of recordings for the interaction.",
             "items": {
               "$ref": "#/components/schemas/UUID"
             }
@@ -4576,35 +4733,40 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "The unique identifier of the transcript.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "metadata": {
             "type": "object",
+            "description": "Additional information about the participants involved in the transcript.",
             "$ref": "#/components/schemas/ResponseMetadataCreate"
           },
           "transcripts": {
             "type": "array",
+            "description": "An array of transcripts.",
             "items": {
               "type": "object",
               "properties": {
                 "channel": {
-                  "type": "integer"
+                  "type": "integer",
+                  "description": "The channel associated with this phrase/utterance."
                 },
                 "participant": {
-                  "type": "integer"
+                  "type": "integer",
+                  "description": "The identifier of the participant."
                 },
                 "text": {
                   "type": "string",
-                  "description": "phrase/utterance"
+                  "description": "The spoken phrase or utterance extracted from the audio."
                 },
                 "start": {
                   "type": "integer",
-                  "description": "Start time in milliseconds for phrase/utterance"
+                  "description": "Start time in milliseconds for phrase/utterance."
                 },
                 "end": {
                   "type": "integer",
-                  "description": "End time in milliseconds for phrase/utterance"
+                  "description": "End time in milliseconds for phrase/utterance."
                 }
               }
             }
@@ -4621,6 +4783,7 @@
               "properties": {
                 "id": {
                   "type": "string",
+                  "description": "The unique identifier of the transcript.",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
@@ -4637,6 +4800,7 @@
         "properties": {
           "id": {
             "type": "string",
+            "description": "The unique identifier of the transcript.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -4704,7 +4868,7 @@
           },
           "isMultichannel": {
             "type": "boolean",
-            "description": "Transcribe each audio channel independently.",
+            "description": "If true, each audio channel is transcribed separately.",
             "example": false
           },
           "participants": {
@@ -4717,7 +4881,8 @@
               ],
               "properties": {
                 "channel": {
-                  "type": "integer"
+                  "type": "integer",
+                  "description": "The audio channel to associate with a participant role."
                 },
                 "role": {
                   "$ref": "#/components/schemas/V2TranscriptParticipantRoleEnum"
@@ -4727,7 +4892,7 @@
           },
           "isDiarization": {
             "type": "boolean",
-            "description": "Separates speakers in a single channel",
+            "description": "If true, separates speakers within an audio channel returning incrementing speaker ids for transcript segments.",
             "example": false
           }
         }
@@ -4752,22 +4917,24 @@
         "type": "object",
         "properties": {
           "channel": {
-            "type": "integer"
+            "type": "integer",
+            "description": "The channel associated with this phrase/utterance."
           },
           "participant": {
-            "type": "integer"
+            "type": "integer",
+            "description": "The identifier of the participant."
           },
           "text": {
             "type": "string",
-            "description": "phrase/utterance"
+            "description": "The spoken phrase or utterance extracted from the audio."
           },
           "start": {
             "type": "integer",
-            "description": "Start time in milliseconds for phrase/utterance"
+            "description": "Start time in milliseconds for phrase/utterance."
           },
           "end": {
             "type": "integer",
-            "description": "End time in milliseconds for phrase/utterance"
+            "description": "End time in milliseconds for phrase/utterance."
           }
         }
       },
@@ -5042,9 +5209,11 @@
       "Tenant-Name": {
         "name": "Tenant-Name",
         "in": "header",
+        "description": "Identifies a distinct entity within Corti's multi-tenant system. Ensures correct routing and authentication of the request.",
         "example": "copiloteu",
         "schema": {
           "type": "string",
+          "description": "Identifies a distinct entity within Corti's multi-tenant system. Ensures correct routing and authentication of the request.",
           "example": "copiloteu"
         }
       }
