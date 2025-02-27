@@ -3726,7 +3726,8 @@
         "required": [
           "recordingId",
           "primaryLanguage",
-          "participants"
+          "participants",
+          "modelName"
         ],
         "properties": {
           "recordingId": {
@@ -3760,6 +3761,7 @@
           },
           "modelName": {
             "type": "string",
+            "description": "Can be \"base\" or \"enhanced\".",
             "example": "\"model_name (Latest)\" | \"model_name_version\""
           }
         }
