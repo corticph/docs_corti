@@ -51,7 +51,7 @@ POST https://api.{environment}.corti.app/v2/templates?lang=de
 
 ### Using Templates to Generate Documents
 Below sequence diagram refers to using the final facts list if your workflow
-involves live notes. You can also use the final transcript as input context.
+involves live notes. You can also use the final transcript as input context, see further  below for more details.
 
 <Card>
  ```mermaid
@@ -63,13 +63,15 @@ involves live notes. You can also use the final transcript as input context.
        Client->>Public API: POST /documents with final facts list and templateKey
        Public API-->>Client: Return document
 
-       Client ->> optional: Public API: PATCH /interactions/{id} "completed"
+       opt Update status of interaction
+       Client ->> Public API: PATCH /interactions/{id} "completed"
        Public API -->> Client: 200, interaction
+       end
     ```
 
 </Card>
 
-### Steps to Generate a Document
+**Steps to Generate a Document**
 
 1. **Review and Finalize Data**: After the live session, the client can review
    and make final edits to the facts collected during the interaction. These
@@ -86,3 +88,145 @@ involves live notes. You can also use the final transcript as input context.
    can update the interaction status by sending a `PATCH` request to
    `/interactions/{id}`, setting the interaction state to
    `"completed"`.
+
+### Generate document from facts vs from transcript
+
+For the typical ambient documentation workflow, summary documentation can be generated either on the basis of facts or the transcript.
+If your integration is centred around facts, those would typically have been generated automatically during the live stream (`source: core`)
+but you might have also created facts to pipe over relevant pre-chart information, e.g. demographics (`source: system`), or have given the
+clinicial the ability to add and edit live notes (`source: user`). In the end, you decide which facts to use as the basis to generate a document.
+
+Let's look at the differences in the request payload when generating a document on the basis of facts vs the transcript.
+
+<CodeGroup>
+
+```bash curl Document from facts - static template
+curl --request POST \
+  --url https://api.${environment}.corti.app/v2/interactions/{id}/documents \
+  --header 'Authorization: Bearer ${token}' \
+  --header 'Tenant-Name: ${tenantname}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "context": [
+    {
+      "type": "facts",
+      "data": [
+        {
+          "text": "32 year-old female",
+          "group": "demographics",
+          "source": "system"
+        },
+        {
+          "text": "itchy rash, started last week",
+          "group": "history-of-present-illness",
+          "source": "core"
+        },
+        {
+          "text": "allergic to birch pollen since childhood",
+          "group": "allergies",
+          "source": "core"
+        },
+        {
+          "text": "typical eczema appearance",
+          "group": "assessment",
+          "source": "core"
+        },
+        {
+          "text": "corticosteroid treatment, follow-up in 4 weeks",
+          "group": "plan",
+          "source": "core"
+        }        
+      ]
+    }
+  ],
+  "templateKey": "soap",
+  "name": "Soap note summary: itchy rash",
+  "outputLanguage": "en-US" //BCP-47 code
+}'
+```
+
+```bash curl Document from transcript - static template
+curl --request POST \
+  --url https://api.${environment}.corti.app/v2/interactions/{id}/documents \
+  --header 'Authorization: Bearer ${token}' \
+  --header 'Tenant-Name: ${tenantname}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "context": [
+    {
+      "type": "transcript",
+      "data": [
+        {
+          "text": "tell me a bit about what’s been going on? When did you first start feeling unwell?\n\n- Erm, I think it was, uh, probly about, like, a week ago? I just started feeling a bit, you know, off—like, uh, tired and achey. Then my throat got really sore, and it, uh, just didn’t get any better.\n\n- Right, okay. And when you say achey, was it more like muscle aches, or, uh, like, joint pain?\n\n- Um, mostly muscles, like, all over? Especially my legs and back. I just, like, wanted to stay in bed. And the sore throat, it’s, um, like, scratchy but also kinda raw, if that makes sense?\n\n- Yeah, it does. Have you had any fever? Like, have you felt hot or shivery at all?\n\n- Oh, yeah, definetely. A couple nights I woke up, uh, like, proper drenched in sweat. Then, uh, during the day, I'd get really cold even with a jumper on.\n\n- Mm-hmm. What about your nose? Any congestion or runny nose?\n\n- Uh, not really, no. Just, like, a tiny bit blocked, but mostly it's my throat and, uh, feeling knackered, really.\n\n- And are you coughing at all? Like, a dry cough or anything productive, like, bringing up phlegm?\n\n- Yeah, um, a bit of a cough, kinda dry. It’s worse at night, actually. Like, when I lie down, I start, uh, coughing more."
+        }
+      ]
+    }
+  ],
+  "templateKey": "brief-clinical-note",
+  "name": "test brief note from transcript",
+  "outputLanguage": "en" //BCP-47 code
+}'
+```
+</CodeGroup>
+
+### Advanced document generation workflows
+The Corti API supports via the /documents endpoint also advanced document generation workflows to cater to more specific needs.
+
+#### Templates with more dynamic sections
+If templates are difficult to predefine upfront due to the large variety in clinical documentation use cases, it might be better to
+approach things more flexibly.
+
+To do so, Corti can partner with you to pre-define the relevant number of sections that could map back to relevant fields in the EHR or documentation.
+Then a general template can be utilized together with the dynamically included sections.
+
+Imagine a use case where the basis is a dictated clinical note where a fixed template is not desired, however the summary will always include a few,
+standardized elements depending on the context of the encounter.
+
+Corti partnered with the customer to pre-define around 50 sections and the integration selects based on the specialty and encounter type a subset at the time
+of generating the documentation.
+
+Let's look at the payload request in that scenario.
+
+```bash curl Document from transcript - static template
+curl --request POST \
+  --url https://api.${environment}.corti.app/v2/interactions/{id}/documents \
+  --header 'Authorization: Bearer ${token}' \
+  --header 'Tenant-Name: ${tenantname}' \
+  --header 'Content-Type: application/json' \
+  --data '{
+  "context": [
+    {
+      "type": "string",
+      "data": [
+        {
+          "text": "${transcript content as string}"
+        }
+      ]
+    }
+  ],
+  "templateKey": "template-for-dynamic-sections",
+   "template": {
+        "sectionKeys": [
+            "signs-and-symptoms",
+            "allergies",
+            "clinical-history",
+            "social-history-including-smoking-and-alcohol",
+            "assessment-bowel-ultrasound"
+        ] 
+    },
+    "outputLanguage": "en", //BCP-47 code
+    "name": "Test from dynamic sections"  
+  }'
+```
+
+#### Working with other existing documents
+Your use case might also involve already existing documents such as reports, referral letters, etc.
+The Corti API was designed to offer flexibility. Some of the use cases Corti has facilitated via the /documents
+endpoint include:
+- summarizing an existing document
+- identifying a match of an existing document based on defined criteria
+- extracting action items for clinicians out of existing documents
+
+<Note>If you are interested in such a use case, please contact your Corti representative</Note>
+
+<Info>Currently, there is no endpoint to upload existing documents for automatic OTC or text parsing.</Info>
