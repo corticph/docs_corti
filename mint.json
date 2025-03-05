@@ -80,6 +80,10 @@
     {
       "group": "Updates",
       "pages": ["release-notes/overview", "release-notes/api-updates"]
+    },
+    {
+      "group": "stream",
+      "pages": ["api-reference/stream"]
     }
   ],
     "footerSocials": {
