@@ -357,153 +357,6 @@
         ]
       }
     },
-    "/interactions/{id}/stream": {
-      "get": {
-        "responses": {
-          "101": {
-            "description": "Protocol switching",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RequestInteractionStreamConfig",
-                  "oneOf": [
-                    {
-                      "title": "Transcript",
-                      "$ref": "#/components/schemas/ResponseInteractionStreamTranscript"
-                    },
-                    {
-                      "title": "Facts",
-                      "$ref": "#/components/schemas/ResponseInteractionStreamFact"
-                    },
-                    {
-                      "title": "Documentation",
-                      "$ref": "#/components/schemas/ResponseInteractionStreamDocumentation"
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "504": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "stream"
-        ],
-        "summary": "Stream Interaction",
-        "description": " Establish WSS connection. See placeholder `TRACE` method for client/server messages in the socket.",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/Tenant-Name"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "description": "The interaction ID representing the context for the request.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The interaction ID representing the context for the request."
-            }
-          }
-        ],
-        "servers": [
-          {
-            "url": "wss://api.{environment}.corti.app/v2/",
-            "variables": {
-              "environment": {
-                "default": "beta-eu",
-                "enum": [
-                  "us",
-                  "eu",
-                  "beta-eu"
-                ]
-              }
-            }
-          }
-        ]
-      },
-      "trace": {
-        "summary": "WSS client/server messages.",
-        "description": "Due to OpenAPI limitation this is a dummy placeholder for the client/server messages in WSS stream.",
-        "tags": [
-          "stream"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "oneOf": [
-                  {
-                    "title": "Stream configuration",
-                    "description": "Stream configuration",
-                    "$ref": "#/components/schemas/RequestInteractionStreamConfig"
-                  },
-                  {
-                    "title": "Setting stream status",
-                    "description": "Setting stream status",
-                    "$ref": "#/components/schemas/RequestInteractionStreamStatus"
-                  },
-                  {
-                    "type": "string",
-                    "format": "binary",
-                    "description": "Audio bytes in an ArrayBuffer",
-                    "title": "Audio"
-                  }
-                ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "101": {
-            "description": "Protocol switching",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "oneOf": [
-                    {
-                      "title": "Transcript",
-                      "$ref": "#/components/schemas/ResponseInteractionStreamTranscript"
-                    },
-                    {
-                      "title": "Facts",
-                      "$ref": "#/components/schemas/ResponseInteractionStreamFact"
-                    },
-                    {
-                      "title": "Documentation",
-                      "$ref": "#/components/schemas/ResponseInteractionStreamDocumentation"
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "UUID of the interaction",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "UUID of the interaction"
-            }
-          }
-        ]
-      }
-    },
     "/interactions/{id}/facts": {
       "get": {
         "responses": {
@@ -3691,14 +3544,6 @@
           }
         }
       },
-      "RequestStreamStatusEnum": {
-        "type": "string",
-        "enum": [
-          "end",
-          "pause",
-          "resume"
-        ]
-      },
       "RequestTranscriptAnonymize": {
         "type": "object",
         "properties": {
@@ -4710,15 +4555,6 @@
           }
         }
       },
-      "ResponseStreamTypeEnum": {
-        "type": "string",
-        "enum": [
-          "transcript",
-          "fact",
-          "topic",
-          "documentation"
-        ]
-      },
       "ResponseTranscriptAnonymize": {
         "type": "object",
         "properties": {
@@ -5224,9 +5060,6 @@
   "tags": [
     {
       "name": "interactions"
-    },
-    {
-      "name": "stream"
     },
     {
       "name": "facts"
