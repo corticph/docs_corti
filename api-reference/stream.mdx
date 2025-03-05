@@ -1,0 +1,210 @@
+---
+title: Connect to stream
+description: WebSocket Secure (WSS) API Documentation
+tag: WSS
+---
+
+## Overview
+
+The WebSocket Secure (WSS) API enables real-time, bidirectional communication with the Corti system for interaction streaming. Clients can send and receive structured data, including transcripts and facts updates.
+
+This documentation provides a structured guide for integrating the Corti WSS API for real-time interaction streaming.
+
+### Base URL
+
+```
+wss://api.{environment}.corti.app/v2/
+```
+
+### Environment Options
+
+| Environment | Description |
+| --- | --- |
+| `us` | US-based instance |
+| `eu` | EU-based instance |
+| `beta-eu` | Beta EU instance (default) |
+
+## Endpoint: `/interactions/{id}/stream`
+
+### Establishing a Connection
+
+Clients must initiate a WebSocket connection using the `wss://` scheme and provide an interaction ID in the URL.
+When creating an interaction, the 200 response provides the URL for that interaction including the Tenant-Name URL parameter.
+
+<Note>The authentication for the WSS stream requires in addition to the `Tenant-Name` parameter a `token` parameter to pass in the Bearer access token.</Note>
+
+### Request
+
+```
+GET /interactions/{id}/stream
+```
+
+### Path Parameters
+<ParamField path="id" type="string" required>
+  Unique interaction identifier
+</ParamField>
+
+### Query Parameters
+<ParamField query="Tenant-Name" type="string" required>
+  Specifies the tenant context
+</ParamField>
+<ParamField query="token" type="string" required>Bearer $token</ParamField>
+
+
+## Responses
+
+### **101 Switching Protocols**
+
+Indicates a successful WebSocket connection. Once connected, the server streams data in the following formats:
+
+### Data Streams
+
+### Transcript Stream
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `type` | string | Message type (`transcript`) |
+| `data.id` | string | Unique identifier for the transcript |
+| `data.transcript` | string | The transcribed text |
+| `data.isFinal` | boolean | Indicates whether the transcript is finalized |
+| `data.participant.id` | string | Participant identifier |
+| `data.participant.role` | string | Role of the participant (e.g., `doctor`) |
+| `data.time.start` | number | Start time of the transcript segment |
+| `data.time.end` | number | End time of the transcript segment |
+
+```json
+{
+  "type": "transcript",
+  "data": [
+    {
+    "id": "UUID",
+    "start": 12345.67,
+    "duration": 5.0,
+    "transcript": "Patient presents with fever and cough.",
+    "isFinal": true,
+    "participant": { "id": "UUID", "role": "doctor" },
+    "time": { "start": 12345.67, "end": 12350.67 }
+    }
+  ]
+}
+```
+
+### Fact Stream
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `type` | string | Message type (`fact`) |
+| `data.id` | string | Unique identifier for the fact |
+| `data.text` | string | Text description of the fact |
+| `data.group` | string | Categorization of the fact (e.g., `medical-history`) |
+| `data.groupId` | string | Unique identifier for the group |
+| `data.isDiscarded` | boolean | Indicates if the fact was discarded |
+| `data.source` | string | Source of the fact (e.g., `EHR`) |
+| `data.createdAt` | string | Timestamp when the fact was created |
+| `data.updatedAt` | string | Timestamp when the fact was last updated |
+
+```json
+{
+  "type": "fact",
+  "data": [
+    {
+    "id": "UUID",
+    "text": "Patient has a history of hypertension.",
+    "group": "medical-history",
+    "groupId": "UUID",
+    "isDiscarded": false,
+    "source": "EHR",
+    "createdAt": "2024-02-28T12:34:56Z",
+    "updatedAt": "2024-02-28T12:35:56Z"
+    }
+  ]
+}
+```
+
+## Sending Messages
+
+Clients must send a stream configuration message and wait for a response of type `CONFIG_ACCEPTED` before transmitting other data.
+
+### Stream Configuration
+
+| Property | Type | Required | Description |
+| --- | --- | --- | --- |
+| `type` | string | Yes | Message type (`config`) |
+| `configuration` | object | Yes | Configuration settings |
+| `transcription.primaryLanguage` | string | Yes | Primary language for transcription |
+| `transcription.isDiarization` | boolean | No - `false` | Enable speaker diarization |
+| `transcription.isMultichannel` | boolean | No - `false` | Enable multi-channel audio processing |
+| `transcription.participants` | array | Yes | List of participants with roles |
+| `mode.type` | string | `facts` | Processing mode |
+| `mode.outputLocale` | string | Yes | Output language locale |
+
+### Example Configuration
+
+```json
+{
+  "type": "config",
+  "configuration": {
+    "transcription": {
+      "primaryLanguage": "en",
+      "isDiarization": false,
+      "isMultichannel": false,
+      "participants": [
+        {
+          "channel": 0,
+          "role": "multiple"
+        }
+      ]
+    },
+    "mode": {
+      "type": "facts",
+      "outputLocale": "en"
+    }
+  }
+}
+```
+
+Once the server responds with:
+
+```json
+{
+  "type": "CONFIG_ACCEPTED"
+}
+```
+
+Clients can proceed with sending audio or controlling the stream status.
+
+## Controlling Stream Status
+
+To end the stream, send:
+
+```json
+{
+  "type": "end"
+}
+```
+
+The connection remains open until all transcripts are complete. The server then sends a message of `type: "ENDED"` and closes the connection.
+
+## Sending Audio Data
+
+Ensure that your configuration was accepted before starting to send audio.
+We recommend sending audio in chunks of 500ms. In terms of buffering, the limit is 64000 bytes per chunk.
+Audio data should be sent as raw binary without JSON wrapping.
+
+## Error Handling
+
+In case of an invalid or missing interaction ID, the server will return an error before opening the WebSocket.
+
+## Closing the Connection
+
+To terminate the WebSocket session, send a standard WebSocket close frame, or use:
+
+```json
+{
+  "type": "end"
+}
+```
+
+The connection remains open until all transcripts are complete, at which point the server sends a message of type `ENDED` and then closes.
+
+<Note>You can at any time open the WebSocket again and resume by sending the configuration.</Note>
