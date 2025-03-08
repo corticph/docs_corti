@@ -71,7 +71,7 @@
   "navigation": [
     {
       "group": "About Corti API",
-      "pages": ["about/introduction", "about/ai_platform", "about/how_it_works"]
+      "pages": ["about/introduction", "about/ai_platform", "about/how_it_works", "about/languages"]
     },
     {
       "group": "Get Started",
