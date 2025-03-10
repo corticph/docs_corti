@@ -79,7 +79,7 @@
     },
     {
       "group": "Updates",
-      "pages": ["release-notes/overview", "release-notes/api-updates"]
+      "pages": ["release-notes/overview", "release-notes/foundation-models", "release-notes/api-updates", "release-notes/asr-updates"]
     },
     {
       "group": "stream",
