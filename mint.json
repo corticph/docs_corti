@@ -79,7 +79,7 @@
     },
     {
       "group": "Updates",
-      "pages": ["release-notes/overview", "release-notes/foundation-models", "release-notes/api-updates", "release-notes/asr-updates"]
+      "pages": ["release-notes/overview", "release-notes/fm-updates", "release-notes/api-updates", "release-notes/language-updates"]
     },
     {
       "group": "stream",
