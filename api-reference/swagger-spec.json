@@ -64,6 +64,26 @@
             "$ref": "#/components/parameters/Tenant-Name"
           },
           {
+            "name": "sort",
+            "in": "query",
+            "description": "Describes interaction attribute for sorting",
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "Describes interaction attribute for sorting"
+            }
+          },
+          {
+            "name": "direction",
+            "in": "query",
+            "description": "Describes sorting direction",
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "Describes sorting direction"
+            }
+          },
+          {
             "name": "pageSize",
             "in": "query",
             "description": "The number of interactions to return. For example, a pageSize of 10 will return a maximum of 10 interactions.",
@@ -1740,6 +1760,56 @@
               "format": "string",
               "description": "The unique identifier of the interaction for which transcripts should be retrieved."
             }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Describes transcript attribute for sorting",
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "Describes transcript attribute for sorting"
+            }
+          },
+          {
+            "name": "direction",
+            "in": "query",
+            "description": "Describes sorting direction",
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "Describes sorting direction"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "The number of transcripts to return. For example, a pageSize of 10 will return a maximum of 10 interactions.",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "description": "The number of transcripts to return. For example, a pageSize of 10 will return a maximum of 10 interactions."
+            }
+          },
+          {
+            "name": "index",
+            "in": "query",
+            "description": "The number of transcripts to skip. For example, index=2 with pageSize=10 will skip the first 10 interactions and return 11-20.",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "description": "The number of transcripts to skip. For example, index=2 with pageSize=10 will skip the first 10 interactions and return 11-20."
+            }
+          },
+          {
+            "name": "full",
+            "in": "query",
+            "description": "Display full transcripts in listing",
+            "schema": {
+              "type": "boolean",
+              "format": "boolean",
+              "description": "Display full transcripts in listing"
+            }
           }
         ]
       },
@@ -2033,6 +2103,82 @@
         ]
       }
     },
+    "/templates": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "List of Templates",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseTemplate"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "templates"
+        ],
+        "summary": "List Templates",
+        "description": " Retrieves a list of templates with optional filters for organization, language, and status.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
+            "name": "org",
+            "in": "query",
+            "description": "Filter templates by organization.",
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "Filter templates by organization."
+            }
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "Filter templates by language.",
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "Filter templates by language."
+            }
+          },
+          {
+            "name": "templateStatus",
+            "in": "query",
+            "description": "Filter templates by their status.",
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "Filter templates by their status."
+            }
+          }
+        ]
+      }
+    },
     "/swagger": {
       "get": {
         "responses": {
@@ -2114,7 +2260,7 @@
           }
         },
         "tags": [
-          "experimental"
+          "discovery"
         ],
         "summary": "Align Sections",
         "description": " Compares a 'source' document with a 'target' document and returns a percentage alignment, optionally including aligned segments.",
@@ -2160,7 +2306,7 @@
           }
         },
         "tags": [
-          "experimental"
+          "discovery"
         ],
         "summary": "Create Classification",
         "description": " This endpoint is used for binary classification tasks where a boolean output is expected.",
@@ -2247,7 +2393,7 @@
           }
         },
         "tags": [
-          "experimental"
+          "discovery"
         ],
         "summary": "Contextual Query Assistant",
         "description": " Allows users to ask questions or make queries, which are processed in the context of a specific interaction. Multiple tools provide responses via SSE. A thread ID is returned with the initial query, which can be used to continue posting to the same thread in subsequent queries.",
@@ -2314,7 +2460,7 @@
           }
         },
         "tags": [
-          "experimental"
+          "discovery"
         ],
         "summary": "Guidelines Tool API",
         "description": " Processes a query and returns a summary along with relevant sources.",
@@ -2360,7 +2506,7 @@
           }
         },
         "tags": [
-          "experimental"
+          "discovery"
         ],
         "summary": "Mentions Tool API",
         "description": " Finds mentions of a query within a set of reference texts.",
@@ -2406,7 +2552,7 @@
           }
         },
         "tags": [
-          "experimental"
+          "discovery"
         ],
         "summary": "Question Prompts Tool API",
         "description": " Provides a list of suggested questions based on a query and/or context.",
@@ -2594,6 +2740,16 @@
           "sort": {
             "type": "integer",
             "description": "Order of the document section within the generated document"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The original timestamp when the document section was created."
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp when the document section was last updated."
           }
         }
       },
@@ -2728,34 +2884,6 @@
             "$ref": "#/components/schemas/V2SourceEnum"
           }
         }
-      },
-      "InteractionMode": {
-        "type": "object",
-        "required": [
-          "type"
-        ],
-        "properties": {
-          "type": {
-            "example": "facts",
-            "$ref": "#/components/schemas/InteractionModeTypeEnum"
-          },
-          "templateId": {
-            "type": "string",
-            "description": "The template the live documentation need to use.",
-            "items": {},
-            "$ref": "#/components/schemas/UUID"
-          }
-        }
-      },
-      "InteractionModeType": {
-        "type": "string"
-      },
-      "InteractionModeTypeEnum": {
-        "type": "string",
-        "enum": [
-          "facts",
-          "documentation"
-        ]
       },
       "MentionData": {
         "type": "object",
@@ -3089,7 +3217,7 @@
           },
           "outputLanguage": {
             "type": "string",
-            "description": "The language in which the document will be generated. (BCP-47)"
+            "description": "The language in which the document will be generated. Check https://docs.corti.ai/about/languages for more."
           }
         }
       },
@@ -3397,22 +3525,6 @@
           }
         }
       },
-      "RequestInteractionStreamConfig": {
-        "type": "object",
-        "required": [
-          "type"
-        ],
-        "properties": {
-          "type": {
-            "type": "string",
-            "example": "config"
-          },
-          "configuration": {
-            "type": "object",
-            "$ref": "#/components/schemas/StreamConfig"
-          }
-        }
-      },
       "RequestInteractionUpdate": {
         "type": "object",
         "properties": {
@@ -3583,7 +3695,7 @@
           },
           "primaryLanguage": {
             "type": "string",
-            "description": "The primary spoken language of the recording in BCP-47 format (e.g., 'en', 'de-CH')."
+            "description": "The primary spoken language of the recording. Check https://docs.corti.ai/about/languages for more."
           },
           "isDictation": {
             "type": "boolean",
@@ -3601,7 +3713,20 @@
             "type": "array",
             "description": "An array of participants, each specifying a role and an assigned audio channel in the recording. Leave empty when shouldDiarize: true",
             "items": {
-              "$ref": "#/components/schemas/RequestParticipantCreate"
+              "type": "object",
+              "required": [
+                "channel",
+                "role"
+              ],
+              "properties": {
+                "channel": {
+                  "type": "integer",
+                  "description": "The audio channel to associate with a participant role."
+                },
+                "role": {
+                  "$ref": "#/components/schemas/V2TranscriptParticipantRoleEnum"
+                }
+              }
             }
           },
           "modelName": {
@@ -3810,9 +3935,29 @@
                 "sort": {
                   "type": "integer",
                   "description": "Order of the document section within the generated document"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "The original timestamp when the document section was created."
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "The timestamp when the document section was last updated."
                 }
               }
             }
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The original timestamp when the document was created."
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp when the document was last updated."
           }
         }
       },
@@ -4555,6 +4700,80 @@
           }
         }
       },
+      "ResponseTemplate": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "description": "List of filtered templates",
+            "items": {
+              "type": "object",
+              "properties": {
+                "date_updated": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "The timestamp when the template was updated."
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Name of the template"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description of the template"
+                },
+                "key": {
+                  "type": "string",
+                  "description": "Unique key for the template"
+                },
+                "status": {
+                  "type": "string",
+                  "description": "Status of the template."
+                },
+                "template_sections": {
+                  "type": "array",
+                  "description": "List of sections included in the template",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "sort": {
+                        "type": "integer",
+                        "description": "Sort order of the section within the template"
+                      },
+                      "sections_id": {
+                        "type": "object",
+                        "description": "The section details",
+                        "$ref": "#/components/schemas/Section"
+                      }
+                    }
+                  }
+                },
+                "translations": {
+                  "type": "array",
+                  "description": "Available translations for the template",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "languages_id": {
+                        "type": "string",
+                        "description": "Language identifier"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Localized name of the template"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Localized description of the template"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "ResponseTranscriptAnonymize": {
         "type": "object",
         "properties": {
@@ -4647,6 +4866,82 @@
           }
         }
       },
+      "Section": {
+        "type": "object",
+        "properties": {
+          "date_updated": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp when the section was updated."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the section"
+          },
+          "alternate_names": {
+            "type": "array",
+            "description": "Alternate names for the section",
+            "items": {
+              "type": "string"
+            }
+          },
+          "key": {
+            "type": "string",
+            "description": "Unique key for the section"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the section"
+          },
+          "default_writing_style": {
+            "type": "object",
+            "description": "Default writing style for the section",
+            "$ref": "#/components/schemas/WritingStyle"
+          },
+          "section_type": {
+            "type": "string",
+            "description": "Type of section"
+          },
+          "translations": {
+            "type": "array",
+            "description": "Available translations for the section",
+            "items": {
+              "type": "object",
+              "properties": {
+                "languages_id": {
+                  "type": "string",
+                  "description": "Language identifier"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Localized name of the section"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Localized description of the section"
+                }
+              }
+            }
+          }
+        }
+      },
+      "SectionTranslation": {
+        "type": "object",
+        "properties": {
+          "languages_id": {
+            "type": "string",
+            "description": "Language identifier"
+          },
+          "name": {
+            "type": "string",
+            "description": "Localized name of the section"
+          },
+          "description": {
+            "type": "string",
+            "description": "Localized description of the section"
+          }
+        }
+      },
       "SourceReference": {
         "type": "object",
         "properties": {
@@ -4663,78 +4958,6 @@
           }
         }
       },
-      "StreamConfig": {
-        "type": "object",
-        "required": [
-          "transcription"
-        ],
-        "properties": {
-          "specialtyId": {
-            "type": "string",
-            "description": "Focus area of the interaction"
-          },
-          "outputLocale": {
-            "type": "string",
-            "description": "BCP-47 determines output facts language"
-          },
-          "transcription": {
-            "type": "object",
-            "$ref": "#/components/schemas/StreamTranscript"
-          },
-          "mode": {
-            "type": "object",
-            "$ref": "#/components/schemas/InteractionMode"
-          }
-        }
-      },
-      "StreamTranscript": {
-        "type": "object",
-        "required": [
-          "primaryLanguage",
-          "participants"
-        ],
-        "properties": {
-          "primaryLanguage": {
-            "type": "string",
-            "description": "BCP-47",
-            "example": "en"
-          },
-          "isDictation": {
-            "type": "boolean",
-            "description": "Spoken dictation commands will be converted to their corresponding punctuation marks. e.g. 'comma' to ','",
-            "example": false
-          },
-          "isMultichannel": {
-            "type": "boolean",
-            "description": "If true, each audio channel is transcribed separately.",
-            "example": false
-          },
-          "participants": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "required": [
-                "channel",
-                "role"
-              ],
-              "properties": {
-                "channel": {
-                  "type": "integer",
-                  "description": "The audio channel to associate with a participant role."
-                },
-                "role": {
-                  "$ref": "#/components/schemas/V2TranscriptParticipantRoleEnum"
-                }
-              }
-            }
-          },
-          "isDiarization": {
-            "type": "boolean",
-            "description": "If true, separates speakers within an audio channel returning incrementing speaker ids for transcript segments.",
-            "example": false
-          }
-        }
-      },
       "TargetSegment": {
         "type": "object",
         "properties": {
@@ -4748,6 +4971,102 @@
             "items": {
               "type": "integer"
             }
+          }
+        }
+      },
+      "TemplateFiltered": {
+        "type": "object",
+        "properties": {
+          "date_updated": {
+            "type": "string",
+            "format": "date-time",
+            "description": "The timestamp when the template was updated."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the template"
+          },
+          "description": {
+            "type": "string",
+            "description": "Description of the template"
+          },
+          "key": {
+            "type": "string",
+            "description": "Unique key for the template"
+          },
+          "status": {
+            "type": "string",
+            "description": "Status of the template."
+          },
+          "template_sections": {
+            "type": "array",
+            "description": "List of sections included in the template",
+            "items": {
+              "type": "object",
+              "properties": {
+                "sort": {
+                  "type": "integer",
+                  "description": "Sort order of the section within the template"
+                },
+                "sections_id": {
+                  "type": "object",
+                  "description": "The section details",
+                  "$ref": "#/components/schemas/Section"
+                }
+              }
+            }
+          },
+          "translations": {
+            "type": "array",
+            "description": "Available translations for the template",
+            "items": {
+              "type": "object",
+              "properties": {
+                "languages_id": {
+                  "type": "string",
+                  "description": "Language identifier"
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Localized name of the template"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Localized description of the template"
+                }
+              }
+            }
+          }
+        }
+      },
+      "TemplateSection": {
+        "type": "object",
+        "properties": {
+          "sort": {
+            "type": "integer",
+            "description": "Sort order of the section within the template"
+          },
+          "sections_id": {
+            "type": "object",
+            "description": "The section details",
+            "$ref": "#/components/schemas/Section"
+          }
+        }
+      },
+      "TemplateTranslation": {
+        "type": "object",
+        "properties": {
+          "languages_id": {
+            "type": "string",
+            "description": "Language identifier"
+          },
+          "name": {
+            "type": "string",
+            "description": "Localized name of the template"
+          },
+          "description": {
+            "type": "string",
+            "description": "Localized description of the template"
           }
         }
       },
@@ -4872,6 +5191,15 @@
           "multiple"
         ]
       },
+      "WritingStyle": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the writing style"
+          }
+        }
+      },
       "copilotCommon.ErrorResponse": {
         "type": "object",
         "properties": {
@@ -4995,50 +5323,6 @@
           "evidence": {
             "type": "object",
             "$ref": "#/components/schemas/DocumentationEvidence"
-          }
-        }
-      },
-      "RequestInteractionStreamStatus": {
-        "type": "string",
-        "enum": [
-          "end",
-          "pause",
-          "resume"
-        ]
-      },
-      "ResponseInteractionStreamTranscript": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "$ref": "#/components/schemas/ResponseStreamTypeEnum"
-          },
-          "data": {
-            "$ref": "#/components/schemas/ResponseTranscript"
-          }
-        }
-      },
-      "ResponseInteractionStreamFact": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "$ref": "#/components/schemas/ResponseStreamTypeEnum"
-          },
-          "data": {
-            "$ref": "#/components/schemas/ResponseFact"
-          }
-        }
-      },
-      "ResponseInteractionStreamDocumentation": {
-        "type": "object",
-        "properties": {
-          "type": {
-            "$ref": "#/components/schemas/ResponseStreamTypeEnum"
-          },
-          "data": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ResponseDocumentation"
-            }
           }
         }
       }
