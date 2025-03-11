@@ -3,25 +3,39 @@ title: "Overview"
 description: "Find the latest updates across Corti's products"
 ---
 
-<CardGroup cols={2}>
   <Card
-    title="API & Model Updates"
+    title="Foundation Models"
+    icon="layer-group"
+    href="/release-notes/foundation-models"
+    horizontal="true"
+  >
+    Learn about the latest capabilities for Corti AI platform and Foundation Models.
+  </Card>
+  <CardGroup cols={2}>
+  <Card
+    title="API Updates"
     icon="rectangle-terminal"
     href="/release-notes/api-updates"
   >
-    Learn about the latest enhancements, new capabilities, and model updates for
-    Corti's API.
+    Learn about the latest capabilities for Corti application programming interfaces (API), used to access the three Foundation Models.
   </Card>
   <Card
-    title="Legacy API"
-    icon="rectangle-terminal"
-    href="https://docs-legacy.corti.ai/"
+    title="ASR Updates"
+    icon="microphone"
+    href="/release-notes/asr-updates"
   >
-    Our v1 API is still accessible but we do not recommend building new integrations with it.
+    Learn about the latest capabilities for Corti automated speech recognition (ASR), packaged into releases of Corti Solo foundation model.
   </Card>
-</CardGroup>
+  </CardGroup>
+<br/>
+<Info>
+  Looking for documentation on Corti API v1? 
+  
+  Legacy API documentation is still accessible <a href="https://docs-legacy.corti.ai/">here</a>, but we recommend using the latest API documentation for new integrations.
+</Info>
 
 <Info>
-  Looking for release notes for Corti Assistant or Mission Control? Visit our{" "}
-  <a href="https://help.corti.ai/">Help Center</a> instead
+  Looking for release notes for Corti Assistant or Mission Control? 
+  
+  Visit our [Help Center](https://help.corti.ai/).
 </Info>
