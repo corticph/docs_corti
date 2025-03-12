@@ -54,8 +54,8 @@ Indicates a successful WebSocket connection. Once connected, the server streams 
 | `type` | string | Message type (`transcript`) |
 | `data.id` | string | Unique identifier for the transcript |
 | `data.transcript` | string | The transcribed text |
-| `data.isFinal` | boolean | Indicates whether the transcript is finalized |
-| `data.participant.id` | string | Participant identifier |
+| `data.final` | boolean | Indicates whether the transcript is finalized or interim |
+| `data.participant.channel` | string | The audio channel for the participant (e.g. 0 or 1) |
 | `data.participant.role` | string | Role of the participant (e.g., `doctor`) |
 | `data.time.start` | number | Start time of the transcript segment |
 | `data.time.end` | number | End time of the transcript segment |
@@ -66,11 +66,12 @@ Indicates a successful WebSocket connection. Once connected, the server streams 
   "data": [
     {
     "id": "UUID",
-    "start": 12345.67,
-    "duration": 5.0,
+    "start": 1.71,
+    "end": 11.296,
     "transcript": "Patient presents with fever and cough.",
-    "isFinal": true,
-    "participant": { "id": "UUID", "role": "doctor" },
+    "final": true,
+    "speakerId": -1,
+    "participant": { "channel": 0, "role": "doctor" },
     "time": { "start": 12345.67, "end": 12350.67 }
     }
   ]
@@ -81,19 +82,19 @@ Indicates a successful WebSocket connection. Once connected, the server streams 
 
 | Property | Type | Description |
 | --- | --- | --- |
-| `type` | string | Message type (`fact`) |
+| `type` | string | Message type (`facts`) |
 | `data.id` | string | Unique identifier for the fact |
 | `data.text` | string | Text description of the fact |
 | `data.group` | string | Categorization of the fact (e.g., `medical-history`) |
 | `data.groupId` | string | Unique identifier for the group |
 | `data.isDiscarded` | boolean | Indicates if the fact was discarded |
-| `data.source` | string | Source of the fact (e.g., `EHR`) |
+| `data.source` | string | Source of the fact (e.g., `core` for generated automatically) |
 | `data.createdAt` | string | Timestamp when the fact was created |
 | `data.updatedAt` | string | Timestamp when the fact was last updated |
 
 ```json
 {
-  "type": "fact",
+  "type": "facts",
   "data": [
     {
     "id": "UUID",
@@ -101,7 +102,7 @@ Indicates a successful WebSocket connection. Once connected, the server streams 
     "group": "medical-history",
     "groupId": "UUID",
     "isDiscarded": false,
-    "source": "EHR",
+    "source": "core",
     "createdAt": "2024-02-28T12:34:56Z",
     "updatedAt": "2024-02-28T12:35:56Z"
     }
@@ -119,12 +120,12 @@ Clients must send a stream configuration message and wait for a response of type
 | --- | --- | --- | --- |
 | `type` | string | Yes | Message type (`config`) |
 | `configuration` | object | Yes | Configuration settings |
-| `transcription.primaryLanguage` | string | Yes | Primary language for transcription |
+| `transcription.primaryLanguage` | string | Yes | Primary spoken language for transcription |
 | `transcription.isDiarization` | boolean | No - `false` | Enable speaker diarization |
 | `transcription.isMultichannel` | boolean | No - `false` | Enable multi-channel audio processing |
 | `transcription.participants` | array | Yes | List of participants with roles |
-| `mode.type` | string | `facts` | Processing mode |
-| `mode.outputLocale` | string | Yes | Output language locale |
+| `mode.type` | string | `facts`, `transcription` | Processing mode |
+| `mode.outputLocale` | string | Yes | Output language locale specific to `facts` |
 
 ### Example Configuration
 
