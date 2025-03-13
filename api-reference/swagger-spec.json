@@ -58,7 +58,7 @@
           "interactions"
         ],
         "summary": "List All Interactions",
-        "description": " Lists all existing interactions. Results can be filtered by encounter status and patient ID.",
+        "description": " Lists all existing interactions. Results can be filtered by encounter status and patient identifier.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -114,7 +114,7 @@
             }
           },
           {
-            "name": "patientId",
+            "name": "patient",
             "in": "query",
             "description": "A unique identifier for the patient.",
             "schema": {
@@ -776,18 +776,23 @@
         "x-codeSamples": [
           {
             "lang": "text",
-            "label": "Facts",
-            "source": "curl --request POST \\\n  --url https://api.{environment}.corti.app/v2/interactions/{id}/documents \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n  \"context\": [\n    {\n      \"type\": \"facts\",\n      \"data\": [\n        {\n          \"text\": \"<string>\",\n          \"group\": \"Others\",\n          \"source\": \"core\"\n        }\n      ]\n    }\n  ],\n  \"templateId\": \"3c90c3cc-0d44-4b50-8888-8dd25736052a\",\n  \"templateKey\": \"<string>\",\n  \"template\": {\n    \"sectionIds\": [\n      \"3c90c3cc-0d44-4b50-8888-8dd25736052a\"\n    ],\n    \"sectionKeys\": [\n      \"<string>\"\n    ],\n    \"documentName\": \"<string>\",\n    \"additionalInstructions\": \"<string>\"\n  },\n  \"name\": \"<string>\",\n  \"modelName\": \"\\\"model_name (Latest)\\\" | \\\"model_name_version\\\"\",\n  \"outputLanguage\": \"<string>\"\n}'"
+            "label": "from Facts",
+            "source": "curl --request POST \\\n  --url https://api.{environment}.corti.app/v2/interactions/{id}/documents \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n  \"context\": [\n    {\n      \"type\": \"facts\",\n      \"data\": [\n        {\n          \"text\": \"<string>\",\n          \"group\": \"other\",\n          \"source\": \"core\"\n        }\n      ]\n    }\n  ],\n  \"templateKey\": \"<string>\",\n  \"name\": \"<string>\",\n  \"outputLanguage\": \"<string>\"\n}'"
           },
           {
             "lang": "text",
-            "label": "Transcript",
-            "source": "curl --request POST \\\n  --url https://api.{environment}.corti.app/v2/interactions/{id}/documents \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n  \"context\": [\n    {\n      \"type\": \"transcript\",\n      \"data\": {\n        \"channel\": 123,\n        \"end\": 123,\n        \"participant\": 123,\n        \"start\": 123,\n        \"text\": \"<string>\"\n      }\n    }\n  ],\n  \"templateId\": \"3c90c3cc-0d44-4b50-8888-8dd25736052a\",\n  \"templateKey\": \"<string>\",\n  \"template\": {\n    \"sectionIds\": [\n      \"3c90c3cc-0d44-4b50-8888-8dd25736052a\"\n    ],\n    \"sectionKeys\": [\n      \"<string>\"\n    ],\n    \"documentName\": \"<string>\",\n    \"additionalInstructions\": \"<string>\"\n  },\n  \"name\": \"<string>\",\n  \"modelName\": \"\\\"model_name (Latest)\\\" | \\\"model_name_version\\\"\",\n  \"outputLanguage\": \"<string>\"\n}'"
+            "label": "from Transcript",
+            "source": "curl --request POST \\\n  --url https://api.{environment}.corti.app/v2/interactions/{id}/documents \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n  \"context\": [\n    {\n      \"type\": \"transcript\",\n      \"data\": {\n        \"channel\": 1,\n        \"end\": 129,\n        \"participant\": 123,\n        \"start\": 20,\n        \"text\": \"<string>\"\n      }\n    }\n  ],\n  \"templateKey\": \"<string>\",\n  \"name\": \"<string>\",\n  \"outputLanguage\": \"<string>\"\n}'"
           },
           {
             "lang": "text",
-            "label": "string",
-            "source": "curl --request POST \\\n  --url https://api.{environment}.corti.app/v2/interactions/{id}/documents \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n  \"context\": [\n    {\n      \"type\": \"string\",\n      \"data\": \"<string>\"\n    }\n  ],\n  \"templateId\": \"3c90c3cc-0d44-4b50-8888-8dd25736052a\",\n  \"templateKey\": \"<string>\",\n  \"template\": {\n    \"sectionIds\": [\n      \"3c90c3cc-0d44-4b50-8888-8dd25736052a\"\n    ],\n    \"sectionKeys\": [\n      \"<string>\"\n    ],\n    \"documentName\": \"<string>\",\n    \"additionalInstructions\": \"<string>\"\n  },\n  \"name\": \"<string>\",\n  \"modelName\": \"\\\"model_name (Latest)\\\" | \\\"model_name_version\\\"\",\n  \"outputLanguage\": \"<string>\"\n}'"
+            "label": "assemble Template",
+            "source": "curl --request POST \\\n  --url https://api.{environment}.corti.app/v2/interactions/{id}/documents \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n  \"context\": [\n    {\n      \"type\": \"string\",\n      \"data\": \"<string>\"\n      }\n  ],\n  \"templateKey\": \"<string>\",\n  \"template\": {\n   \"sectionKeys\": [\n      \"<string>\"\n    ],\n  \"name\": \"<string>\",\n  \"outputLanguage\": \"<string>\"\n}'"
+          },
+          {
+            "lang": "text",
+            "label": "from string",
+            "source": "curl --request POST \\\n  --url https://api.{environment}.corti.app/v2/interactions/{id}/documents \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n  \"context\": [\n    {\n      \"type\": \"string\",\n      \"data\": \"<string>\"\n    }\n  ],\n  \"templateKey\": \"<string>\",\n  \"name\": \"<string>\",\n  \"outputLanguage\": \"<string>\"\n}'"
           }
         ]
       }
@@ -1075,7 +1080,7 @@
       "get": {
         "responses": {
           "200": {
-            "description": " ",
+            "description": "List of associated codes.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1128,7 +1133,7 @@
         "tags": [
           "codes"
         ],
-        "summary": "List codes",
+        "summary": "List Codes",
         "description": " Get all codes associated with an interaction.",
         "parameters": [
           {
@@ -1150,7 +1155,7 @@
       "post": {
         "responses": {
           "200": {
-            "description": " ",
+            "description": "List of predicted codes.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1245,7 +1250,7 @@
       "put": {
         "responses": {
           "200": {
-            "description": " ",
+            "description": "Updated list of selected codes.",
             "content": {
               "application/json": {
                 "schema": {
@@ -1298,7 +1303,7 @@
         "tags": [
           "codes"
         ],
-        "summary": "Select codes",
+        "summary": "Select Codes",
         "description": " Mark provided codes as selected.",
         "parameters": [
           {
@@ -2581,17 +2586,21 @@
         "properties": {
           "subsetName": {
             "type": "string",
+            "description": "Category or subset of the additional code",
             "example": "orsakskoder"
           },
           "code": {
             "type": "string",
+            "description": "The additional code",
             "example": "W0231"
           },
           "description": {
-            "type": "string"
+            "type": "string",
+            "description": "Description of the additional code"
           },
           "state": {
             "type": "object",
+            "description": "State of the additional code",
             "$ref": "#/components/schemas/CodesState"
           }
         }
@@ -2647,7 +2656,8 @@
             "$ref": "#/components/schemas/CodesContextTypeEnum"
           },
           "data": {
-            "type": "string"
+            "type": "string",
+            "description": "Can be a transcript or document ID"
           }
         }
       },
@@ -2665,9 +2675,11 @@
         "type": "object",
         "properties": {
           "isSelected": {
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Indicates whether the code is selected"
           },
           "source": {
+            "description": "Source of the predicted code",
             "$ref": "#/components/schemas/V2SourceEnum"
           }
         }
@@ -3106,10 +3118,12 @@
         "properties": {
           "code": {
             "type": "string",
+            "description": "The medical code to update",
             "example": "W0231"
           },
           "additionalCodes": {
             "type": "array",
+            "description": "List of additional codes",
             "items": {
               "type": "string"
             }
@@ -3125,14 +3139,17 @@
         "properties": {
           "modelName": {
             "type": "string",
+            "description": "The model name used for code predictions",
             "example": "\"geography_modelName (Latest)\" | \"geography_modelName_version\""
           },
           "context": {
             "type": "object",
+            "description": "Context object containing type and data",
             "$ref": "#/components/schemas/CodesContext"
           },
           "existingCodes": {
             "type": "array",
+            "description": "List of pre-selected codes before interaction",
             "items": {
               "type": "string"
             }
@@ -3144,15 +3161,18 @@
         "properties": {
           "finalCodes": {
             "type": "array",
+            "description": "List of final codes",
             "items": {
               "type": "object",
               "properties": {
                 "code": {
                   "type": "string",
+                  "description": "The medical code to update",
                   "example": "W0231"
                 },
                 "additionalCodes": {
                   "type": "array",
+                  "description": "List of additional codes",
                   "items": {
                     "type": "string"
                   }
@@ -3794,42 +3814,52 @@
         "properties": {
           "codes": {
             "type": "array",
+            "description": "List of medical codes",
             "items": {
               "type": "object",
               "properties": {
                 "system": {
                   "type": "string",
+                  "description": "The coding system used",
                   "example": "ICD-10"
                 },
                 "code": {
                   "type": "string",
+                  "description": "The medical code",
                   "example": "T933"
                 },
                 "description": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "Description of the medical code"
                 },
                 "state": {
                   "type": "object",
+                  "description": "State of the code",
                   "$ref": "#/components/schemas/CodesState"
                 },
                 "additionalCodes": {
                   "type": "array",
+                  "description": "List of additional codes",
                   "items": {
                     "type": "object",
                     "properties": {
                       "subsetName": {
                         "type": "string",
+                        "description": "Category or subset of the additional code",
                         "example": "orsakskoder"
                       },
                       "code": {
                         "type": "string",
+                        "description": "The additional code",
                         "example": "W0231"
                       },
                       "description": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Description of the additional code"
                       },
                       "state": {
                         "type": "object",
+                        "description": "State of the additional code",
                         "$ref": "#/components/schemas/CodesState"
                       }
                     }
@@ -3845,37 +3875,46 @@
         "properties": {
           "system": {
             "type": "string",
+            "description": "The coding system used",
             "example": "ICD-10"
           },
           "code": {
             "type": "string",
+            "description": "The medical code",
             "example": "T933"
           },
           "description": {
-            "type": "string"
+            "type": "string",
+            "description": "Description of the medical code"
           },
           "state": {
             "type": "object",
+            "description": "State of the code",
             "$ref": "#/components/schemas/CodesState"
           },
           "additionalCodes": {
             "type": "array",
+            "description": "List of additional codes",
             "items": {
               "type": "object",
               "properties": {
                 "subsetName": {
                   "type": "string",
+                  "description": "Category or subset of the additional code",
                   "example": "orsakskoder"
                 },
                 "code": {
                   "type": "string",
+                  "description": "The additional code",
                   "example": "W0231"
                 },
                 "description": {
-                  "type": "string"
+                  "type": "string",
+                  "description": "Description of the additional code"
                 },
                 "state": {
                   "type": "object",
+                  "description": "State of the additional code",
                   "$ref": "#/components/schemas/CodesState"
                 }
               }
