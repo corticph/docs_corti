@@ -750,17 +750,6 @@
               "format": "string",
               "description": "The interaction ID representing the context for the request."
             }
-          },
-          {
-            "name": "stream",
-            "in": "query",
-            "description": "If true the response happens via SSE sending back a full valid JSON always, however, the content within text may be incomplete.",
-            "example": "false",
-            "schema": {
-              "type": "boolean",
-              "format": "boolean",
-              "description": "If true the response happens via SSE sending back a full valid JSON always, however, the content within text may be incomplete."
-            }
           }
         ],
         "requestBody": {
