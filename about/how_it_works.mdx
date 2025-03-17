@@ -14,7 +14,7 @@ The available API endpoints leverage the foundational models offered by Corti fo
 
 ## Bringing it all together 
 
-Through the structured flow of **Interactions**, and the power of **Streaming** with **real-time** extraction of **Facts**, combined with the other available endpoints, the Corti API delivers a cohesive and efficient experience. Corti API ensures that all data, from live conversations to finalized documents, is tightly integrated and easily accessible. 
+Through the structured flow of **Interactions**, and the power of **Streaming** with **real-time** extraction of **Facts**, combined with the other available endpoints, the Corti API delivers a cohesive and efficient experience. Corti API ensures that all data, from live conversations to finalized documents, are tightly integrated and easily accessible. 
 
 This interaction-centric approach, combined with the granularity and flexibility of the endpoints, makes it simple for developers to build robust medical applications that leverage real-time AI capabilities across multiple aspects of the clinician-patient relationship.
 
@@ -36,17 +36,17 @@ _Key features of Facts_:
 </Accordion> 
 
 <Accordion title="Streams">
-The streams endpoint enables **real-time** workflows, designed for scenarios requiring immediate processing and feedback during live interactions. It works by establishing a WebSocket connection after initializing an interaction through the `/interactions` endpoint. Once connected, the client streams audio packets to the API, which responds with live transcripts and fact updates in real-time. This continuous data flow allows for instantaneous capture and processing of information, making it ideal for situations where immediate action is crucial. The stream can be updated with new facts during the interaction, and it concludes when the client sends an "end" message, formally closing the live session.
+The streams endpoint enables **real-time** workflows, designed for scenarios requiring immediate processing and feedback during live interactions. It works by establishing a WebSocket connection after initializing an interaction through the `/interactions/` endpoint. Once connected, the client streams audio packets to the API, which responds with live transcripts and fact updates in real-time. This continuous data flow allows for instantaneous capture and processing of information, making it ideal for situations where immediate action is crucial. The stream can be updated with new facts during the interaction, and it concludes when the client sends an "end" message, formally closing the live session.
 </Accordion>
 
 <Accordion title="Recordings">
 The recordings endpoint in the Corti API allows clients to manage audio recordings associated with interactions. It is part of a larger workflow that includes initializing interactions, uploading recordings, generating transcripts, and creating documents based on the interaction data.
         
-As an example, after initializing an interaction, clients can upload an audio file by sending a `POST` request to `/interactions/:interactionId/recording`. The API responds with a 200 status code and returns a `recordingId`, confirming that the audio file has been successfully uploaded and linked to the specific interaction. Use the 'recordingId' in your next step, such as generating Facts or Documents. 
+As an example, after initializing an interaction, clients can upload an audio file by sending a `POST` request to `/interactions/:interactionId/recording/`. The API responds with a 200 status code and returns a `recordingId`, confirming that the audio file has been successfully uploaded and linked to the specific interaction. Use the 'recordingId' in your next step, such as generating Facts or Documents. 
 </Accordion>
 
 <Accordion title="Transcripts">
-The transcripts endpoint in the Corti API is part of the workflow for processing recorded interactions. After uploading an audio recording, clients can initiate the transcription process by sending a POST request to `/interactions/:interactionId/transcripts`. The API then processes the audio and returns a 200 status code along with the generated transcript. This transcript contains the text version of the recorded interaction, extracted and formatted for review. The transcripts endpoint plays a crucial role in converting speech to text for clinical conversations and dictations, enabling further processing and documentation creation based on the interaction data.
+The transcripts endpoint in the Corti API is part of the workflow for processing recorded interactions. After uploading an audio recording, clients can initiate the transcription process by sending a POST request to `/interactions/:interactionId/transcripts/`. The API then processes the audio and returns a 200 status code along with the generated transcript. This transcript contains the text version of the recorded interaction, extracted and formatted for review. The transcripts endpoint plays a crucial role in converting speech to text for clinical conversations and dictations, enabling further processing and documentation creation based on the interaction data.
 </Accordion>
 
 <Accordion title="Templates">
@@ -56,11 +56,11 @@ For more information on how to find and use existing templates, or to request cu
 </Accordion>
 
 <Accordion title="Documents">
-The documents endpoint in the Corti API is an essential part of the workflow for processing recorded interactions. After initializing an interaction, uploading a recording, and generating a transcript, clients can create the necessary documentation by sending a POST request to `/interactions/:interactionId/documents`. This request includes the previously generated transcript and a templateId to specify the desired format of the output document. The API then processes the request and returns a 200 status code along with the final document, which is ready for use or further editing. This endpoint allows for the generation of documentation tailored to specific needs, such as clinical notes or referral letters, based on the interaction data and predefined templates. The endpoint can be called multiple times for a given interaction if multiple document outputs are desired. 
+The documents endpoint in the Corti API is an essential part of the workflow for processing recorded interactions. After initializing an interaction, uploading a recording, and generating a transcript, clients can create the necessary documentation by sending a POST request to `/interactions/:interactionId/documents/`. This request includes the previously generated transcript and a templateId to specify the desired format of the output document. The API then processes the request and returns a 200 status code along with the final document, which is ready for use or further editing. This endpoint allows for the generation of documentation tailored to specific needs, such as clinical notes or referral letters, based on the interaction data and predefined templates. The endpoint can be called multiple times for a given interaction if multiple document outputs are desired. 
 </Accordion>
 
 <Accordion title="Codes">
-The codes endpoint in the Corti API provides access to the Corti Coding Expert Model, which includes support for ICD-10 diagnosis and procedure codes as well as CPT code with modifiers. The API provides the ability to generate codes for a text that is defined in the request or documents associated with the interaction. In addition to using out of the box coding model, organizational-specific model training is available so that coding output is tuned for client note styles and requirements. 
+The codes endpoint in the Corti API provides access to the code extraction model, which includes support for ICD-10 diagnosis and procedure codes as well as CPT code with modifiers. The API provides the ability to generate codes for a text that is defined in the request or documents associated with the interaction. In addition to using out of the box coding model, organizational-specific model training is available so that coding output is tuned for client note styles and requirements. 
 </Accordion>
 
 <Accordion title="Discovery">
