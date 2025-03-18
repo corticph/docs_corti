@@ -377,7 +377,7 @@
         ]
       }
     },
-    "/interactions/{id}/facts": {
+    "/interactions/{id}/facts/": {
       "get": {
         "responses": {
           "200": {
@@ -602,7 +602,7 @@
         }
       }
     },
-    "/interactions/{id}/documents": {
+    "/interactions/{id}/documents/": {
       "get": {
         "responses": {
           "200": {
@@ -1065,7 +1065,7 @@
         ]
       }
     },
-    "/interactions/{id}/codes": {
+    "/interactions/{id}/codes/": {
       "get": {
         "responses": {
           "200": {
@@ -1322,7 +1322,7 @@
         }
       }
     },
-    "/interactions/{id}/recordings": {
+    "/interactions/{id}/recordings/": {
       "get": {
         "responses": {
           "200": {
@@ -1671,7 +1671,7 @@
         ]
       }
     },
-    "/interactions/{id}/transcripts": {
+    "/interactions/{id}/transcripts/": {
       "get": {
         "responses": {
           "200": {
@@ -2097,7 +2097,7 @@
         ]
       }
     },
-    "/templates": {
+    "/templates/": {
       "get": {
         "responses": {
           "200": {
@@ -2173,7 +2173,7 @@
         ]
       }
     },
-    "/swagger": {
+    "/swagger/": {
       "get": {
         "responses": {
           "200": {
@@ -2199,7 +2199,7 @@
         ]
       }
     },
-    "/private/v2/align": {
+    "/private/v2/align/": {
       "post": {
         "responses": {
           "200": {
@@ -2332,7 +2332,7 @@
         }
       }
     },
-    "/private/v2/interactions/{id}/query": {
+    "/private/v2/interactions/{id}/query/": {
       "post": {
         "responses": {
           "200": {
@@ -2429,7 +2429,7 @@
         }
       }
     },
-    "/private/v2/tools/guidelines": {
+    "/private/v2/tools/guidelines/": {
       "post": {
         "responses": {
           "200": {
@@ -2475,7 +2475,7 @@
         }
       }
     },
-    "/tools/mentions": {
+    "/tools/mentions/": {
       "post": {
         "responses": {
           "200": {
@@ -2521,7 +2521,7 @@
         }
       }
     },
-    "/tools/question-prompts": {
+    "/tools/question-prompts/": {
       "post": {
         "responses": {
           "200": {
@@ -2645,8 +2645,7 @@
             "$ref": "#/components/schemas/CodesContextTypeEnum"
           },
           "data": {
-            "type": "string",
-            "description": "Can be a transcript or document ID"
+            "type": "string"
           }
         }
       },
@@ -2824,20 +2823,10 @@
             "format": "date-time",
             "description": "The start date/time of the encounter. (UTC)"
           },
-          "startedAtTzoffset": {
-            "type": "string",
-            "description": "Timezone offset for startedAt",
-            "example": "+00:00"
-          },
           "endedAt": {
             "type": "string",
             "format": "date-time",
             "description": "The end date/time of the encounter. (UTC)"
-          },
-          "endedAtTzoffset": {
-            "type": "string",
-            "description": "Timezone offset for endedAt",
-            "example": "+00:00"
           }
         }
       },
@@ -3175,7 +3164,6 @@
         "type": "object",
         "required": [
           "context",
-          "templateId",
           "templateKey",
           "outputLanguage"
         ],
@@ -3201,19 +3189,13 @@
               }
             }
           },
-          "templateId": {
-            "type": "string",
-            "description": "The ID of the template that informs on what kind of document is to be generated.",
-            "items": {},
-            "$ref": "#/components/schemas/UUID"
-          },
           "templateKey": {
             "type": "string",
             "description": "The key of the template that informs on what kind of document is to be generated."
           },
           "template": {
             "type": "object",
-            "description": "Template details if the template should be generated during the request. Overrides templateId.",
+            "description": "Template details if the template should be generated during the request.",
             "$ref": "#/components/schemas/DocumentTemplate"
           },
           "name": {
@@ -3293,20 +3275,10 @@
             "format": "date-time",
             "description": "The UTC timestamp indicating when the encounter started."
           },
-          "startedAtTzoffset": {
-            "type": "string",
-            "description": "The timezone offset for the start time.",
-            "example": "+00:00"
-          },
           "endedAt": {
             "type": "string",
             "format": "date-time",
             "description": "The UTC timestamp indicating when the encounter ended."
-          },
-          "endedAtTzoffset": {
-            "type": "string",
-            "description": "The timezone offset for the end time.",
-            "example": "+00:00"
           }
         }
       },
@@ -3518,7 +3490,7 @@
         "properties": {
           "assignedUserId": {
             "type": "string",
-            "description": "A unique identifier for the medical professional responsible for this interaction.",
+            "description": "A unique identifier for the medical professional responsible for this interaction. If nulled, automatically set to a uuid.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -3539,7 +3511,7 @@
         "properties": {
           "assignedUserId": {
             "type": "string",
-            "description": "The unique identifier of the medical professional responsible for this interaction.",
+            "description": "The unique identifier of the medical professional responsible for this interaction.  If nulled, automatically set to a uuid.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -3692,7 +3664,6 @@
         "required": [
           "recordingId",
           "primaryLanguage",
-          "participants",
           "modelName"
         ],
         "properties": {
@@ -3714,9 +3685,15 @@
             "type": "boolean",
             "description": "If true, each audio channel is transcribed separately."
           },
-          "shouldDiarize": {
+          "diarize": {
             "type": "boolean",
             "description": "If true, separates speakers within an audio channel returning incrementing ids for transcript segments."
+          },
+          "speakerId": {
+            "type": "string",
+            "description": "Speaker ID used when IsMultichannel is false.",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
           },
           "participants": {
             "type": "array",
@@ -4026,20 +4003,10 @@
             "format": "date-time",
             "description": "The timestamp when the fact was created."
           },
-          "createdAtTzOffset": {
-            "type": "string",
-            "description": "The timezone offset for the creation timestamp.",
-            "example": "+00:00"
-          },
           "updatedAt": {
             "type": "string",
             "format": "date-time",
             "description": "The timestamp when the fact was last updated."
-          },
-          "updatedAtTzOffset": {
-            "type": "string",
-            "description": "The timezone offset for the last update timestamp.",
-            "example": "+00:00"
           },
           "evidence": {
             "type": "array",
@@ -4099,11 +4066,6 @@
             "type": "string",
             "format": "date-time",
             "description": "The timestamp when the fact was last updated."
-          },
-          "updatedAtTzOffset": {
-            "type": "string",
-            "description": "The timezone offset for the last update timestamp.",
-            "example": "+00:00"
           }
         }
       },
@@ -4161,20 +4123,10 @@
             "format": "date-time",
             "description": "The original timestamp when the fact was created."
           },
-          "createdAtTzOffset": {
-            "type": "string",
-            "description": "The timezone offset for the creation timestamp.",
-            "example": "+00:00"
-          },
           "updatedAt": {
             "type": "string",
             "format": "date-time",
             "description": "The timestamp when the fact was last updated."
-          },
-          "updatedAtTzOffset": {
-            "type": "string",
-            "description": "The timezone offset for the last update timestamp.",
-            "example": "+00:00"
           }
         }
       },
@@ -4220,11 +4172,6 @@
                   "type": "string",
                   "format": "date-time",
                   "description": "The timestamp when the fact was last updated."
-                },
-                "updatedAtTzOffset": {
-                  "type": "string",
-                  "description": "The timezone offset for the last update timestamp.",
-                  "example": "+00:00"
                 }
               }
             }
@@ -4274,20 +4221,10 @@
                   "format": "date-time",
                   "description": "The timestamp when the fact was created."
                 },
-                "createdAtTzOffset": {
-                  "type": "string",
-                  "description": "The timezone offset for the creation timestamp.",
-                  "example": "+00:00"
-                },
                 "updatedAt": {
                   "type": "string",
                   "format": "date-time",
                   "description": "The timestamp when the fact was last updated."
-                },
-                "updatedAtTzOffset": {
-                  "type": "string",
-                  "description": "The timezone offset for the last update timestamp.",
-                  "example": "+00:00"
                 },
                 "evidence": {
                   "type": "array",
@@ -4357,20 +4294,10 @@
                   "format": "date-time",
                   "description": "The original timestamp when the fact was created."
                 },
-                "createdAtTzOffset": {
-                  "type": "string",
-                  "description": "The timezone offset for the creation timestamp.",
-                  "example": "+00:00"
-                },
                 "updatedAt": {
                   "type": "string",
                   "format": "date-time",
                   "description": "The timestamp when the fact was last updated."
-                },
-                "updatedAtTzOffset": {
-                  "type": "string",
-                  "description": "The timezone offset for the last update timestamp.",
-                  "example": "+00:00"
                 }
               }
             }
@@ -4414,20 +4341,10 @@
             "format": "date-time",
             "description": "The original timestamp when the fact was created."
           },
-          "createdAtTzOffset": {
-            "type": "string",
-            "description": "The timezone offset for the creation timestamp.",
-            "example": "+00:00"
-          },
           "updatedAt": {
             "type": "string",
             "format": "date-time",
             "description": "The timestamp when the fact was last updated."
-          },
-          "updatedAtTzOffset": {
-            "type": "string",
-            "description": "The timezone offset for the last update timestamp.",
-            "example": "+00:00"
           }
         }
       },
@@ -4457,7 +4374,7 @@
           },
           "assignedUserId": {
             "type": "string",
-            "description": "A unique identifier for the medical professional responsible for this interaction.",
+            "description": "A unique identifier for the medical professional responsible for this interaction. If nulled, automatically set to a uuid.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -4476,30 +4393,15 @@
             "format": "date-time",
             "description": "The timestamp when the interaction concluded (UTC)."
           },
-          "endedAtTzoffset": {
-            "type": "string",
-            "description": "Timezone offset for the end timestamp.",
-            "example": "+00:00"
-          },
           "createdAt": {
             "type": "string",
             "format": "date-time",
             "description": "The timestamp when the interaction was started (UTC)."
           },
-          "createdAtTzoffset": {
-            "type": "string",
-            "description": "Timezone offset for the creation timestamp.",
-            "example": "+00:00"
-          },
           "updatedAt": {
             "type": "string",
             "format": "date-time",
             "description": "The timestamp when the interaction was last modified (UTC)."
-          },
-          "updatedAtTzoffset": {
-            "type": "string",
-            "description": "Timezone offset for the updated timestamp.",
-            "example": "+00:00"
           },
           "websocketUrl": {
             "type": "string",
@@ -4543,7 +4445,7 @@
                 },
                 "assignedUserId": {
                   "type": "string",
-                  "description": "A unique identifier for the medical professional responsible for this interaction.",
+                  "description": "A unique identifier for the medical professional responsible for this interaction. If nulled, automatically set to a uuid.",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
@@ -4562,30 +4464,15 @@
                   "format": "date-time",
                   "description": "The timestamp when the interaction concluded (UTC)."
                 },
-                "endedAtTzoffset": {
-                  "type": "string",
-                  "description": "Timezone offset for the end timestamp.",
-                  "example": "+00:00"
-                },
                 "createdAt": {
                   "type": "string",
                   "format": "date-time",
                   "description": "The timestamp when the interaction was started (UTC)."
                 },
-                "createdAtTzoffset": {
-                  "type": "string",
-                  "description": "Timezone offset for the creation timestamp.",
-                  "example": "+00:00"
-                },
                 "updatedAt": {
                   "type": "string",
                   "format": "date-time",
                   "description": "The timestamp when the interaction was last modified (UTC)."
-                },
-                "updatedAtTzoffset": {
-                  "type": "string",
-                  "description": "Timezone offset for the updated timestamp.",
-                  "example": "+00:00"
                 },
                 "websocketUrl": {
                   "type": "string",
@@ -5228,6 +5115,29 @@
           }
         }
       },
+      "common.ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "requestid": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "details": {
+            "type": "string"
+          },
+          "instance": {
+            "type": "string"
+          }
+        }
+      },
       "copilotCommon.ErrorResponse": {
         "type": "object",
         "properties": {
@@ -5265,6 +5175,9 @@
       },
       "copilotModels.V2TranscriptParticipantRole": {
         "type": "string"
+      },
+      "type.NoContent": {
+        "type": "object"
       },
       "uuid.UUID": {
         "type": "string",
