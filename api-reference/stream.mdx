@@ -1,6 +1,6 @@
 ---
-title: Connect to stream
-description: WebSocket Secure (WSS) API Documentation
+title: Stream - Ambient
+description: WebSocket Secure (WSS) API Documentation for /stream
 tag: WSS
 ---
 
@@ -9,6 +9,8 @@ tag: WSS
 The WebSocket Secure (WSS) API enables real-time, bidirectional communication with the Corti system for interaction streaming. Clients can send and receive structured data, including transcripts and facts updates.
 
 This documentation provides a structured guide for integrating the Corti WSS API for real-time interaction streaming.
+
+<Info>If you are looking for a stateless, atomic endpoint that is more geared towards front-end dictation workflows you should use the /transcribe WSS</Info>
 
 ### Environment Options
 
@@ -43,7 +45,11 @@ The authentication for the WSS stream requires in addition to the `tenant-name` 
 
 ### **101 Switching Protocols**
 
-Indicates a successful WebSocket connection. Once connected, the server streams data in the following formats:
+Indicates a successful WebSocket connection.
+Once connected, the server streams data in the following formats.
+
+<Info>By default, returned data streams as well as incoming audio are being saved. Based on the interactionId you can find the saved `transcripts` and `facts` and `recording(s)` in the relevant REST endpoints. Audio recordings are saved as .webm format.
+This can be configured by Corti to be turned off to ensure you can comply with your applicable regulations and data handling preferences.</Info>
 
 ### Data Streams
 
