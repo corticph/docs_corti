@@ -121,7 +121,7 @@ Clients must send a stream configuration message and wait for a response of type
 | `transcription.primaryLanguage` | string | Yes | Primary spoken language for transcription |
 | `transcription.isDiarization` | boolean | No - `false` | Enable speaker diarization |
 | `transcription.isMultichannel` | boolean | No - `false` | Enable multi-channel audio processing |
-| `transcription.participants` | array | Yes | List of participants with roles |
+| `transcription.participants` | array | Yes | List of participants with roles assigned to a channel |
 | `mode.type` | string | `facts`, `transcription` | Processing mode |
 | `mode.outputLocale` | string | Yes | Output language locale specific to `facts` |
 
@@ -174,13 +174,40 @@ The connection remains open until all transcripts are complete. The server then 
 
 ## Sending Audio Data
 
-Ensure that your configuration was accepted before starting to send audio.
+Ensure that your configuration was accepted before starting to send audio and that your initial audio chunk is not too small as it needs to contain the headers to properly decode the audio.
 We recommend sending audio in chunks of 500ms. In terms of buffering, the limit is 64000 bytes per chunk.
 Audio data should be sent as raw binary without JSON wrapping.
+
+While we for bandwith and efficiency reasons recommend utilizing the webm/opus encoding, you can send a variety of common audio formats as the audio you send first passes through a transcoder.
+Similarly, you do not need to specify any sample rate, depth or other audio settings.
+
+### Channels, participants and speakers
+
+In a typical **on-site setting** you will be sending mono-channel audio. If the microphone is a stereo-microphone, you can ensure to set `isMultichannel: false` and audio will be converted to mono-channel, ensuring no duplicate transcripts are being returned.
+
+In a **virtual setting** such as telehealth, you would typically have the virtual audio on one channel from webRTC and mix in on a separate channel the microphone of the local client. In this scenario, define `isMultichannel: true` and assign each channel the relevant participant role, e.g. if the doctor is on the local client and channel 0, then you can set the role for channel 0 to `doctor`.
+
+**Diarization** is independent of audio channels and participant roles. If you want transcript segments to be assigned to automatically identified speakers, set `isDiarization: true`. If `false`, transcript segments will be returned with `speakerId: -1`. If set to `true`, then diarization will try to identify speakers separately on each channel. The first identified speaker on each channel will have transcript segments with `speakerId: 0`, the second `speakerId: 1` and so forth.
+
+<Note>SpeakerIds are not related or matched to participant roles.</Note>
 
 ## Error Handling
 
 In case of an invalid or missing interaction ID, the server will return an error before opening the WebSocket.
+
+<Note>From opening the WebSocket, you need to commit the configuration within 15 seconds, else the WebSocket will close again</Note>
+
+During a WebSocket session the following messages related to configuration can be returned.
+
+```json
+
+  {"type": "CONFIG_DENIED"} // in case the configuration is not valid
+  {"type": "CONFIG_MISSING"}
+  {"type": "CONFIG_NOT_PROVIDED"}
+  {"type": "CONFIG_ALREADY_RECEIVED"}
+```
+
+In addition, a reason will be supplied, e.g. `reason: language unavailable`
 
 ## Closing the Connection
 
