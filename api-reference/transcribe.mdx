@@ -141,8 +141,12 @@ Here is an example to transcribe dictated audio in English, with interim results
 ### Sending audio
 Raw audio data to be transcribed.
 
+### Ending
+To end the /transcribe session send a `type: end`. This will signal the server to send any remaining transcript segments and detected voice commands before ending the session.
+
 ## Responses <Icon icon="message-arrow-down" iconType="solid" /> 
 
+#### Configuration
 <ResponseField name="type" type="string" required default="CONFIG_ACCEPTED">
   Returned when sending a valid configuration.
 </ResponseField>
@@ -150,8 +154,45 @@ Raw audio data to be transcribed.
   Returned when sending a valid configuration.
 </ResponseField>
 
-TODO Transcript response
+#### Commands
+<ReponseField name="type" type="string" required>
+      <Expandable title="data" type="string" required>
+        <ResponseField name="id" type="string" required>
+          To identify the command when it gets detected and returned over the WebSocket
+        </ParamField>
+        <ResponseField name="variables" type="string[]">
+          The variables identified
+        </ResponseField>
+        <ResponseField name="rawTranscriptText" type="string" required>
+          The raw transcript without spoken punctuation applied, without voice command phrases removed
+        </ResponseField>
+        <ResponseField name="start" type="float64" required>
+          Start time of the transcript segment in ms
+        </ResponseField>
+        <ResponseField name="end" type="float64" required>
+          End time of the transcript segment in ms
+        </ResponseField>
+      </Expandable>
+</ResponseField>
 
-TODO Command response
+#### Transcripts
+<ReponseField name="type" type="string" required>
+      <Expandable title="data" type="string" required>
+        <ResponseField name="text" type="string" required>
+          Transcript segment with punctuations applied and voice command phrases removed
+        </ParamField>
+        <ResponseField name="rawTranscriptText" type="string" required>
+          The raw transcript without spoken punctuation applied, without voice command phrases removed
+        </ResponseField>
+        <ResponseField name="start" type="float64" required>
+          Start time of the transcript segment in ms
+        </ResponseField>
+        <ResponseField name="end" type="float64" required>
+          End time of the transcript segment in ms
+        </ResponseField>
+        <ResponseField name="isFinal" type="bool" required>
+          If false, then interim transcript result
+        </ResponseField>
+      </Expandable>
 
-TODO type: end etc response
+### Error handling
