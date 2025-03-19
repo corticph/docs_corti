@@ -83,7 +83,7 @@
     },
     {
       "group": "Live Speech to Text",
-      "pages": ["api-reference/stream"]
+      "pages": ["api-reference/stream", "api-reference/transcribe"]
     }
   ],
     "footerSocials": {
