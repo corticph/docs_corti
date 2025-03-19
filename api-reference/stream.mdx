@@ -183,9 +183,9 @@ Similarly, you do not need to specify any sample rate, depth or other audio sett
 
 ### Channels, participants and speakers
 
-In a typical **on-site setting** you will be sending mono-channel audio. If the microphone is a stereo-microphone, you can ensure to set `isMultiChannel: false` and audio will be converted to mono-channel, ensuring no duplicate transcripts are being returned.
+In a typical **on-site setting** you will be sending mono-channel audio. If the microphone is a stereo-microphone, you can ensure to set `isMultichannel: false` and audio will be converted to mono-channel, ensuring no duplicate transcripts are being returned.
 
-In a **virtual setting** such as telehealth, you would typically have the virtual audio on one channel from webRTC and mix in on a separate channel the microphone of the local client. In this scenario, define `isMultiChannel: true` and assign each channel the relevant participant role, e.g. if the doctor is on the local client and channel 0, then you can set the role for channel 0 to `doctor`.
+In a **virtual setting** such as telehealth, you would typically have the virtual audio on one channel from webRTC and mix in on a separate channel the microphone of the local client. In this scenario, define `isMultichannel: true` and assign each channel the relevant participant role, e.g. if the doctor is on the local client and channel 0, then you can set the role for channel 0 to `doctor`.
 
 **Diarization** is independent of audio channels and participant roles. If you want transcript segments to be assigned to automatically identified speakers, set `isDiarization: true`. If `false`, transcript segments will be returned with `speakerId: -1`. If set to `true`, then diarization will try to identify speakers separately on each channel. The first identified speaker on each channel will have transcript segments with `speakerId: 0`, the second `speakerId: 1` and so forth.
 
