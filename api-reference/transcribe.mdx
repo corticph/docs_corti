@@ -1,0 +1,151 @@
+---
+title: GET transcribe
+description: WebSocket Secure (WSS) API Documentation for stateless /transcribe
+tag: WSS
+---
+
+## Overview
+
+The WebSocket Secure (WSS) API enables real-time, bidirectional communication with the Corti system for stateless speech to text. Clients can send and receive structured data, including transcripts and detected voice commands.
+
+This documentation provides a structured guide for integrating these capabilities.
+
+### Environment Options
+
+| Environment | Description |
+| --- | --- |
+| `us` | US-based instance |
+| `eu` | EU-based instance |
+| `beta-eu` | Beta EU instance (default) |
+
+## Establishing a Connection <Icon icon="circle-wifi" iconType="solid" /> 
+
+Clients must initiate a WebSocket connection using the `wss://` scheme.
+
+<RequestExample>
+
+```bash Handshake
+  curl --request GET \
+    --url wss://api.${environment}.corti.app/audio-bridge/v2/transcribe?tenant-name=${tenant}&token=Bearer%20${accessToken}
+```
+
+</RequestExample>
+
+<Note>The authentication for the WSS requires in addition to the `tenant-name` url parameter a `token` url parameter to pass in the Bearer access token.</Note>
+
+### Query Parameters
+<ParamField query="tenant-name" type="string" required>
+  Specifies the tenant context
+</ParamField>
+<ParamField query="token" type="string" required>Bearer $token</ParamField>
+
+## Handshake Response
+
+### **101 Switching Protocols** <Icon icon="circle-check" iconType="solid" /> 
+
+Indicates a successful WebSocket connection.
+Upon successful connection, send a message including the configuration to specify the input and expected output formats.
+
+## Sending Messages <Icon icon="message-arrow-up" iconType="solid" /> 
+
+Clients must send a stream configuration message and wait for a response of type `CONFIG_ACCEPTED` before transmitting other data.
+If the configuration is not valid it will return `CONFIG_DENIED`.
+The configuration must be committed within 10 seconds of opening the WebSocket, else it will time-out with `CONFIG_TIMEOUT`.
+
+### Basic Stream Configuration
+
+#### Body
+
+<ParamField body="primaryLanguage" type="string" required>
+  The locale of the primary spoken language. Check https://docs.corti.ai/about/languages for more.
+</ParamField>
+<ParamField body="interimResults" type="bool">
+  When true, returns interim results for reduced latency
+</ParamField>
+<ParamField body="spokenPunctuation" type="bool">
+  When true, converts spoken punctuation such as `dot` or `slash` into `.`or `/`.
+</ParamField>
+<ParamField body="automaticPunctuation" type="bool">
+  When true, automatically punctuates and capitalizes in the final transcript.
+</ParamField>
+
+### Advanced Stream Configuration: Voice Commands
+The transcribe endpoint supports registering and detection of voice commands common in frontend-dictation workflows.
+Extend the configuration with the following parameters to register voice commands that should be detected.
+
+#### Body
+
+<ParamField body="commands" type="command object[]">
+  Provide the voice commands that should be registered and detected
+   <Expandable title="properties">
+    <ParamField body="id" type="string" required>
+      To identify the command when it gets detected and returned over the WebSocket
+    </ParamField>
+    <ParamField body="phrases" type="string[]">
+      The spoken phrases that should trigger the command
+    </ParamField>
+    <ParamField body="variables" type="string[]">
+      The spoken phrases that should trigger the command
+    </ParamField>
+    <Expandable title="variable properties">
+        <ParamField body="key" type="string" required>
+          To identify the command when it gets detected and returned over the WebSocket
+        </ParamField>
+        <ParamField body="type" type="string">
+          The spoken phrases that should trigger the command
+        </ParamField>
+        <ParamField body="enum" type="string[]">
+          The spoken phrases that should trigger the command
+        </ParamField>
+      </Expandable>
+  </Expandable>
+</ParamField>
+
+Here is an example to transcribe dictated audio in English, with interim results, spoken punctuation and automatic punctuation, as well as an example voice commands enabled.
+```jsx Configuration example
+{
+  primaryLanguage: "en",
+  interimResults: true, 
+  spokenPunctuation: true, 
+  automaticPunctuation: true,
+  commands: [
+    {
+      id: "next_section",
+      phrases: ["next section", "go to next section"]
+    },
+    {
+      id: "delete",
+      phrases: ["delete that"]
+    },
+    {
+            "id": "insert_template",
+            "phrases": [
+                "insert my {template_name} template",
+                "insert {template_name} template"
+            ],
+            "variables": [
+                {
+                    "key": "template_name",
+                    "type": "enum",
+                    "enum": [
+                        "radiology",
+                        "referral"
+                    ]
+                }
+            ]
+    }
+  ],
+}
+```
+
+### Sending audio
+Raw audio data to be transcribed.
+
+## Responses <Icon icon="message-arrow-down" iconType="solid" /> 
+
+<ResponseField name="type" type="string" required default="CONFIG_ACCEPTED">
+  Returned when sending a valid configuration.
+</ResponseField>
+<ResponseField name="sessionId" type="uuid" required>
+  Returned when sending a valid configuration.
+</ResponseField>
