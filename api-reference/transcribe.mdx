@@ -1,5 +1,5 @@
 ---
-title: GET transcribe
+title: Dictate and Transcribe
 description: WebSocket Secure (WSS) API Documentation for stateless /transcribe
 tag: WSS
 ---
@@ -30,6 +30,24 @@ Clients must initiate a WebSocket connection using the `wss://` scheme.
 ```
 
 </RequestExample>
+
+<ResponseExample>
+
+```jsx Transcript response
+      {
+  "type": "transcript",
+  "data": {
+    "text": "Hello.\nHow are you?",
+    "rawTranscriptText": "hello new line how are you",
+    "start": 0.124,
+    "end": 6.421,
+    "isFinal": true
+  }
+}
+```
+
+</ResponseExample>
+
 
 <Note>The authentication for the WSS requires in addition to the `tenant-name` url parameter a `token` url parameter to pass in the Bearer access token.</Note>
 
@@ -138,7 +156,7 @@ Here is an example to transcribe dictated audio in English, with interim results
 }
 ```
 
-### Sending audio
+### Sending audio <Icon icon="microphone" iconType="solid" /> 
 Raw audio data to be transcribed.
 
 ### Ending
@@ -154,12 +172,36 @@ To end the /transcribe session send a `type: end`. This will signal the server t
   Returned when sending a valid configuration.
 </ResponseField>
 
+#### Transcripts
+<ResponseField name="type" type="string" required default="transcript">
+<ResponseField name="data" type="string" required></ResponseField>
+      <Expandable title="data attributes" type="string" required>
+        <ResponseField name="text" type="string" required>
+          Transcript segment with punctuations applied and voice command phrases removed
+        </ResponseField>
+        <ResponseField name="rawTranscriptText" type="string" required>
+          The raw transcript without spoken punctuation applied, without voice command phrases removed
+        </ResponseField>
+        <ResponseField name="start" type="float64" required>
+          Start time of the transcript segment in seconds
+        </ResponseField>
+        <ResponseField name="end" type="float64" required>
+          End time of the transcript segment in seconds
+        </ResponseField>
+        <ResponseField name="isFinal" type="bool" required>
+          If false, then interim transcript result
+        </ResponseField>
+      </Expandable>
+      </ResponseField>
+
+
 #### Commands
-<ReponseField name="type" type="string" required>
-      <Expandable title="data" type="string" required>
+<ResponseField name="type" type="string" required default="command">
+<ResponseField name="data" type="string" required></ResponseField>
+      <Expandable title="data attributes" type="string" required>
         <ResponseField name="id" type="string" required>
           To identify the command when it gets detected and returned over the WebSocket
-        </ParamField>
+        </ResponseField>
         <ResponseField name="variables" type="string[]">
           The variables identified
         </ResponseField>
@@ -167,32 +209,38 @@ To end the /transcribe session send a `type: end`. This will signal the server t
           The raw transcript without spoken punctuation applied, without voice command phrases removed
         </ResponseField>
         <ResponseField name="start" type="float64" required>
-          Start time of the transcript segment in ms
+          Start time of the transcript segment in seconds
         </ResponseField>
         <ResponseField name="end" type="float64" required>
-          End time of the transcript segment in ms
+          End time of the transcript segment in seconds
         </ResponseField>
       </Expandable>
 </ResponseField>
 
-#### Transcripts
-<ReponseField name="type" type="string" required>
-      <Expandable title="data" type="string" required>
-        <ResponseField name="text" type="string" required>
-          Transcript segment with punctuations applied and voice command phrases removed
-        </ParamField>
-        <ResponseField name="rawTranscriptText" type="string" required>
-          The raw transcript without spoken punctuation applied, without voice command phrases removed
-        </ResponseField>
-        <ResponseField name="start" type="float64" required>
-          Start time of the transcript segment in ms
-        </ResponseField>
-        <ResponseField name="end" type="float64" required>
-          End time of the transcript segment in ms
-        </ResponseField>
-        <ResponseField name="isFinal" type="bool" required>
-          If false, then interim transcript result
-        </ResponseField>
-      </Expandable>
+```jsx Command response
+      {
+    "type": "command",
+    "data": {
+        "id": "insert_template",
+        "variables": {
+            "template_name": "radiology"
+        },
+        "rawTranscriptText": "insert my radiology template",
+        "start": 2.3,
+        "end": 2.9,
+        }
+      }
+```
 
-### Error handling
+### Error Responses
+<ResponseField name="type" type="string" required>
+  Returned when sending an invalid configuration.
+  
+  Possible errors `CONFIG_DENIED`, `CONFIG_TIMEOUT`
+</ResponseField>
+<ResponseField name="reason" type="string">
+  The reason the configuration is invalid.
+</ResponseField>
+<ResponseField name="sessionId" type="uuid" required>
+  The session ID.
+</ResponseField>
