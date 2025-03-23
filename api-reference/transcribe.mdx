@@ -1,19 +1,19 @@
 ---
-title: Dictate and Transcribe
-description: WebSocket Secure (WSS) API Documentation for stateless /transcribe
+title: Stream - Dictation/ Transcription
+description: WebSocket Secure (WSS) API Documentation for stateless use of /transcribe endpoint
 tag: WSS
 ---
 
 ## Overview
 
-The WebSocket Secure (WSS) API enables real-time, bidirectional communication with the Corti system for stateless speech to text. Clients can send and receive structured data, including transcripts and detected voice commands.
+The WebSocket Secure (WSS) API enables real-time, bidirectional communication with the Corti system for stateless speech-to-text. Clients can send and receive structured data, including transcripts and detected voice commands.
 
-This documentation provides a structured guide for integrating these capabilities.
+This documentation provides a comprehensive guide for integrating these capabilities.
 
 ### Environment Options
 
 | Environment | Description |
-| --- | --- |
+| :--- | :--- |
 | `us` | US-based instance |
 | `eu` | EU-based instance |
 | `beta-eu` | Beta EU instance (default) |
@@ -49,7 +49,7 @@ Clients must initiate a WebSocket connection using the `wss://` scheme.
 </ResponseExample>
 
 
-<Note>The authentication for the WSS requires in addition to the `tenant-name` url parameter a `token` url parameter to pass in the Bearer access token.</Note>
+<Note>In addition to the `tenant-name` url parameter, authentication for the WSS requires a `token` url parameter to pass in the Bearer access token.</Note>
 
 ### Query Parameters
 <ParamField query="tenant-name" type="string" required>
@@ -88,13 +88,13 @@ The configuration must be committed within 10 seconds of opening the WebSocket, 
 </ParamField>
 
 ### Advanced Stream Configuration: Voice Commands
-The transcribe endpoint supports registering and detection of voice commands common in frontend-dictation workflows.
+The transcribe endpoint supports registration and detection of commands, common in front end-dictation workflows.
 Extend the configuration with the following parameters to register voice commands that should be detected.
 
 #### Body
 
 <ParamField body="commands" type="command object[]">
-  Provide the voice commands that should be registered and detected
+  Provide the commands that should be registered and detected
    <Expandable title="properties">
     <ParamField body="id" type="string" required>
       To identify the command when it gets detected and returned over the WebSocket
@@ -119,7 +119,7 @@ Extend the configuration with the following parameters to register voice command
   </Expandable>
 </ParamField>
 
-Here is an example to transcribe dictated audio in English, with interim results, spoken punctuation and automatic punctuation, as well as an example voice commands enabled.
+Here is an example configuration for transcription of dictated audio in English, with interim results, spoken punctuation and automatic punctuation enabled, and example commands defined.
 ```jsx Configuration example
 {
   primaryLanguage: "en",
@@ -160,7 +160,7 @@ Here is an example to transcribe dictated audio in English, with interim results
 Raw audio data to be transcribed.
 
 ### Ending
-To end the /transcribe session send a `type: end`. This will signal the server to send any remaining transcript segments and detected voice commands before ending the session.
+To end the /transcribe session send a `type: end`. This will signal the server to send any remaining transcript segments and detected commands before ending the session.
 
 ## Responses <Icon icon="message-arrow-down" iconType="solid" /> 
 
@@ -177,10 +177,10 @@ To end the /transcribe session send a `type: end`. This will signal the server t
 <ResponseField name="data" type="string" required></ResponseField>
       <Expandable title="data attributes" type="string" required>
         <ResponseField name="text" type="string" required>
-          Transcript segment with punctuations applied and voice command phrases removed
+          Transcript segment with punctuations applied and command phrases removed
         </ResponseField>
         <ResponseField name="rawTranscriptText" type="string" required>
-          The raw transcript without spoken punctuation applied, without voice command phrases removed
+          The raw transcript without spoken punctuation applied and without command phrases removed
         </ResponseField>
         <ResponseField name="start" type="float64" required>
           Start time of the transcript segment in seconds
@@ -206,7 +206,7 @@ To end the /transcribe session send a `type: end`. This will signal the server t
           The variables identified
         </ResponseField>
         <ResponseField name="rawTranscriptText" type="string" required>
-          The raw transcript without spoken punctuation applied, without voice command phrases removed
+          The raw transcript without spoken punctuation applied and without command phrases removed
         </ResponseField>
         <ResponseField name="start" type="float64" required>
           Start time of the transcript segment in seconds
