@@ -29,7 +29,6 @@
   "sidebar": {
     "items": "card"
   },
-
   "font": {
     "headings": {
       "family": "Inter",
@@ -40,32 +39,26 @@
       "weight": 400
     }
   },
-  "topbarLinks": [
-    {
-      "name": "Support",
-      "url": "https://help.corti.ai"
-    }
-  ],
   "topbarCtaButton": {
     "name": "Get Started",
     "url": "https://www.corti.ai/contact-us"
   },
-  "tabs": [
-    {
-      "name": "API Reference",
-      "url": "api-reference"
-    },
-    {
-      "name": "Updates",
-      "url": "release-notes"
-    }
-  ],
   "anchors": [
     {
       "name": "API Reference",
       "openapi": "/api-reference/swagger-spec.json",
       "url": "api-reference",
       "icon": "square-terminal"
+    },
+    {
+      "name": "Updates",
+      "url": "release-notes",
+      "icon": "gears"
+    },
+    {
+      "name": "Support",
+      "url": "https://help.corti.ai",
+      "icon": "square-question"
     }
   ],
   "navigation": [
