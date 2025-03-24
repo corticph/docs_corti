@@ -68,7 +68,7 @@
     },
     {
       "group": "Get Started",
-      "pages": ["get_started/getaccess","get_started/authentication", "get_started/workflows", "get_started/templates"]
+      "pages": ["get_started/getaccess","get_started/authentication", "get_started/workflows", "get_started/templates", "get_started/dictation-sdk"]
     },
     {
       "group": "Updates",
