@@ -6,7 +6,7 @@ tag: WSS
 
 ## Overview
 
-The WebSocket Secure (WSS) API enables real-time, bidirectional communication with the Corti system for stateless speech-to-text. Clients can send and receive structured data, including transcripts and detected voice commands.
+The WebSocket Secure (WSS) API enables real-time, bidirectional communication with the Corti system for stateless speech-to-text. Clients can send and receive structured data, including transcripts and detected commands.
 
 This documentation provides a comprehensive guide for integrating these capabilities.
 
@@ -87,9 +87,9 @@ The configuration must be committed within 10 seconds of opening the WebSocket, 
   When true, automatically punctuates and capitalizes in the final transcript.
 </ParamField>
 
-### Advanced Stream Configuration: Voice Commands
+### Advanced Stream Configuration: Commands
 The transcribe endpoint supports registration and detection of commands, common in front end-dictation workflows.
-Extend the configuration with the following parameters to register voice commands that should be detected.
+Extend the configuration with the following parameters to register commands that should be detected.
 
 #### Body
 
