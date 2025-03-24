@@ -75,7 +75,7 @@
       "pages": ["release-notes/overview", "release-notes/fm-updates", "release-notes/api-updates", "release-notes/language-updates"]
     },
     {
-      "group": "Live Speech to Text",
+      "group": "Live Streams",
       "pages": ["api-reference/stream", "api-reference/transcribe"]
     }
   ],

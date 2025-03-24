@@ -1,6 +1,6 @@
 ---
-title: Stream - Ambient
-description: WebSocket Secure (WSS) API Documentation for /stream
+title: Fact generation 
+description: WebSocket Secure (WSS) API Documentation for /stream endpoint in support of real-time conversational transcript and fact generation  
 tag: WSS
 ---
 
@@ -15,7 +15,7 @@ This documentation provides a structured guide for integrating the Corti WSS API
 ### Environment Options
 
 | Environment | Description |
-| --- | --- |
+| :--- | :--- |
 | `us` | US-based instance |
 | `eu` | EU-based instance |
 | `beta-eu` | Beta EU instance (default) |
@@ -56,7 +56,7 @@ This can be configured by Corti to be turned off to ensure you can comply with y
 ### Transcript Stream
 
 | Property | Type | Description |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | `type` | string | Message type (`transcript`) |
 | `data.id` | string | Unique identifier for the transcript |
 | `data.transcript` | string | The transcribed text |
@@ -85,7 +85,7 @@ This can be configured by Corti to be turned off to ensure you can comply with y
 ### Fact Stream
 
 | Property | Type | Description |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | `type` | string | Message type (`facts`) |
 | `data.id` | string | Unique identifier for the fact |
 | `data.text` | string | Text description of the fact |
@@ -121,7 +121,7 @@ Clients must send a stream configuration message and wait for a response of type
 ### Stream Configuration
 
 | Property | Type | Required | Description |
-| --- | --- | --- | --- |
+| :--- | :--- | :--- | :--- |
 | `type` | string | Yes | Message type (`config`) |
 | `configuration` | object | Yes | Configuration settings |
 | `transcription.primaryLanguage` | string | Yes | Primary spoken language for transcription |
