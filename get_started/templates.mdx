@@ -1,5 +1,5 @@
 ---
-title: Working with Templates
+title: Templates & Documentation
 description: "Learn how to generate documents with Templates"
 ---
 
@@ -46,7 +46,7 @@ and use the ?lang= to filter for available languages. Without any language
 filtering, the default returned are templates in `en`.
 
 ```javascript request to retrieve templates available in German
-POST https://api.{environment}.corti.app/v2/templates?lang=de
+POST https://api.{environment}.corti.app/v2/templates/?lang=de
 ```
 
 ### Using Templates to Generate Documents
@@ -97,6 +97,7 @@ but you might have also created facts to pipe over relevant pre-chart informatio
 clinician the ability to add and edit live notes (`source: user`). In the end, you decide which facts to use as the basis to generate a document.
 
 Let's look at the differences in the request payload when generating a document on the basis of facts vs the transcript.
+You can toggle in below code example between the two.
 
 <CodeGroup>
 
