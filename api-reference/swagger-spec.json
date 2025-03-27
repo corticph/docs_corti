@@ -377,951 +377,6 @@
         ]
       }
     },
-    "/interactions/{id}/facts/": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": "Returns a list of facts associated with the specified interaction.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseFactsList"
-                }
-              }
-            }
-          },
-          "504": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "facts"
-        ],
-        "summary": "List Facts",
-        "description": " Retrieves a list of facts for a given interaction.",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/Tenant-Name"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "description": "The unique identifier of the interaction for which facts should be retrieved.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The unique identifier of the interaction for which facts should be retrieved."
-            }
-          }
-        ]
-      },
-      "post": {
-        "responses": {
-          "200": {
-            "description": "Returns the created facts, including their unique identifiers and associated metadata.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseFactsCreate"
-                }
-              }
-            }
-          },
-          "504": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "facts"
-        ],
-        "summary": "Add Facts",
-        "description": " Adds new facts to an interaction.",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/Tenant-Name"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "description": "The unique identifier of the interaction to which the facts belong.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The unique identifier of the interaction to which the facts belong."
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestFactsCreate"
-              }
-            }
-          },
-          "required": true
-        }
-      },
-      "patch": {
-        "responses": {
-          "200": {
-            "description": "Returns the list of successfully updated facts.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseFactsUpdate"
-                }
-              }
-            }
-          },
-          "504": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "facts"
-        ],
-        "summary": "Update Facts",
-        "description": " Updates multiple facts associated with an interaction. If the interaction `status = \"in progress\"`, the updated facts will be sent to the client over WebSocket.",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/Tenant-Name"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "description": "The unique identifier of the interaction for which facts are being updated.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The unique identifier of the interaction for which facts are being updated."
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestFactsUpdate"
-              }
-            }
-          },
-          "required": true
-        }
-      }
-    },
-    "/interactions/{id}/facts/{factId}": {
-      "patch": {
-        "responses": {
-          "200": {
-            "description": "Returns the updated fact, including updated fields.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseFactUpdate"
-                }
-              }
-            }
-          },
-          "504": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "facts"
-        ],
-        "summary": "Update Fact",
-        "description": " Updates an existing fact within a specific interaction. If the interaction `status = \"in progress\"`, the updated fact will be sent to the client via WebSocket. To discard a fact, simply set `discarded = true`.",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/Tenant-Name"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "description": "The unique identifier of the interaction to which the fact belongs.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The unique identifier of the interaction to which the fact belongs."
-            }
-          },
-          {
-            "name": "factId",
-            "in": "path",
-            "description": "The unique identifier of the fact to update.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The unique identifier of the fact to update."
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestFactUpdate"
-              }
-            }
-          },
-          "required": true
-        }
-      }
-    },
-    "/interactions/{id}/documents/": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": " ",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDocumentList"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "504": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "documents"
-        ],
-        "summary": "List Documents",
-        "description": " List Documents",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/Tenant-Name"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "description": "The interaction ID representing the context for the request.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The interaction ID representing the context for the request."
-            }
-          }
-        ]
-      },
-      "post": {
-        "responses": {
-          "201": {
-            "description": " ",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDocumentRead"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "504": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "documents"
-        ],
-        "summary": "Generate Document",
-        "description": " Generate Document.",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/Tenant-Name"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "description": "The interaction ID representing the context for the request.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The interaction ID representing the context for the request."
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestDocumentCreate"
-              }
-            }
-          },
-          "required": true
-        },
-        "x-codeSamples": [
-          {
-            "lang": "text",
-            "label": "from Facts",
-            "source": "curl --request POST \\\n  --url https://api.{environment}.corti.app/v2/interactions/{id}/documents \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n  \"context\": [\n    {\n      \"type\": \"facts\",\n      \"data\": [\n        {\n          \"text\": \"<string>\",\n          \"group\": \"other\",\n          \"source\": \"core\"\n        }\n      ]\n    }\n  ],\n  \"templateKey\": \"<string>\",\n  \"name\": \"<string>\",\n  \"outputLanguage\": \"<string>\"\n}'"
-          },
-          {
-            "lang": "text",
-            "label": "from Transcript",
-            "source": "curl --request POST \\\n  --url https://api.{environment}.corti.app/v2/interactions/{id}/documents \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n  \"context\": [\n    {\n      \"type\": \"transcript\",\n      \"data\": {\n        \"channel\": 1,\n        \"end\": 129,\n        \"participant\": 123,\n        \"start\": 20,\n        \"text\": \"<string>\"\n      }\n    }\n  ],\n  \"templateKey\": \"<string>\",\n  \"name\": \"<string>\",\n  \"outputLanguage\": \"<string>\"\n}'"
-          },
-          {
-            "lang": "text",
-            "label": "assemble Template",
-            "source": "curl --request POST \\\n  --url https://api.{environment}.corti.app/v2/interactions/{id}/documents \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n  \"context\": [\n    {\n      \"type\": \"string\",\n      \"data\": \"<string>\"\n      }\n  ],\n  \"templateKey\": \"<string>\",\n  \"template\": {\n   \"sectionKeys\": [\n      \"<string>\"\n    ],\n  \"name\": \"<string>\",\n  \"outputLanguage\": \"<string>\"\n}'"
-          },
-          {
-            "lang": "text",
-            "label": "from string",
-            "source": "curl --request POST \\\n  --url https://api.{environment}.corti.app/v2/interactions/{id}/documents \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n  \"context\": [\n    {\n      \"type\": \"string\",\n      \"data\": \"<string>\"\n    }\n  ],\n  \"templateKey\": \"<string>\",\n  \"name\": \"<string>\",\n  \"outputLanguage\": \"<string>\"\n}'"
-          }
-        ]
-      }
-    },
-    "/interactions/{id}/documents/{documentId}": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": " ",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDocumentRead"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "504": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "documents"
-        ],
-        "summary": "Get Document",
-        "description": " Get Document.",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/Tenant-Name"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "description": "The interaction ID representing the context for the request.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The interaction ID representing the context for the request."
-            }
-          },
-          {
-            "name": "documentId",
-            "in": "path",
-            "description": "The document ID representing the context for the request.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The document ID representing the context for the request."
-            }
-          },
-          {
-            "name": "context",
-            "in": "query",
-            "description": "If true the response contains the context used to generated the document, such as fact, transcript or string.",
-            "example": "false",
-            "schema": {
-              "type": "boolean",
-              "format": "boolean",
-              "description": "If true the response contains the context used to generated the document, such as fact, transcript or string."
-            }
-          }
-        ]
-      },
-      "patch": {
-        "responses": {
-          "200": {
-            "description": " ",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseDocumentRead"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "504": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "documents"
-        ],
-        "summary": "Update Document",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/Tenant-Name"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "description": "The interaction ID representing the context for the request.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The interaction ID representing the context for the request."
-            }
-          },
-          {
-            "name": "documentId",
-            "in": "path",
-            "description": "The document ID representing the context for the request.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The document ID representing the context for the request."
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestDocumentUpdate"
-              }
-            }
-          },
-          "required": true
-        }
-      },
-      "delete": {
-        "responses": {
-          "204": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NoContent"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "504": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "documents"
-        ],
-        "summary": "Delete Document",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/Tenant-Name"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "description": "The interaction ID representing the context for the request.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The interaction ID representing the context for the request."
-            }
-          },
-          {
-            "name": "documentId",
-            "in": "path",
-            "description": "The document ID representing the context for the request.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The document ID representing the context for the request."
-            }
-          }
-        ]
-      }
-    },
-    "/interactions/{id}/codes/": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": "List of associated codes.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseCodesList"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "504": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "codes"
-        ],
-        "summary": "List Codes",
-        "description": " Get all codes associated with an interaction.",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/Tenant-Name"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "description": "The interaction ID representing the context for the request.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The interaction ID representing the context for the request."
-            }
-          }
-        ]
-      },
-      "post": {
-        "responses": {
-          "200": {
-            "description": "List of predicted codes.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseCodesList"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "502": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "504": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "codes"
-        ],
-        "summary": "Generate Codes",
-        "description": " Generate Codes.",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/Tenant-Name"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "description": "The interaction ID representing the context for the request.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The interaction ID representing the context for the request."
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestCodesPredict"
-              }
-            }
-          },
-          "required": true
-        }
-      },
-      "put": {
-        "responses": {
-          "200": {
-            "description": "Updated list of selected codes.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseCodesList"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "504": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "codes"
-        ],
-        "summary": "Select Codes",
-        "description": " Mark provided codes as selected.",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/Tenant-Name"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "description": "The interaction ID representing the context for the request.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "string",
-              "description": "The interaction ID representing the context for the request."
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestCodesUpdate"
-              }
-            }
-          },
-          "required": true
-        }
-      }
-    },
     "/interactions/{id}/recordings/": {
       "get": {
         "responses": {
@@ -2097,6 +1152,694 @@
         ]
       }
     },
+    "/interactions/{id}/facts/": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Returns a list of facts associated with the specified interaction.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseFactsList"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "facts"
+        ],
+        "summary": "List Facts",
+        "description": " Retrieves a list of facts for a given interaction.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The unique identifier of the interaction for which facts should be retrieved.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The unique identifier of the interaction for which facts should be retrieved."
+            }
+          }
+        ]
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Returns the created facts, including their unique identifiers and associated metadata.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseFactsCreate"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "facts"
+        ],
+        "summary": "Add Facts",
+        "description": " Adds new facts to an interaction.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The unique identifier of the interaction to which the facts belong.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The unique identifier of the interaction to which the facts belong."
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestFactsCreate"
+              }
+            }
+          },
+          "required": true
+        }
+      },
+      "patch": {
+        "responses": {
+          "200": {
+            "description": "Returns the list of successfully updated facts.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseFactsUpdate"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "facts"
+        ],
+        "summary": "Update Facts",
+        "description": " Updates multiple facts associated with an interaction. If the interaction `status = \"in progress\"`, the updated facts will be sent to the client over WebSocket.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The unique identifier of the interaction for which facts are being updated.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The unique identifier of the interaction for which facts are being updated."
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestFactsUpdate"
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/interactions/{id}/facts/{factId}": {
+      "patch": {
+        "responses": {
+          "200": {
+            "description": "Returns the updated fact, including updated fields.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseFactUpdate"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "facts"
+        ],
+        "summary": "Update Fact",
+        "description": " Updates an existing fact within a specific interaction. If the interaction `status = \"in progress\"`, the updated fact will be sent to the client via WebSocket. To discard a fact, simply set `discarded = true`.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The unique identifier of the interaction to which the fact belongs.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The unique identifier of the interaction to which the fact belongs."
+            }
+          },
+          {
+            "name": "factId",
+            "in": "path",
+            "description": "The unique identifier of the fact to update.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The unique identifier of the fact to update."
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestFactUpdate"
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/interactions/{id}/documents/": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDocumentList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "documents"
+        ],
+        "summary": "List Documents",
+        "description": " List Documents",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          }
+        ]
+      },
+      "post": {
+        "responses": {
+          "201": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDocumentRead"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "documents"
+        ],
+        "summary": "Generate Document",
+        "description": " Generate Document.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestDocumentCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "x-codeSamples": [
+          {
+            "lang": "text",
+            "label": "from Facts",
+            "source": "curl --request POST \\\n  --url https://api.{environment}.corti.app/v2/interactions/{id}/documents \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n  \"context\": [\n    {\n      \"type\": \"facts\",\n      \"data\": [\n        {\n          \"text\": \"<string>\",\n          \"group\": \"other\",\n          \"source\": \"core\"\n        }\n      ]\n    }\n  ],\n  \"templateKey\": \"<string>\",\n  \"name\": \"<string>\",\n  \"outputLanguage\": \"<string>\"\n}'"
+          },
+          {
+            "lang": "text",
+            "label": "from Transcript",
+            "source": "curl --request POST \\\n  --url https://api.{environment}.corti.app/v2/interactions/{id}/documents \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n  \"context\": [\n    {\n      \"type\": \"transcript\",\n      \"data\": {\n        \"channel\": 1,\n        \"end\": 129,\n        \"participant\": 123,\n        \"start\": 20,\n        \"text\": \"<string>\"\n      }\n    }\n  ],\n  \"templateKey\": \"<string>\",\n  \"name\": \"<string>\",\n  \"outputLanguage\": \"<string>\"\n}'"
+          },
+          {
+            "lang": "text",
+            "label": "assemble Template",
+            "source": "curl --request POST \\\n  --url https://api.{environment}.corti.app/v2/interactions/{id}/documents \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n  \"context\": [\n    {\n      \"type\": \"string\",\n      \"data\": \"<string>\"\n      }\n  ],\n  \"templateKey\": \"<string>\",\n  \"template\": {\n   \"sectionKeys\": [\n      \"<string>\"\n    ],\n  \"name\": \"<string>\",\n  \"outputLanguage\": \"<string>\"\n}'"
+          },
+          {
+            "lang": "text",
+            "label": "from string",
+            "source": "curl --request POST \\\n  --url https://api.{environment}.corti.app/v2/interactions/{id}/documents \\\n  --header 'Content-Type: application/json' \\\n  --data '{\n  \"context\": [\n    {\n      \"type\": \"string\",\n      \"data\": \"<string>\"\n    }\n  ],\n  \"templateKey\": \"<string>\",\n  \"name\": \"<string>\",\n  \"outputLanguage\": \"<string>\"\n}'"
+          }
+        ]
+      }
+    },
+    "/interactions/{id}/documents/{documentId}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDocumentRead"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "documents"
+        ],
+        "summary": "Get Document",
+        "description": " Get Document.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          },
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The document ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The document ID representing the context for the request."
+            }
+          },
+          {
+            "name": "context",
+            "in": "query",
+            "description": "If true the response contains the context used to generated the document, such as fact, transcript or string.",
+            "example": "false",
+            "schema": {
+              "type": "boolean",
+              "format": "boolean",
+              "description": "If true the response contains the context used to generated the document, such as fact, transcript or string."
+            }
+          }
+        ]
+      },
+      "patch": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDocumentRead"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "documents"
+        ],
+        "summary": "Update Document",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          },
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The document ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The document ID representing the context for the request."
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestDocumentUpdate"
+              }
+            }
+          },
+          "required": true
+        }
+      },
+      "delete": {
+        "responses": {
+          "204": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoContent"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "documents"
+        ],
+        "summary": "Delete Document",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          },
+          {
+            "name": "documentId",
+            "in": "path",
+            "description": "The document ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The document ID representing the context for the request."
+            }
+          }
+        ]
+      }
+    },
     "/templates/": {
       "get": {
         "responses": {
@@ -2173,30 +1916,261 @@
         ]
       }
     },
-    "/swagger/": {
+    "/interactions/{id}/codes/": {
       "get": {
         "responses": {
           "200": {
-            "description": "JSON representation of the API documentation",
+            "description": "List of associated codes.",
             "content": {
-              "text/plain": {
+              "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/ResponseCodesList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
           }
         },
         "tags": [
-          "swagger"
+          "codes"
         ],
-        "summary": "Swagger JSON",
-        "description": " JSON representation of the API documentation.",
+        "summary": "List Codes",
+        "description": " Get all codes associated with an interaction.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
           }
         ]
+      },
+      "post": {
+        "responses": {
+          "200": {
+            "description": "List of predicted codes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCodesList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "codes"
+        ],
+        "summary": "Generate Codes",
+        "description": " Generate Codes.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCodesPredict"
+              }
+            }
+          },
+          "required": true
+        }
+      },
+      "put": {
+        "responses": {
+          "200": {
+            "description": "Updated list of selected codes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseCodesList"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "codes"
+        ],
+        "summary": "Select Codes",
+        "description": " Mark provided codes as selected.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The interaction ID representing the context for the request.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "The interaction ID representing the context for the request."
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCodesUpdate"
+              }
+            }
+          },
+          "required": true
+        }
       }
     },
     "/private/v2/align/": {
@@ -2254,10 +2228,10 @@
           }
         },
         "tags": [
-          "discovery"
+          "alignment"
         ],
-        "summary": "Align Sections",
-        "description": " Compares a 'source' document with a 'target' document and returns a percentage alignment, optionally including aligned segments.",
+        "summary": "Alignment Model",
+        "description": " Compares two reference texts, a 'source' document and a 'target' document, and returns a percentage alignment, optionally including aligned segments.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -2300,10 +2274,10 @@
           }
         },
         "tags": [
-          "discovery"
+          "classification"
         ],
-        "summary": "Create Classification",
-        "description": " This endpoint is used for binary classification tasks where a boolean output is expected.",
+        "summary": "Classify Binary",
+        "description": " This endpoint is used for binary classification tasks: comparing two resources, where a boolean output is expected.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -2387,10 +2361,10 @@
           }
         },
         "tags": [
-          "discovery"
+          "contextual"
         ],
-        "summary": "Contextual Query Assistant",
-        "description": " Allows users to ask questions or make queries, which are processed in the context of a specific interaction. Multiple tools provide responses via SSE. A thread ID is returned with the initial query, which can be used to continue posting to the same thread in subsequent queries.",
+        "summary": "Chat",
+        "description": " Allows users to ask questions or make queries in the context of a specific interaction. This endpoint supports Server-Sent Events (SSE) for real-time updates and responses. The thread ID, which is returned with the initial query, allows users to ask follow-up questions or refine their queries. This endpoint is designed to facilitate dynamic and context-aware conversations, making it suitable for applications such as chatbots, virtual assistants, research tools and workflow augmentation.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -2454,10 +2428,10 @@
           }
         },
         "tags": [
-          "discovery"
+          "contextual"
         ],
-        "summary": "Guidelines Tool API",
-        "description": " Processes a query and returns a summary along with relevant sources.",
+        "summary": "Retrieval",
+        "description": " Access and unlock knowledge bases and guidelines tools queries, documents, or interactions. This endpoint is designed to facilitate the retrieval of relevant information from various sources, enabling users to access and utilize knowledge bases and guidelines effectively. The response includes a summary and a list of relevant sources, providing users with a comprehensive overview of the retrieved information.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -2468,52 +2442,6 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/RequestGuidelines"
-              }
-            }
-          },
-          "required": true
-        }
-      }
-    },
-    "/tools/mentions/": {
-      "post": {
-        "responses": {
-          "200": {
-            "description": "Returns an array of mentions found in the reference texts.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ResponseMention"
-                }
-              }
-            }
-          },
-          "504": {
-            "description": "RFC9457",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "discovery"
-        ],
-        "summary": "Mentions Tool API",
-        "description": " Finds mentions of a query within a set of reference texts.",
-        "parameters": [
-          {
-            "$ref": "#/components/parameters/Tenant-Name"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RequestMention"
               }
             }
           },
@@ -2546,10 +2474,10 @@
           }
         },
         "tags": [
-          "discovery"
+          "contextual"
         ],
-        "summary": "Question Prompts Tool API",
-        "description": " Provides a list of suggested questions based on a query and/or context.",
+        "summary": "Predictive Prompt",
+        "description": " Provides a list of suggested questions based on a query and/or interaction context.",
         "parameters": [
           {
             "$ref": "#/components/parameters/Tenant-Name"
@@ -2565,6 +2493,78 @@
           },
           "required": true
         }
+      }
+    },
+    "/tools/mentions/": {
+      "post": {
+        "responses": {
+          "200": {
+            "description": "Returns an array of mentions found in the reference texts.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseMention"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "explainability"
+        ],
+        "summary": "Explainability Model",
+        "description": " Finds mentions of defined content within a set of reference texts.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestMention"
+              }
+            }
+          },
+          "required": true
+        }
+      }
+    },
+    "/swagger/": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "JSON representation of the API documentation",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "swagger"
+        ],
+        "summary": "Swagger JSON",
+        "description": " JSON representation of the API documentation.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          }
+        ]
       }
     }
   },
@@ -3688,12 +3688,6 @@
           "diarize": {
             "type": "boolean",
             "description": "If true, separates speakers within an audio channel returning incrementing ids for transcript segments."
-          },
-          "speakerId": {
-            "type": "string",
-            "description": "Speaker ID used when IsMultichannel is false.",
-            "items": {},
-            "$ref": "#/components/schemas/UUID"
           },
           "participants": {
             "type": "array",
