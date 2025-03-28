@@ -1,5 +1,5 @@
 ---
-title: Dictation 
+title: Stateless front-end dictation 
 description: WebSocket Secure (WSS) API Documentation for stateless use of /transcribe endpoint for real-time speech-to-text  
 tag: WSS
 ---
@@ -9,6 +9,13 @@ tag: WSS
 The WebSocket Secure (WSS) API enables real-time, bidirectional communication with the Corti system for stateless speech-to-text. Clients can send and receive structured data, including transcripts and detected commands.
 
 This documentation provides a comprehensive guide for integrating these capabilities.
+
+<Info>
+  This `/transcribe` endpoint supports stateless front-end dictation. 
+  
+  - If you are looking for real-time ambient documentation interactions, you should use the [/stream WSS](/api-reference/stream/)
+  - If you are looking for asynchronous transcript generation as part of an interaction, then please refer to the [/transcipts endpoint](/api-reference/transcripts)
+</Info>
 
 ### Environment Options
 
@@ -22,18 +29,30 @@ This documentation provides a comprehensive guide for integrating these capabili
 
 Clients must initiate a WebSocket connection using the `wss://` scheme.
 
-<RequestExample>
+<Note>When creating an interaction, the 200 response provides a `websocketUrl` for that interaction including the `tenant-name` as url parameter.
+The authentication for the WSS stream requires in addition to the `tenant-name` parameter a `token` parameter to pass in the Bearer access token.</Note>
 
-```bash Handshake
+## Request 
+
+### Query Parameters
+<ParamField query="tenant-name" type="string" required>
+  Specifies the tenant context
+</ParamField>
+<ParamField query="token" type="string" required>Bearer $token</ParamField>
+
+```bash
   curl --request GET \
     --url wss://api.${environment}.corti.app/audio-bridge/v2/transcribe?tenant-name=${tenant}&token=Bearer%20${accessToken}
 ```
 
-</RequestExample>
+## Handshake Response
 
-<ResponseExample>
+### **101 Switching Protocols** 
 
-```jsx Transcript response
+Indicates a successful WebSocket connection.
+Upon successful connection, send a message including the configuration to specify the input and expected output formats.
+
+```json
       {
   "type": "transcript",
   "data": {
@@ -45,25 +64,6 @@ Clients must initiate a WebSocket connection using the `wss://` scheme.
   }
 }
 ```
-
-</ResponseExample>
-
-
-<Note>In addition to the `tenant-name` url parameter, authentication for the WSS requires a `token` url parameter to pass in the Bearer access token.</Note>
-
-### Query Parameters
-<ParamField query="tenant-name" type="string" required>
-  Specifies the tenant context
-</ParamField>
-<ParamField query="token" type="string" required>Bearer $token</ParamField>
-
-## Handshake Response
-
-### **101 Switching Protocols** <Icon icon="circle-check" iconType="solid" /> 
-
-Indicates a successful WebSocket connection.
-Upon successful connection, send a message including the configuration to specify the input and expected output formats.
-
 ## Sending Messages <Icon icon="message-arrow-up" iconType="solid" /> 
 
 Clients must send a stream configuration message and wait for a response of type `CONFIG_ACCEPTED` before transmitting other data.
@@ -81,7 +81,7 @@ The configuration must be committed within 10 seconds of opening the WebSocket, 
   When true, returns interim results for reduced latency
 </ParamField>
 <ParamField body="spokenPunctuation" type="bool">
-  When true, converts spoken punctuation such as `dot` or `slash` into `.`or `/`.
+  When true, converts spoken punctuation such as `period` or `slash` into `.`or `/`.
 </ParamField>
 <ParamField body="automaticPunctuation" type="bool">
   When true, automatically punctuates and capitalizes in the final transcript.
@@ -95,7 +95,7 @@ Extend the configuration with the following parameters to register commands that
 
 <ParamField body="commands" type="command object[]">
   Provide the commands that should be registered and detected
-   <Expandable title="properties">
+   <Expandable title="command properties">
     <ParamField body="id" type="string" required>
       To identify the command when it gets detected and returned over the WebSocket
     </ParamField>
@@ -164,7 +164,7 @@ To end the /transcribe session send a `type: end`. This will signal the server t
 
 ## Responses <Icon icon="message-arrow-down" iconType="solid" /> 
 
-#### Configuration
+### Configuration
 <ResponseField name="type" type="string" required default="CONFIG_ACCEPTED">
   Returned when sending a valid configuration.
 </ResponseField>
@@ -172,7 +172,7 @@ To end the /transcribe session send a `type: end`. This will signal the server t
   Returned when sending a valid configuration.
 </ResponseField>
 
-#### Transcripts
+### Transcripts
 <ResponseField name="type" type="string" required default="transcript">
 <ResponseField name="data" type="string" required></ResponseField>
       <Expandable title="data attributes" type="string" required>
@@ -195,7 +195,7 @@ To end the /transcribe session send a `type: end`. This will signal the server t
       </ResponseField>
 
 
-#### Commands
+### Commands
 <ResponseField name="type" type="string" required default="command">
 <ResponseField name="data" type="string" required></ResponseField>
       <Expandable title="data attributes" type="string" required>
