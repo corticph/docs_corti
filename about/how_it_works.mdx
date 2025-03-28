@@ -3,69 +3,123 @@ title: How it works
 description: 'Understanding Corti API endpoints'
 ---
 
-The available API endpoints leverage the foundational models offered by Corti for conversational speech-to-text, dictation, live note taking, summary document generation and evaluation, contextual search, knowledge retrieval from authoritative public references or your custom sources, medical coding and more. Where applicable, an alignment model can link evidence from inputs to model outputs to add guardrails and explainability. 
+The available API endpoints leverage the foundational models offered by Corti for conversational speech-to-text, font-end dictation, live Fact generation, document generation, ICD-10/CPT code prediction, contextual chat, knowledge retrieval from authoritative public references or your custom sources, and more. This page will provide an overview of each endpoint listed in the API Reference. 
 
 ## Why choose the Corti API?
 
 - **Purpose-built for healthcare**: Optimized for the unique needs and compliance standards of the medical field.
-- **Real-time processing**: Live data streaming with highly accurate fact generation enables instantaneous AI-driven support to healthcare professionals.
-- **Seamless workflow integration**: Designed to work across multiple interaction points in clinical and operational workflows.
-- **Customizable and scalable**: Adaptable capabilities to fit your organizational needs.
+- **Real-time processing**: Live data streaming with highly accurate fact generation enables instantaneous AI-driven support to integrated applications and healthcare professionals.
+- **Seamless workflow integration**: Designed to work across multiple modalities within clinical and operational workflows.
+- **Customizable and scalable**: Robust and adaptable capabilities to fit your organizational needs.
 
 ## Bringing it all together 
 
-Through the structured flow of **Interactions**, and the power of **Streaming** with **real-time** extraction of **Facts**, combined with the other available endpoints, the Corti API delivers a cohesive and efficient experience. Corti API ensures that all data, from live conversations to finalized documents, are tightly integrated and easily accessible. 
+Through the structured flow of **Interactions** with **real-time** extraction of **Facts** during audio **streams**, the Corti API delivers a cohesive and comprehensive experience. Corti API ensures that all data, from live conversations to finalized documents and medical codes, are tightly integrated and easily accessible. 
 
-This interaction-centric approach, combined with the granularity and flexibility of the endpoints, makes it simple for developers to build robust medical applications that leverage real-time AI capabilities across multiple aspects of the clinician-patient relationship.
+This interaction-centric approach, combined with the granularity and flexibility of the endpoints, makes it simple for developers to build robust medical applications that leverage real-time AI capabilities across multiple aspects of the clinician-patient relationship and needs of the health system. 
 
-## API Endpoints 
+## API endpoints 
+
+### Available today 
 
 <AccordionGroup>
 <Accordion title="Interactions">
 An **Interaction** is the fundamental unit within the Corti API that encapsulates the entire conversation or session between a medical professional and a patient. It ties together all related data and operations, enabling a cohesive workflow from the start of the interaction to the generation of final documentation. The Interaction endpoint allows you to discover all interactions available for your organization, create a new interaction, and update existing ones. When creating an interaction you'll receive an InteractionId as well as a Web Socket URL that can be used for real-time, streaming workflows. 
 </Accordion> 
 
-<Accordion title="Facts">
-Within an interaction, the Corti API extracts **Facts**, atomic pieces of information that are critical for documenting an interaction accurately. These facts can include details such as the patient’s name, height, blood pressure, symptoms, and other clinically relevant data. Facts are designed to help clinicians quickly identify the salient points of an interaction, making it easier to draft complete and truthful clinical documents.
-
-_Key features of Facts_:
-- **Relevance and Precision**: Facts are distilled from the conversation in real-time, ensuring that every crucial piece of information is captured as the interaction unfolds.
-- **Customizability**: Clinicians can easily add, remove, or modify facts to ensure that the documentation reflects the true nature of the interaction.
-- **Integration with Documentation**: These facts form the building blocks of clinical documents, ensuring that every relevant detail is included without overwhelming the clinician with unnecessary information.
-
-</Accordion> 
-
-<Accordion title="Streams">
-The streams endpoint enables **real-time** workflows, designed for scenarios requiring immediate processing and feedback during live interactions. It works by establishing a WebSocket connection after initializing an interaction through the `/interactions/` endpoint. Once connected, the client streams audio packets to the API, which responds with live transcripts and fact updates in real-time. This continuous data flow allows for instantaneous capture and processing of information, making it ideal for situations where immediate action is crucial. The stream can be updated with new facts during the interaction, and it concludes when the client sends an "end" message, formally closing the live session.
-</Accordion>
-
 <Accordion title="Recordings">
 The recordings endpoint in the Corti API allows clients to manage audio recordings associated with interactions. It is part of a larger workflow that includes initializing interactions, uploading recordings, generating transcripts, and creating documents based on the interaction data.
         
-As an example, after initializing an interaction, clients can upload an audio file by sending a `POST` request to `/interactions/:interactionId/recording/`. The API responds with a 200 status code and returns a `recordingId`, confirming that the audio file has been successfully uploaded and linked to the specific interaction. Use the 'recordingId' in your next step, such as generating Facts or Documents. 
+As an example, after initializing an interaction, clients can upload an audio file by sending a `POST` request to `/interactions/:interactionId/recording/`. The API responds with a 200 status code and returns a `recordingId`, confirming that the audio file has been successfully uploaded and linked to the specific interaction. Use the 'recordingId' in your next step, such as generating transcripts or documents. 
 </Accordion>
 
 <Accordion title="Transcripts">
 The transcripts endpoint in the Corti API is part of the workflow for processing recorded interactions. After uploading an audio recording, clients can initiate the transcription process by sending a POST request to `/interactions/:interactionId/transcripts/`. The API then processes the audio and returns a 200 status code along with the generated transcript. This transcript contains the text version of the recorded interaction, extracted and formatted for review. The transcripts endpoint plays a crucial role in converting speech to text for clinical conversations and dictations, enabling further processing and documentation creation based on the interaction data.
 </Accordion>
 
+<Accordion title="Transcribe">
+The transcribe endpoint enables stateless speech-to-text that can be used to power dictation workflows. Spoken or automated punctuation is supported, and commands can be defined in configuration requests. 
+
+- See the [languages](/about/languages/) page for more information on how and which languages are supported. 
+- See the [dictation SDK](/get_started/dictation-sdk/) page for a packaged SDK ready to integrate into your app within minutes. 
+</Accordion>
+
+<Accordion title="Streams">
+The streams endpoint enables **real-time** conversational transcript and fact generation. Designed for scenarios requiring immediate processing and feedback during live interactions, the streams endpoint operates over a WebSocket connection after initializing an interaction. Once connected, the client streams audio packets to the API, which responds with live transcripts and fact updates in real-time. 
+
+This continuous data flow allows for instantaneous capture and processing of information, making it ideal for situations where immediate action is crucial. The stream can be updated with new facts during the interaction, and it concludes when the client sends an "end" message, formally closing the live session.
+</Accordion>
+
+<Accordion title="Facts">
+Within a real-time streaming interaction, the Corti API extracts **Facts**: atomic pieces of information that are critical for documenting an interaction accurately. These facts can include details such as the patient’s name, height, blood pressure, symptoms, and other clinically relevant data. Facts are designed to help clinicians quickly identify the salient points of an interaction, making it easier to draft complete and truthful clinical documents.
+
+_Key features of Facts_:
+- **Relevance and Precision**: Facts are distilled from the conversation in real-time, ensuring that every crucial piece of information is captured as the interaction unfolds.
+- **Customizability**: Clinicians can easily add, remove, or modify facts to ensure that the documentation reflects the true nature of the interaction.
+- **Integration with Documentation**: These facts form the building blocks of clinical documents, ensuring that every relevant detail is included without overwhelming the clinician with unnecessary information.
+</Accordion> 
+
+<Accordion title="Documents">
+The documents endpoint in the Corti API is an essential part of the workflow for processing recorded interactions. After initializing an interaction, uploading a recording, and generating a transcript, clients can create the necessary documentation by sending a POST request to `/interactions/:interactionId/documents/`. This request utilizes generated transcripts and a templateKey defined in the request to specify the desired format of the output document. Upon processing the request, the API returns a 200 status code along with the final document. 
+
+This endpoint allows for the generation of documentation tailored to specific needs, such as clinical notes or referral letters, based on the interaction data and predefined templates. The endpoint can be called multiple times for a given interaction if multiple document outputs are desired. See more details in the [Templates & Documents](/get_started/templates/) page. 
+</Accordion>
+
 <Accordion title="Templates">
 Templates in the Corti API allow users to specify the output of medical documents generated from various inputs, such as transcripts, facts, or other medical documents. They enable the definition of specific sections, structure, language, and writing style for documentation, ensuring consistency and clarity in medical reporting. 
         
-For more information on how to find and use existing templates, or to request custom templates, please see details on the Templates page or [contact us](https://www.corti.ai/contact-us) for more information. 
-</Accordion>
-
-<Accordion title="Documents">
-The documents endpoint in the Corti API is an essential part of the workflow for processing recorded interactions. After initializing an interaction, uploading a recording, and generating a transcript, clients can create the necessary documentation by sending a POST request to `/interactions/:interactionId/documents/`. This request includes the previously generated transcript and a templateId to specify the desired format of the output document. The API then processes the request and returns a 200 status code along with the final document, which is ready for use or further editing. This endpoint allows for the generation of documentation tailored to specific needs, such as clinical notes or referral letters, based on the interaction data and predefined templates. The endpoint can be called multiple times for a given interaction if multiple document outputs are desired. 
+For more information on how to find and use existing templates, how to build templates dynamically in the document generation request, or how to request a custom template, please see more details in the [Templates & Documents](/get_started/templates/) page. 
 </Accordion>
 
 <Accordion title="Codes">
-The codes endpoint in the Corti API provides access to the code extraction model, which includes support for ICD-10 diagnosis and procedure codes as well as CPT code with modifiers. The API provides the ability to generate codes for a text that is defined in the request or documents associated with the interaction. In addition to using out of the box coding model, organizational-specific model training is available so that coding output is tuned for client note styles and requirements. 
+The codes endpoint in the Corti API provides access to code prediction models, which includes support for ICD-10 diagnosis and procedure codes as well as CPT code with modifiers. The API provides the ability to generate codes for a text that is defined in the request or documents associated with the interaction. 
+
+Currently, the coding endpoint is available for use on a per-customer basis: customer-specific tuning is required so that coding output is tuned for client note styles and requirements. Check back soon for a general use coding model to be available. 
 </Accordion>
 
-<Accordion title="Discovery">
-The discovery endpoints in the Corti API provide the ability to execute contextual searches and knowledge retrieval. Public reference material is widely supported; however, organizations can customize information sources for their standards of care. Furthermore, alignment and explainability models are available to compare resources to identify overlaps or gaps between two assets. Please [contact us](https://www.corti.ai/contact-us) for more information. 
+</AccordionGroup>
+
+### Coming soon 
+<AccordionGroup>
+<Accordion title="Codes">
+The codes endpoint in the Corti API provides access to code prediction models, which includes support for ICD-10 diagnosis and procedure codes as well as CPT code with modifiers. The API provides the ability to generate codes for a text that is defined in the request or documents associated with the interaction. 
+
+In Q2 2025 a general use coding model will be made available so that any user of the Corti API system can generate ICD-10 and CPT code predictions without requiring organizational tuning. 
 </Accordion>
+
+<Accordion title="Alignment">
+The alignment endpoint provides the ability to compare resources to identify overlaps or gaps between the textual assets. Please [contact us](https://www.corti.ai/contact-us) for more information. 
+</Accordion>
+
+<Accordion title="Classification">
+The classification endpoint provides the ability to execute binary classification tasks: Comparing two resources where a booleran output is expected. Please [contact us](https://www.corti.ai/contact-us) for more information. 
+</Accordion>
+
+<Accordion title="Contextual Chat">
+Contextual chat allows users to ask questions or make queries in the context of a specific interaction. This endpoint supports Server-Sent Events (SSE) for real-time updates and responses. The thread ID, which is returned with the initial query, allows users to ask follow-up questions or refine their queries. 
+
+This endpoint is designed to facilitate dynamic and context-aware conversations, making it suitable for applications such as chatbots, virtual assistants, research tools and workflow augmentation. Please [contact us](https://www.corti.ai/contact-us) for more information. 
+</Accordion>
+
+<Accordion title="Contextual Retrieval">
+Contextual retrieval empowers you to unlock knowledge bases and guidelines tools via queries, documents, or interactions. This endpoint is designed to facilitate the retrieval of relevant information from various sources, enabling users to access knowledge bases and utilize guidelines at point of care. 
+
+The response includes a summary and a list of relevant sources, providing users with a comprehensive overview of the retrieved information. Please [contact us](https://www.corti.ai/contact-us) for more information. 
+</Accordion>
+
+<Accordion title="Predictive Prompt">
+The predictive prompt endpoint in the Corti API provides a list of suggested questions based on a query and/or interaction context. Please [contact us](https://www.corti.ai/contact-us) for more information. 
+</Accordion>
+
+<Accordion title="Explainability">
+The explainability endpoint in the Corti API provide access to an AI model that can identify pertinent mentions of defined content within a set of reference texts. Please [contact us](https://www.corti.ai/contact-us) for more information. 
+</Accordion>
+
 </AccordionGroup> 
 
-To learn more about how these APIs can be used, please see the [Example Workflows](/get_started/workflows) or the detailed [API reference](/api-reference/) documentation. Enhancements and new functionality will be documented on the [Updates](/release-notes/overview/) page. 
+<br/>
+<Check>
+    To learn more, see the detailed pages under [Get Started](/get_started/get-access) or the comprehensive [API reference](/api-reference/) documentation. 
+
+    Enhancements and new functionality will be announced on the [Updates](/release-notes/overview/) page. 
+</Check>
