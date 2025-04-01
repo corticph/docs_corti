@@ -3711,8 +3711,7 @@
           },
           "modelName": {
             "type": "string",
-            "description": "Can be \"base\" or \"enhanced\".",
-            "example": "\"model_name (Latest)\" | \"model_name_version\""
+            "description": "Can be \"base\", \"enhanced\", \"premier\". By default, only the highest tier is accessible. Check https://docs.corti.ai/about/languages for more."
           }
         }
       },
