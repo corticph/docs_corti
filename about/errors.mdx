@@ -1,0 +1,42 @@
+---
+title: Errors
+description: 'Collection of known errors and solutions'
+---
+
+[docs-get-access]: https://docs.corti.ai/get_started/getaccess
+[docs-auth]: https://docs.corti.ai/get_started/authentication
+
+## <a id="A0001" /> Access forbidden (`403`)
+You don't have the necessary permissions to access this feature or
+information. Please check [Get access](docs-get-access) and
+[Authentication](docs-auth).
+
+## <a id="A0002" /> Timeout (`504`)
+The allowed time for this request has passed. Please try again with smaller
+request size or contact the support.
+
+## <a id="A0003" /> Bad request (`400`)
+Your request couldn't be processed. Please check the relevant documentation,
+base URL, endpoint, `Content-Type` header, required fields, field format
+(e.g. UUIDs) and try again.
+
+## <a id="A0004" /> Invalid token (`403`)
+The provided token was incomplete or not in correct format. Please check the
+token or contact support.
+
+## <a id="A0005" /> Invalid user (`403`)
+The provided token contains an invalid user. Please check the token or contact
+support.
+
+## <a id="A0006" /> Invalid ID (`400`)
+The provided ID is in an incorrect format or shape. Please check the
+documentation for required ID formatting such as UUID.
+
+## <a id="A0007" /> Interaction not found (`404`)
+The requested interaction could not be found in our system. Ensure the
+interaction exists and you have permission to access it through the listing
+endpoint.
+
+## <a id="A0008" /> Invalid UUID (`400`)
+The provided UUID is in an incorrect format or shape. Please check the
+documentation for required ID formatting such as UUID.
