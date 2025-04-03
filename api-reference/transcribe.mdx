@@ -1,5 +1,5 @@
 ---
-title: Stateless front-end dictation 
+title: Real-time stateless dictation 
 description: WebSocket Secure (WSS) API Documentation for stateless use of /transcribe endpoint for real-time speech-to-text  
 tag: WSS
 ---
@@ -11,7 +11,7 @@ The WebSocket Secure (WSS) API enables real-time, bidirectional communication wi
 This documentation provides a comprehensive guide for integrating these capabilities.
 
 <Info>
-  This `/transcribe` endpoint supports stateless front-end dictation. 
+  This `/transcribe` endpoint supports real-time stateless dictation. 
   
   - If you are looking for real-time ambient documentation interactions, you should use the [/stream WSS](/api-reference/stream/)
   - If you are looking for asynchronous transcript generation as part of an interaction, then please refer to the [/transcripts endpoint](/api-reference/transcripts)
@@ -88,7 +88,7 @@ The configuration must be committed within 10 seconds of opening the WebSocket, 
 </ParamField>
 
 ### Advanced Stream Configuration: Commands
-The transcribe endpoint supports registration and detection of commands, common in front end-dictation workflows.
+The transcribe endpoint supports registration and detection of commands, common in dictation workflows.
 Extend the configuration with the following parameters to register commands that should be detected.
 
 #### Body
