@@ -1,0 +1,57 @@
+---
+title: Asynchronous ambient documentation
+description: 'Ambient note generation from audio recording and conversational transcript'
+---
+
+## Introduction 
+
+The **Asynchronous Ambient Documentation Workflow** is the most common "AI scribe" workflow in use today. While the [real-time ambient documentation workflow](/workflows/ambient-rt/) is designed for scenarios where immediate processing and feedback are essential during the patient visit, this workflow processes a complete audio file and within seconds returns a document generated based on the conversational transcript. In scenarios where real-time processing isn't required or feasible, the asynchronous workflow provides flexibility and predictability.
+
+
+### Endpoints and capabilities 
+
+| Endpoint | Capability | Use |
+| :--- | :--- | :--- |
+| Interactions | The foundational unit that ties together all related data and operations, enabling a cohesive workflow from the start of the interaction to the generation of final documentation. | Required | 
+| Recordings | Real-time audio streaming, conversational transcript, and fact extraction | Required | 
+| Transcripts | Used by /streams endpoint for fact extraction; can also be called to get, update or add facts | Required | 
+| Documents | Ambient note generation based on template and language defined in the request | Required | 
+| Templates | Get details for available templates that define the structure and language of generated documents | Optional | 
+
+## Workflow 
+
+<Card>
+  ```mermaid
+        sequenceDiagram
+        Client ->> Public API: POST /interactions
+        Public API -->> Client: 200, interactionId, wssUrl
+        Client ->> Public API: POST /interactions/:id/recording
+        Public API -->> Client: 200, recordingId
+        Client ->> Public API: POST /interactions/:id/transcripts
+        Public API -->> Client: 200, transcript
+        Client ->> Public API: POST /interactions/:id/documents
+        Public API -->> Client: 200, document
+    ```
+</Card>
+
+<Steps titleSize="h3">
+    <Step title="Create interaction">
+        1. The workflow begins with the client initiating an interaction by sending a `POST` request to the `/interactions` endpoint.
+        2. The API responds with a unique `id` for the interaction and a WebSocket URL (`wssUrl`). The identifier will be used to manage the subsequent steps of the workflow.
+    </Step>
+    <Step title="Upload audio recording">
+        3. Once the interaction is initialized, the client uploads an audio file associated with that interaction by sending a `POST` request to `/interactions/:id/recording`.
+        4. The API responds with a `200` status and returns a `recordingId`, confirming that the audio file has been successfully uploaded and linked to the interaction.
+    </Step>
+    <Step title="Create conversational transcript">
+        5. After the recording is uploaded, the client initiates the transcription process by sending a `POST` request to `/interactions/:id/transcripts`.
+        6. The API processes the audio and returns a `200` status with the generated transcript. This transcript contains the text version of the recorded interaction, extracted and formatted for review.
+    </Step>
+    <Step title="Generate document(s)">
+        7. Finally, the client creates the necessary documentation by sending a `POST` request to `/interactions/:id/documents`. This request includes the transcript generated in the previous step and a `templateKey` to specify the format of the output document.
+        8. The API processes the request and returns a `200` status along with the final document, which is ready for use or further editing.
+        9. Submit multiple `POST` requests to the `/documents` endpoint with different `templateKey` to generate multiple notes for a given interaction. 
+    </Step>
+</Steps>
+
+<Check>See details on Templates and how to use them [here](/templates/templates/)</Check>

@@ -1,0 +1,141 @@
+---
+title: Standard templates
+description: "Using Corti's default out of the box templates"
+---
+
+## Overview 
+Corti provides a library of standard, out of the box templates for use in note generation workflows. Standard templates are comprised of standardized note sections that are also available for use. The default template library is always growing. 
+
+
+## Standard out of the box templates 
+
+The following templates are available for use with Corti API: 
+
+<Card>
+<Tabs>
+  <Tab title="SOAP Note">
+	  **templateKey**: `corti-soap` 
+
+  	**Description**: Classic SOAP note supporting ambient note generation for most medical visits.
+    
+	  **Sections included**: Subjective, Objective, Assessment, Plan 
+
+	  **Languages**: Danish (da), German (de), Swiss German (de-CH), English (en), English UK (en-GB), Spanish (es), French (fr), Swedish (sv) 
+  </Tab> 
+  <Tab title="Brief Clinic Note">
+	  **templateKey**: `corti-brief-clinical-note` 
+
+  	**Description**: A brief, one-paragraph document summarizing the encounter and key clinical findings.  
+
+	  **Sections included**: Brief clinical note 
+
+	  **Languages**: Danish (da), German (de), Swiss German (de-CH), English (en), English UK (en-GB), Spanish (es), French (fr), Swedish (sv) 
+  </Tab> 
+  <Tab title="H&P">
+	  **templateKey**: `corti-h-and-p` 
+
+  	**Description**: Classic History and Physical (H&P) note supporting ambient note generation for visits with comprehensive history and examination to be summarized from the conversation. 
+
+	  **Sections included**: Chief Complaint, History of present illness, Past medical and surgical history, Family history, Social history, Medications, Allergies, Review of systems, Physical exam with vitals, Diagnostic results, Assessment, Plan 
+
+	  **Languages**: Danish (da), German (de), Swiss German (de-CH), English (en), English UK (en-GB), Spanish (es), French (fr), Swedish (sv)  
+  </Tab> 
+  <Tab title="Emergency Note">
+	  **templateKey**: `corti-emergency-note` 
+
+  	**Description**: Comprehensive emergency department (ED) note.
+    
+	  **Sections included**: Allergies, Chief complaint, HPI, Past medical history, Past surgical history, Family history, Social history, Review of systems, vitals, Physical Exam, Diagnostic results, Medical decision making, Assessment and Plan 
+
+	  **Languages**: Danish (da), German (de), Swiss German (de-CH), English (en), English UK (en-GB), Spanish (es), French (fr), Swedish (sv) 
+  </Tab> 
+  <Tab title="Nursing Note">
+	  **templateKey**: `corti-nursing-note`
+
+  	**Description**: Brief note summarizing objective observations, actions taken by the nurse, and follow up plan discussed during the visit. 
+
+	  **Sections included**: Objective, Actions, Plan 
+
+	  **Languages**: Danish (da), German (de), Swiss German (de-CH), English (en), English UK (en-GB), Spanish (es), French (fr), Swedish (sv) 
+  </Tab> 
+  <Tab title="Patient Summary">
+	  **templateKey**: `corti-patient-summary`
+
+  	**Description**: Brief summary of the patient visit with language appropriate for non-medical professional. 
+
+	  **Sections included**: Patient summary
+
+	  **Languages**: Danish (da), German (de), Swiss German (de-CH), English (en), English UK (en-GB), Spanish (es), French (fr), Swedish (sv) 
+  </Tab> 
+  <Tab title="Epic AVR">
+	  **templateKey**: `corti-epic-avr`
+
+  	**Description**: Note template used for integration with Epic Ambient Voice Recognition API. 
+
+	  **Sections included**: HPI, Physical Exam, Diagnostic Results, Assessment and Plan
+
+	  **Languages**: Danish (da), German (de), Swiss German (de-CH), English (en), English UK (en-GB), Spanish (es), French (fr), Swedish (sv) 
+  </Tab> 
+  <Tab title="Outpatient Visit Note">
+	  **templateKey**: `corti-outpatient-visit-note`
+
+  	**Description**: Universal outpatient visit note, more detailed than a SOAP note but not as comprehensive as an H&P. 
+
+	  **Sections included**: Reason for visit, HPI, Past Medical History, Family History, Social History, Physical Exam (with vitals), Diagnostic Results, Assessment and Plan
+
+	  **Languages**: Danish (da), German (de), Swiss German (de-CH), English (en), English UK (en-GB), Spanish (es), French (fr), Swedish (sv) 
+  </Tab> 
+  <Tab title="Emergency Response">
+	  **templateKey**: `corti-emergency-response-note`
+
+  	**Description**: Summary of emergency service response call transcripts that includes the 5Ws: Who, What, Where, When, Weapons involved. 
+
+	  **Sections included**: Emergency situation details
+
+	  **Languages**: Danish (da), German (de), Swiss German (de-CH), English (en), English UK (en-GB), Spanish (es), French (fr), Swedish (sv) 
+  </Tab> 
+</Tabs>
+</Card> 
+
+<br/>
+
+<Check>Use the `templateKey` and `language` codes for these system default templates in your note generation requests, or use the `GET /templates` request to see all available templates</Check>
+
+<br/>
+
+## Standard out of the box sections 
+
+The following template sections are included in default templates. They're available for use in custom template requests and dynamic note generation requests. 
+
+<Accordion title="Click to expand">
+
+    | Section name | Section Key | Description |
+    | :--- | :--- | :--- | 
+    |Actions | corti-actions | Summary of actions taken during the consultation |
+    | Allergies | corti-allergies | Known drug allergies and other allergies, along with the reactions |
+    | Assessment | corti-assessment | A brief summary of the clinician's diagnostic considerations |
+    | Assessment and Plan | corti-assessment-and-plan | A diagnosis or evaluation of the patient's condition and the proposed treatment plan |
+    | Brief clinical note | corti-brief-clinical-note | A brief, one-paragraph document summarizing the encounter and key clinical findings |
+    | Chief Complaint | corti-chief-complaint | A brief statement describing the main reason for the patient's visit |
+    | Diagnostic Results | corti-diagnostic-results | Summary of diagnosis lab and radiology test results that have been discussed in the consultation, including the test performed and result value mentioned |
+    | Discussion Notes | corti-discussion-notes | Bullet list summary of the key discussion points of the consultation (reason for visit, patient concerns, provider recommendations, next steps) |
+    | Emergency Situation Details | corti-emergency-situation-details | Summary of emergency service response call transcripts that includes the 5Ws: Who, What, Where, When, Weapons involved | 
+    | Family History | corti-family-history | Documentation of medical conditions present in the patient’s family that could influence their health risks |
+    | History of Present Illness | corti-hpi | A detailed description of the patient's experience related to the present illness |
+    | Medical Decision Making | corti-medical-decision-making | Summary of the facts of the patient's presentation, care provided and actions taken | 
+    | Medications | corti-medications | A list of medications the patient is currently taking, including dosages and frequency |
+    | Objective | corti-objective | The detailed results of the physical examination and other diagnostic data |
+    | Past Medical and Surgical History | corti-past-medical-and-surgical-history | Combined account of the patient's medical and surgical history |
+    | Past Medical History | corti-past-medical-history | Summary of the patient's existing medical conditions |
+    | Patient summary | corti-patient-summary | Summary of patient visit intended for non-medical professional |
+    | Physical Examination | corti-physical-exam-without-vitals | Outline of physical exam findings by body section, without vital signs |
+    | Physical Examination | corti-physical-exam-with-vitals | Outline of physical exam findings by body section, including vital signs |
+    | Plan | corti-plan | The plan that is being suggested by the clinician in the transcript, for steps to be taken after the consultation ends |
+    | Review of Systems | corti-review-of-systems | Summary of patient reported symptoms per body system |
+    | Social History | corti-social-history-w-smoking-and-alcohol | Summary of patient social history, including smoking status and alcohol use |
+    | Social History | corti-social-history-w-o-smoking-and-alcohol | Summary of patient social history, not including smoking status and alcohol use |
+    | Subjective | corti-subjective | A detailed narrative of the symptoms leading up to the current visit, including onset, duration, and any treatments attempted | 
+    | Surgical History | corti-surgical-history | Summary of patient surgical history discussed during the consultation |
+    | Vital Signs | corti-vital-signs | Summary of patient vitals mentioned in the consultation, including blood pressure, temperature, pulse, respiratory rate, and oxygen saturation |
+
+</Accordion>

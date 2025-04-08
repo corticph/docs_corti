@@ -1,0 +1,130 @@
+---
+title: Real-time ambient documentation 
+description: 'Live conversational transcript, fact extraction, and note generation'
+---
+
+## Introduction 
+
+The **Real-Time Ambient Documentation Workflow** is designed for scenarios where immediate processing and feedback are essential during live interactions between medical practitioners and patients. This workflow leverages WebSocket connections to enable continuous audio streaming, real-time transcription, and dynamic updates throughout the interaction. It is ideal for situations where clinicians need to capture and act on information instantaneously, ensuring that all relevant data is processed and available in real-time.
+
+### Endpoints and capabilities 
+
+| Endpoint | Capability | Use |
+| :--- | :--- | :--- |
+| Interactions | The foundational unit that ties together all related data and operations, enabling a cohesive workflow from the start of the interaction to the generation of final documentation. | Required | 
+| Streams | Real-time audio streaming, conversational transcript, and fact extraction | Required | 
+| Facts | Used by /streams endpoint for fact extraction; can also be called to get, update or add facts | Optional | 
+| Documents | Ambient note generation based on template and language defined in the request | Required | 
+| Templates | Get details for available templates that define the structure and language of generated documents | Optional | 
+
+## Workflow 
+
+<Steps titleSize="h3">
+    <Step title="Initialization">
+
+        <Card>
+        ```mermaid
+                sequenceDiagram
+                participant Client
+                participant Public API
+                Client->> Public API: POST /interactions
+                Public API -->> Client: interactionId, wssUrL
+                opt Clients wants to provide known facts pre-interaction
+                Client ->> Public API: POST /interactions/:interactionId/facts
+                end
+
+                Client ->> Public API: PATCH /interactions/:interactionId "in-progress"
+                Public API -->> Client: 200, interaction
+            ```
+        </Card>
+
+        1. The workflow begins with the client application initiating an interaction. This is done by sending a `POST` request to the `/interactions` endpoint. 
+        2. The API responds with a unique `interactionId` and a WebSocket URL (`wssUrl`). The identifier will be used to manage the subsequent steps of the workflow.
+        3. *Optional* **Pre-Interaction Data**: If the client has pre-existing information (known `Facts`) about the patient or session, these can be sent to `/interactions/:id/facts` before starting the live interaction.
+        4. **Start the interaction:** The client should `PATCH` to `/interactions/:id` changing the interaction state to `“in-progress”`
+    </Step>
+
+    <Step title="Live Interaction">
+
+        <Card>
+        ```mermaid
+                sequenceDiagram
+                participant Client
+                participant Public API
+                participant WebSocket
+                note over Client, WebSocket: Live Interaction Starts
+                Client->>WebSocket: WSS to /interactions/:interactionId/stream
+                Client->>WebSocket: configuration
+                WebSocket-->>Client: "configuration accepted", configuration
+
+                Client-->>WebSocket: Send audio packets
+                WebSocket-->>Client: Live transcripts and fact updates
+
+                opt User wants to create a fact
+                Client ->> Public API: POST /interactions/:interactionId/facts
+                Public API -->> Client: 200, fact
+                WebSocket-->>Client: Created facts
+                end 
+            ```
+        </Card>
+
+        1. **Opening the WebSocket Connection**: The client establishes a real-time connection by opening a WebSocket using the provided `wssUrl`. This connection serves as the primary channel for transmitting and receiving data throughout the interaction.
+        2. **Streaming and Configuration**: Upon connection, the client should send configuration details to tailor the interaction. These configurations are committed via the WebSocket, which acknowledges them back to the client.
+        3. **Continuous Data Flow**: As the interaction progresses, the client sends audio packets through the WebSocket. In return, the API streams back `transcripts` in 3 to 20s intervals, and automatically generated `Facts` in 60s intervals.
+        4. During the interaction, the Client may need to introduce new facts based on the ongoing conversation. These are sent to `/interactions/:id/facts`, adding to the current interaction data.
+
+        <Check>See details for /streams requests and configuration options [here](/api-reference/streams/)</Check>
+    </Step>
+
+    <Step title="Document generation">
+
+        <Card>
+        ```mermaid
+                sequenceDiagram
+                Client->>Client: Select facts and/or transcript for note generation 
+                Client ->> Public API: POST /interactions/:id/documents
+                Public API -->> Client: 200, document
+            ```
+        </Card>
+
+        1. **Select facts** and/or transcript that should be utilized for note generation
+        2. **Generate documents** by sending a `POST` request to `/interactions/:id/documents`. This request should include selected facts and/or transcript generated in the real-time stream. A `templateKey` and `language` are defined to specify the format of the output document.
+        3. The API processes the request and returns a `200` status along with the final document, which is ready for use or further editing.
+        4. Submit multiple `POST` requests to the `/documents` endpoint with different `templateKey` to generate multiple notes for a given interaction. 
+
+        <Check>See details on Templates and how to use them [here](/templates/templates/)</Check>
+    </Step>
+
+    <Step title="Ending the Interaction">
+
+        <Card>
+        ```mermaid
+                sequenceDiagram
+                participant Client
+                participant Public API
+                participant WebSocket
+
+                Client->>WebSocket: Send "end" message
+
+                note over Client, WebSocket: Live Interaction Ends
+
+                WebSocket-->>Client: Final updates
+                WebSocket-->>Client: Received "ended" message
+
+                Client->>Client: Makes final edits to facts
+                Client->>Public API: POST /documents with final facts list
+                Public API-->>Client: Return document
+
+                Client ->> Public API: PATCH /interactions/:id "completed"
+                Public API -->> Client: 200, interaction
+            ```
+        </Card>
+
+        1. Once the live interaction is complete, the client sends an `"end"` message via the WebSocket, signalling the conclusion of the session.
+        2. The WebSocket then sends any final updates and the `"ended"` message formally closing the live interaction.
+        3. After the live session, the client can review and make final edits to the facts collected during the interaction.
+        4. These finalized `Facts` are then submitted through a `POST` request to `/interactions/:id/documents`, which generates the desired documentation, such as clinical notes or summaries, based on the provided data and a template.
+        5. The API processes this request and returns the completed document, ready for use or further review.
+        6. The client should `PATCH` to `/interactions/:id` changing the interaction state to `“completed”`
+    </Step>
+</Steps>
