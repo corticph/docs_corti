@@ -62,29 +62,41 @@
     }
   ],
   "navigation": [
-    {
-      "group": "About Corti API",
-      "pages": ["about/introduction", "about/ai_platform", "about/how_it_works", "about/languages"]
-    },
-    {
-      "group": "Get Started",
-      "pages": ["get_started/getaccess","get_started/authentication", "get_started/workflows", "get_started/templates", "get_started/dictation-sdk"]
-    },
-    {
-      "group": "Updates",
-      "pages": ["release-notes/overview", "release-notes/fm-updates", "release-notes/api-updates", "release-notes/language-updates"]
-    },
-    {
-      "group": "Live Streams",
-      "pages": ["api-reference/stream", "api-reference/transcribe"]
-    }
-  ],
-    "footerSocials": {
-      "website": "https://www.corti.ai",
-      "x": "https://x.com/corti_ai",
-      "github": "https://github.com/corticph",
-      "linkedin": "https://www.linkedin.com/company/corti"
-    },
+      {
+        "group": "About Corti API",
+        "pages": ["about/introduction", "about/ai_platform", "about/how_it_works", "about/languages"]
+      },
+      {
+        "group": "Get Started",
+        "pages": ["get_started/getaccess","get_started/authentication"]
+      },
+      {
+        "group": "Templates and Documents",
+        "pages": ["templates/templates", "templates/templates-standard", "templates/documents-standard", "templates/documents-advanced", "templates/templates-request"]
+      },
+      {
+        "group": "Workflows",
+        "pages": ["workflows/overview", "workflows/ambient-rt", "workflows/ambient-async"]
+      },
+      {
+        "group": "SDKs",
+        "pages": ["sdk/overview", "sdk/dictation-sdk"]
+      },
+      {
+        "group": "Updates",
+        "pages": ["release-notes/overview", "release-notes/fm-updates", "release-notes/api-updates", "release-notes/language-updates"]
+      },
+      {
+        "group": "Live Streams",
+        "pages": ["api-reference/stream", "api-reference/transcribe"]
+      }
+    ],
+  "footerSocials": {
+    "website": "https://www.corti.ai",
+    "x": "https://x.com/corti_ai",
+    "github": "https://github.com/corticph",
+    "linkedin": "https://www.linkedin.com/company/corti"
+  },
   "integrations": {
     "intercom": "y30epli4"
   },

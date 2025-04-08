@@ -41,7 +41,7 @@ The transcripts endpoint in the Corti API is part of the workflow for processing
 The transcribe endpoint enables stateless speech-to-text that can be used to power dictation workflows. Spoken or automated punctuation is supported, and commands can be defined in configuration requests. 
 
 - See the [languages](/about/languages/) page for more information on how and which languages are supported. 
-- See the [dictation SDK](/get_started/dictation-sdk/) page for a packaged SDK ready to integrate into your app within minutes. 
+- See the [dictation SDK](/sdk/dictation-sdk/) page for a packaged SDK ready to integrate into your app within minutes. 
 </Accordion>
 
 <Accordion title="Streams">
@@ -62,13 +62,13 @@ _Key features of Facts_:
 <Accordion title="Documents">
 The documents endpoint in the Corti API is an essential part of the workflow for processing recorded interactions. After initializing an interaction, uploading a recording, and generating a transcript, clients can create the necessary documentation by sending a POST request to `/interactions/:interactionId/documents/`. This request utilizes generated transcripts and a templateKey defined in the request to specify the desired format of the output document. Upon processing the request, the API returns a 200 status code along with the final document. 
 
-This endpoint allows for the generation of documentation tailored to specific needs, such as clinical notes or referral letters, based on the interaction data and predefined templates. The endpoint can be called multiple times for a given interaction if multiple document outputs are desired. See more details in the [Templates & Documents](/get_started/templates/) page. 
+This endpoint allows for the generation of documentation tailored to specific needs, such as clinical notes or referral letters, based on the interaction data and predefined templates. The endpoint can be called multiple times for a given interaction if multiple document outputs are desired. See more details in the [Templates & Documents](/templates/templates/) page. 
 </Accordion>
 
 <Accordion title="Templates">
 Templates in the Corti API allow users to specify the output of medical documents generated from various inputs, such as transcripts, facts, or other medical documents. They enable the definition of specific sections, structure, language, and writing style for documentation, ensuring consistency and clarity in medical reporting. 
         
-For more information on how to find and use existing templates, how to build templates dynamically in the document generation request, or how to request a custom template, please see more details in the [Templates & Documents](/get_started/templates/) page. 
+For more information on how to find and use existing templates, how to build templates dynamically in the document generation request, or how to request a custom template, please see more details in the [Templates & Documents](/templates/templates/) page. 
 </Accordion>
 
 <Accordion title="Codes">
