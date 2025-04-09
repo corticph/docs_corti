@@ -3956,6 +3956,10 @@
             "type": "string",
             "format": "date-time",
             "description": "The timestamp when the document was last updated."
+          },
+          "outputLanguage": {
+            "type": "string",
+            "description": "The language in which the document will be generated. Check https://docs.corti.ai/about/languages for more."
           }
         }
       },
@@ -4721,6 +4725,10 @@
                   "type": "integer",
                   "description": "The identifier of the participant."
                 },
+                "speaker_id": {
+                  "type": "integer",
+                  "description": "Id to tag an identified speaker. Auto-increments."
+                },
                 "text": {
                   "type": "string",
                   "description": "The spoken phrase or utterance extracted from the audio."
@@ -4988,6 +4996,10 @@
           "participant": {
             "type": "integer",
             "description": "The identifier of the participant."
+          },
+          "speaker_id": {
+            "type": "integer",
+            "description": "Id to tag an identified speaker. Auto-increments."
           },
           "text": {
             "type": "string",
