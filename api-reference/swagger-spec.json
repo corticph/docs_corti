@@ -1152,6 +1152,41 @@
         ]
       }
     },
+    "/factgroups/": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": " ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDirectusFactGroupsFiltered"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "facts"
+        ],
+        "summary": "List Fact Groups",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          }
+        ]
+      }
+    },
     "/interactions/{id}/facts/": {
       "get": {
         "responses": {
@@ -2682,6 +2717,50 @@
           }
         }
       },
+      "DirectusFactGroupFiltered": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
+          },
+          "key": {
+            "type": "string"
+          },
+          "translations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "languages_id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "DirectusFactGroupTranslationFiltered": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "languages_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
       "DocumentContext": {
         "type": "object",
         "required": [
@@ -3875,6 +3954,44 @@
                   "type": "object",
                   "description": "State of the additional code",
                   "$ref": "#/components/schemas/CodesState"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ResponseDirectusFactGroupsFiltered": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "items": {},
+                  "$ref": "#/components/schemas/UUID"
+                },
+                "key": {
+                  "type": "string"
+                },
+                "translations": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "languages_id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  }
                 }
               }
             }
