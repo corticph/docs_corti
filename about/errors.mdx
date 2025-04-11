@@ -8,77 +8,145 @@ description: 'Collection of known errors and solutions'
 [docs-langs]: https://docs.corti.ai/about/languages
 [support]: https://help.corti.app
 
-## <a id="A0001" /> Access forbidden (`403`)
+<a id="A0001" />
+## Access forbidden (`403`)
+Code: `A0001`
+
 You don't have the necessary permissions to access this feature or
-information. Please check [Get access](docs-get-access) and
-[Authentication](docs-auth).
+information. Please check [Get access][docs-get-access] and
+[Authentication][docs-auth].
 
-## <a id="A0002" /> Timeout (`504`)
+<a id="A0002" />
+## Timeout (`504`)
+Code: `A0002`
+
 The allowed time for this request has passed. Please try again with smaller
-request size or contact the [support](support).
+request size or contact the [support][support].
 
-## <a id="A0003" /> Bad request (`400`)
+<a id="A0003" />
+## Bad request (`400`)
+Code: `A0003`
+
 Your request couldn't be processed. Please check the relevant documentation,
 base URL, endpoint, `Content-Type` header, required fields, field format
 (e.g. UUIDs) and try again.
 
-## <a id="A0004" /> Invalid token (`403`)
+<a id="A0004" />
+## Invalid token (`403`)
+Code: `A0004`
+
 The provided token was incomplete or not in correct format. Please check the
-token or contact the [support](support).
+token or contact the [support][support].
 
-## <a id="A0005" /> Invalid user (`403`)
+<a id="A0005" />
+## Invalid user (`403`)
+Code: `A0005`
+
 The provided token contains an invalid user. Please check the token or contact
-the [support](support).
+the [support][support].
 
-## <a id="A0006" /> Invalid ID (`400`)
+<a id="A0006" />
+## Invalid ID (`400`)
+Code: `A0006`
+
 The provided ID is in an incorrect format or shape. Please check the
 documentation for required ID formatting such as UUID.
 
-## <a id="A0007" /> Interaction not found (`404`)
+<a id="A0007" />
+## Interaction not found (`404`)
+Code: `A0007`
+
 The requested interaction could not be found in our system. Ensure the
 interaction exists and you have permission to access it through the listing
 endpoint.
 
-## <a id="A0008" /> Invalid UUID (`400`)
+<a id="A0008" />
+## Invalid UUID (`400`)
+Code: `A0008`
+
 The provided UUID is in an incorrect format or shape. Please check the
 documentation for required ID formatting such as UUID.
 
-## <a id="A0009" /> Document not found (`404`)
+<a id="A0009" />
+## Document not found (`404`)
+Code: `A0009`
+
 The requested document could not be found in our system. Ensure the document
 exists and you have permission to access it through the listing endpoint.
 
-## <a id="A0010" /> Error processing (`500`)
-The request could not be performed at the moment. Please try again later or
-contact the [support](support).
+<a id="A0010" />
+## Error processing (`500`)
+Code: `A0010`
 
-## <a id="A0011" /> Recording not found (`404`)
+The request could not be performed at the moment. Please try again later or
+contact the [support][support].
+
+<a id="A0011" />
+## Recording not found (`404`)
+Code: `A0011`
+
 The requested recording could not be found in our system. Ensure the recording
 exists and you have permission to access it through the listing endpoint.
 
-## <a id="A0012" /> Transcript not found (`404`)
+<a id="A0012" />
+## Transcript not found (`404`)
+Code: `A0012`
+
 The requested transcript could not be found in our system. Ensure the transcript
 exists and you have permission to access it through the listing endpoint.
 
-## <a id="A0013" /> Bad query in URL (`400`)
+<a id="A0013" />
+## Bad query in URL (`400`)
+Code: `A0013`
+
 The query parameters are invalid or incomplete. Please verify them against the
 endpoint specification.
 
-## <a id="A0014" /> Template section not found (`404`)
+<a id="A0014" />
+## Template section not found (`404`)
+Code: `A0014`
+
 The requested template section could not be located in our system. Ensure the
 template section exists and you have permission to access it.
 
-## <a id="A0015" /> Invalid context structure (`400`)
+<a id="A0015" />
+## Invalid context structure (`400`)
+Code: `A0015`
+
 The specified context structure is invalid. Ensure the request matches the
 expected format.
 
-## <a id="A0016" /> Limit reached (`400`)
+<a id="A0016" />
+## Limit reached (`400`)
+Code: `A0016`
+
 The provided input exceeds the maximum allowed limit. Please provide a
 different value or check the endpoint's documentation.
 
-## <a id="A0017" /> Duplicate value (`400`)
+<a id="A0017" />
+## Duplicate value (`400`)
+Code: `A0017`
+
 The value provided already exists. Duplicate entries are not allowed for this
 field. Refer to the endpoint specification for the field.
 
-## <a id="A0018" /> Unsupported language (`400`)
+<a id="A0018" />
+## Unsupported language (`400`)
+Code: `A0018`
+
 The requested language is not supported by the endpoint. Please check the
-[supported languages](docs-langs) or contact the [support](support).
+[supported languages][docs-langs] or contact the [support][support].
+
+<a id="A0019" />
+## Fact group not found (`404`)
+Code: `A0019`
+
+The requested fact group was not found in the system. Double-check such a group
+exists or contact the [support][support].
+
+<a id="A0020" />
+## Fact not found (`404`)
+Code: `A0020`
+
+The requested fact was not found in the system. Double-check such a group
+exists or contact the [support][support].
