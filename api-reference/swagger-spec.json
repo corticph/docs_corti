@@ -3390,7 +3390,8 @@
       "RequestFactCreate": {
         "type": "object",
         "required": [
-          "text"
+          "text",
+          "group"
         ],
         "properties": {
           "text": {
@@ -3446,7 +3447,8 @@
             "items": {
               "type": "object",
               "required": [
-                "text"
+                "text",
+                "group"
               ],
               "properties": {
                 "text": {
