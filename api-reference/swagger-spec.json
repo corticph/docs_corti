@@ -116,11 +116,11 @@
           {
             "name": "patient",
             "in": "query",
-            "description": "A unique identifier for the patient.",
+            "description": "A unique identifier for the patient. Must be a valid UUID.",
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "A unique identifier for the patient."
+              "description": "A unique identifier for the patient. Must be a valid UUID."
             }
           }
         ]
@@ -246,12 +246,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the interaction to retrieve.",
+            "description": "The unique identifier of the interaction to retrieve. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The unique identifier of the interaction to retrieve."
+              "description": "The unique identifier of the interaction to retrieve. Must be a valid UUID."
             }
           }
         ]
@@ -301,12 +301,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the interaction to update.",
+            "description": "The unique identifier of the interaction to update. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The unique identifier of the interaction to update."
+              "description": "The unique identifier of the interaction to update. Must be a valid UUID."
             }
           }
         ],
@@ -366,12 +366,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the interaction to delete.",
+            "description": "The unique identifier of the interaction to delete. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The unique identifier of the interaction to delete."
+              "description": "The unique identifier of the interaction to delete. Must be a valid UUID."
             }
           }
         ]
@@ -443,12 +443,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the interaction for which recordings should be retrieved.",
+            "description": "The unique identifier of the interaction for which recordings should be retrieved. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The unique identifier of the interaction for which recordings should be retrieved."
+              "description": "The unique identifier of the interaction for which recordings should be retrieved. Must be a valid UUID."
             }
           }
         ]
@@ -518,12 +518,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the interaction for which recording should be attributed.",
+            "description": "The unique identifier of the interaction for which recording should be attributed. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The unique identifier of the interaction for which recording should be attributed."
+              "description": "The unique identifier of the interaction for which recording should be attributed. Must be a valid UUID."
             }
           }
         ],
@@ -618,23 +618,23 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the interaction for which the recording should be retrieved.",
+            "description": "The unique identifier of the interaction for which the recording should be retrieved. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The unique identifier of the interaction for which the recording should be retrieved."
+              "description": "The unique identifier of the interaction for which the recording should be retrieved. Must be a valid UUID."
             }
           },
           {
             "name": "recordingId",
             "in": "path",
-            "description": "The unique identifier of the recording to be retrieved.",
+            "description": "The unique identifier of the recording to be retrieved. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The unique identifier of the recording to be retrieved."
+              "description": "The unique identifier of the recording to be retrieved. Must be a valid UUID."
             }
           }
         ]
@@ -704,23 +704,23 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the interaction for which the recording should be deleted from.",
+            "description": "The unique identifier of the interaction for which the recording should be deleted from. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The unique identifier of the interaction for which the recording should be deleted from."
+              "description": "The unique identifier of the interaction for which the recording should be deleted from. Must be a valid UUID."
             }
           },
           {
             "name": "recordingId",
             "in": "path",
-            "description": "The unique identifier of the recording to be deleted.",
+            "description": "The unique identifier of the recording to be deleted. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The unique identifier of the recording to be deleted."
+              "description": "The unique identifier of the recording to be deleted. Must be a valid UUID."
             }
           }
         ]
@@ -802,12 +802,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the interaction for which transcripts should be retrieved.",
+            "description": "The unique identifier of the interaction for which transcripts should be retrieved. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The unique identifier of the interaction for which transcripts should be retrieved."
+              "description": "The unique identifier of the interaction for which transcripts should be retrieved. Must be a valid UUID."
             }
           },
           {
@@ -937,12 +937,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the interaction for which the transcript is created.",
+            "description": "The unique identifier of the interaction for which the transcript is created. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The unique identifier of the interaction for which the transcript is created."
+              "description": "The unique identifier of the interaction for which the transcript is created. Must be a valid UUID."
             }
           }
         ],
@@ -1034,23 +1034,23 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the interaction containing the transcript.",
+            "description": "The unique identifier of the interaction containing the transcript. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The unique identifier of the interaction containing the transcript."
+              "description": "The unique identifier of the interaction containing the transcript. Must be a valid UUID."
             }
           },
           {
             "name": "transcriptId",
             "in": "path",
-            "description": "The unique identifier of the transcript to retrieve.",
+            "description": "The unique identifier of the transcript to retrieve. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The unique identifier of the transcript to retrieve."
+              "description": "The unique identifier of the transcript to retrieve. Must be a valid UUID."
             }
           }
         ]
@@ -1130,23 +1130,23 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the interaction to which the transcript belongs.",
+            "description": "The unique identifier of the interaction to which the transcript belongs. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The unique identifier of the interaction to which the transcript belongs."
+              "description": "The unique identifier of the interaction to which the transcript belongs. Must be a valid UUID."
             }
           },
           {
             "name": "transcriptId",
             "in": "path",
-            "description": "The unique identifier of the transcript to delete.",
+            "description": "The unique identifier of the transcript to delete. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The unique identifier of the transcript to delete."
+              "description": "The unique identifier of the transcript to delete. Must be a valid UUID."
             }
           }
         ]
@@ -1223,12 +1223,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the interaction for which facts should be retrieved.",
+            "description": "The unique identifier of the interaction for which facts should be retrieved. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The unique identifier of the interaction for which facts should be retrieved."
+              "description": "The unique identifier of the interaction for which facts should be retrieved. Must be a valid UUID."
             }
           }
         ]
@@ -1268,12 +1268,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the interaction to which the facts belong.",
+            "description": "The unique identifier of the interaction to which the facts belong. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The unique identifier of the interaction to which the facts belong."
+              "description": "The unique identifier of the interaction to which the facts belong. Must be a valid UUID."
             }
           }
         ],
@@ -1323,12 +1323,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the interaction for which facts are being updated.",
+            "description": "The unique identifier of the interaction for which facts are being updated. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The unique identifier of the interaction for which facts are being updated."
+              "description": "The unique identifier of the interaction for which facts are being updated. Must be a valid UUID."
             }
           }
         ],
@@ -1380,23 +1380,23 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The unique identifier of the interaction to which the fact belongs.",
+            "description": "The unique identifier of the interaction to which the fact belongs. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The unique identifier of the interaction to which the fact belongs."
+              "description": "The unique identifier of the interaction to which the fact belongs. Must be a valid UUID."
             }
           },
           {
             "name": "factId",
             "in": "path",
-            "description": "The unique identifier of the fact to update.",
+            "description": "The unique identifier of the fact to update. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The unique identifier of the fact to update."
+              "description": "The unique identifier of the fact to update. Must be a valid UUID."
             }
           }
         ],
@@ -1478,12 +1478,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The interaction ID representing the context for the request.",
+            "description": "The interaction ID representing the context for the request. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The interaction ID representing the context for the request."
+              "description": "The interaction ID representing the context for the request. Must be a valid UUID."
             }
           }
         ]
@@ -1553,12 +1553,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The interaction ID representing the context for the request.",
+            "description": "The interaction ID representing the context for the request. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The interaction ID representing the context for the request."
+              "description": "The interaction ID representing the context for the request. Must be a valid UUID."
             }
           }
         ],
@@ -1662,23 +1662,23 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The interaction ID representing the context for the request.",
+            "description": "The interaction ID representing the context for the request. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The interaction ID representing the context for the request."
+              "description": "The interaction ID representing the context for the request. Must be a valid UUID."
             }
           },
           {
             "name": "documentId",
             "in": "path",
-            "description": "The document ID representing the context for the request.",
+            "description": "The document ID representing the context for the request. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The document ID representing the context for the request."
+              "description": "The document ID representing the context for the request. Must be a valid UUID."
             }
           },
           {
@@ -1758,23 +1758,23 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The interaction ID representing the context for the request.",
+            "description": "The interaction ID representing the context for the request. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The interaction ID representing the context for the request."
+              "description": "The interaction ID representing the context for the request. Must be a valid UUID."
             }
           },
           {
             "name": "documentId",
             "in": "path",
-            "description": "The document ID representing the context for the request.",
+            "description": "The document ID representing the context for the request. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The document ID representing the context for the request."
+              "description": "The document ID representing the context for the request. Must be a valid UUID."
             }
           }
         ],
@@ -1853,23 +1853,23 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The interaction ID representing the context for the request.",
+            "description": "The interaction ID representing the context for the request. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The interaction ID representing the context for the request."
+              "description": "The interaction ID representing the context for the request. Must be a valid UUID."
             }
           },
           {
             "name": "documentId",
             "in": "path",
-            "description": "The document ID representing the context for the request.",
+            "description": "The document ID representing the context for the request. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The document ID representing the context for the request."
+              "description": "The document ID representing the context for the request. Must be a valid UUID."
             }
           }
         ]
@@ -2017,12 +2017,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The interaction ID representing the context for the request.",
+            "description": "The interaction ID representing the context for the request. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The interaction ID representing the context for the request."
+              "description": "The interaction ID representing the context for the request. Must be a valid UUID."
             }
           }
         ]
@@ -2102,12 +2102,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The interaction ID representing the context for the request.",
+            "description": "The interaction ID representing the context for the request. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The interaction ID representing the context for the request."
+              "description": "The interaction ID representing the context for the request. Must be a valid UUID."
             }
           }
         ],
@@ -2187,12 +2187,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The interaction ID representing the context for the request.",
+            "description": "The interaction ID representing the context for the request. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The interaction ID representing the context for the request."
+              "description": "The interaction ID representing the context for the request. Must be a valid UUID."
             }
           }
         ],
@@ -2320,12 +2320,12 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The interaction ID representing the context for the request.",
+            "description": "The interaction ID representing the context for the request. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The interaction ID representing the context for the request."
+              "description": "The interaction ID representing the context for the request. Must be a valid UUID."
             }
           }
         ],
@@ -2407,22 +2407,22 @@
           {
             "name": "id",
             "in": "path",
-            "description": "The interaction ID representing the context for the request.",
+            "description": "The interaction ID representing the context for the request. Must be a valid UUID.",
             "required": true,
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The interaction ID representing the context for the request."
+              "description": "The interaction ID representing the context for the request. Must be a valid UUID."
             }
           },
           {
             "name": "threadId",
             "in": "query",
-            "description": "The thread ID representing the context for the request.",
+            "description": "The thread ID representing the context for the request. Must be a valid UUID.",
             "schema": {
               "type": "string",
               "format": "string",
-              "description": "The thread ID representing the context for the request."
+              "description": "The thread ID representing the context for the request. Must be a valid UUID."
             }
           }
         ],
