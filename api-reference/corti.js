@@ -20,6 +20,7 @@ const watchContentContainer = () => {
             }
             disablePlaygrounds();
             patchBugDocuments();
+            patchTrailingSlash();
             watchDocumentsContextTypeContainer();
         }
     });
@@ -50,7 +51,7 @@ const watchDocumentsContextTypeContainer = () => {
         return;
     }
 
-    if (shouldSkipDocumentsPatch(pattern)) {
+    if (shouldSkipPatch([pattern])) {
         return;
     }
 
@@ -156,12 +157,15 @@ const patchPlayground = () => {
     }
 };
 
-const shouldSkipDocumentsPatch = (pattern) => {
+const shouldSkipPatch = (patterns) => {
     for (const head of document.getElementsByTagName("h1")) {
-        if (!head.textContent.toLowerCase().includes(pattern)) {
-            return true;
+        for (const pattern of patterns) {
+            if (head.textContent.toLowerCase().includes(pattern)) {
+                return false;
+            }
         }
     }
+    return true;
 };
 
 const patchBugDocuments = () => {
@@ -177,7 +181,7 @@ const patchBugDocuments = () => {
         return;
     }
 
-    if (shouldSkipDocumentsPatch(pattern)) {
+    if (shouldSkipPatch([pattern])) {
         return;
     }
 
@@ -210,9 +214,53 @@ const patchBugDocuments = () => {
     }
 };
 
+const patchTrailingSlash = () => {
+    const patterns = [
+        "interaction", "recording", "transcript", "fact", "document", "code"
+    ];
+    if (shouldSkipPatch(patterns)) {
+        return;
+    }
+
+    const badElement = document.getElementById("header")?.nextSibling;
+    if (!badElement) {
+        console.error("Missing playground widget");
+    }
+
+    if (badElement.innerText.split("\n")[0].toUpperCase() !== "POST") {
+        return;
+    }
+
+    const layers = 4;
+    let target = badElement;
+    for (let idx = 0; idx < layers; idx++) {
+        if (target.children.length === 0) {
+            console.error("Missing playground section");
+            return;
+        }
+        target = target.children[0];
+    }
+
+    let parts;
+    try {
+        parts = target.children[1].children[0].children;
+    } catch (err) {
+        console.error("Missing playground parts");
+        console.error(err);
+        return;
+    }
+
+    // Mintlify mangling the schema
+    if (parts[parts.length - 1].innerHTML.endsWith("/")) {
+        return;
+    }
+    parts[parts.length - 1].innerHTML = parts[parts.length - 1].innerHTML + "/";
+};
+
 window.addEventListener("load", () => {
     disablePlaygrounds();
     patchBugDocuments();
+    patchTrailingSlash();
     watchContentContainer();
     watchDocumentsContextTypeContainer();
 })
