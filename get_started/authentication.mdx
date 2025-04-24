@@ -5,16 +5,19 @@ description: 'Learn how to authenticate to the Corti API'
 
 Authentication to the API on all environments is governed by OAuth 2.0. This authentication protocol offers enhanced security measures, ensuring that access to patient data and medical documentation is securely managed and compliant with healthcare regulations.
 
-<Info>By default, you will receive a client-id and client-secret to authenticate via grant type: client credentials. This can be modified and extended to authenticate individual users of your application, including options to utilize SSO or SAML.</Info>
+<Info>By default, you will receive a client-id and client-secret to authenticate via grant type: client credentials. This can be modified and extended upon request to authenticate individual users of your application, including options to utilize SSO or SAML.</Info>
 
-<Steps>
+<Steps titleSize="h3">
   <Step title="Request an access token">
-    To acquire an access token, make a request to the authURL provided to you.
+    To acquire an access token, make a request to the authURL provided to you:
 
     ```bash auth URL
     https://auth.{environment}.corti.app/realms/{tenant-name}/protocol/openid-connect/token
     ```
 
+     <Note>For API trial authentication, please replace the above placehoders as follows: <br/>
+     `{environment}` with `beta-eu` <br/>`{tenant-name}` with `copiloteu`</Note>
+  <br/>
     The full request body that needs to be of `Content-Type: "application/x-www-form-urlencoded"` looks like this:
 
     ```jsx Client Credentials request body
@@ -24,45 +27,46 @@ Authentication to the API on all environments is governed by OAuth 2.0. This aut
     client_secret: "********"
     ```
 
-    <Tip>For the test environment `beta-eu`, the Tenant-Name is `copiloteu`.</Tip>
   </Step>
   <Step title="Your access token">
-    It will return you an `access_token`
+    It will return you an `access_token`:
 
     ```jsx Access token
     {"access_token":"ey...","expires_in":300,"refresh_expires_in":0,"token_type":"Bearer","id_token":"e...","not-before-policy":0,"scope":"openid email profile"}
     ```
 
-    As you can see, the access token expires after 300s/5min. By default as per oAuth standards, no refresh token is used in this flow. There are many available modules to manage monitoring expiry and acquiring a new access token. However, a refresh token can be enabled if needed.
+    As you can see, the access token expires after 300 seconds (5 minutes). By default as per oAuth standards, no refresh token is used in this flow. There are many available modules to manage monitoring expiry and acquiring a new access token. However, a refresh token can be enabled if needed.
   </Step>
   <Step title="Make an API request">
-    Subsequently you use the access_token to authenticate any API request. The baseURL is dependent on the environment:
+    Subsequently you use the `access_token` to authenticate any API request. The baseURL is dependent on the environment:
 
     ```bash baseURL API
     api.{environment}.corti.app/v2
     ```
-    
-    So if you for example are on the beta-eu environment and want to create an interaction as the starting point for any other workflow operations your URL will look like this:
+
+    <Note>For API trial use, please replace the `{environment}` placeholder with `beta-eu`</Note>
+  <br/>
+    If, for example, you are on the beta-eu environment and want to create an interaction as the starting point for any other workflow operations your URL will look like this:
 
     ```bash URL to create an interaction
     POST https://api.beta-eu.corti.app/v2/interactions/
     ```
 
-    Find the specifications for the request body in the [API Reference](api-reference/interactions/create-interaction)
+    In your `Request Header` you also need to include the `Tenant-Name` parameter:
     
-    In your `Request Header` you also need to include the `Tenant-Name` parameter
-    <Tip>For the test environment `beta-eu`, the Tenant-Name is `copiloteu`.</Tip>
-
     ```jsx API call request header
     Tenant-Name: <tenantname>
     Authorization: Bearer <access_token>
     ```
 
-    <Note>To authenticate when opening a websocket, the access_token needs to be passed in as URL parameter in addition to the Tenant-Name already part of the url returned upon creating an interaction.</Note>
+    <Note>For API trial use, please use `{tenant-name}` of `copiloteu`</Note>
+<br/>
+    To authenticate when opening a websocket, the access_token needs to be passed in as URL parameter in addition to the Tenant-Name already part of the url returned upon creating an interaction:
+
     ```javascript wss url with access_token appended
     wss://{stream-url}&token=Bearer {access_token}
     ```
-
+  <Tip>Find the full specification for create interaction request in the [API Reference](api-reference/interactions/create-interaction)</Tip>
 
   </Step>
 </Steps>
