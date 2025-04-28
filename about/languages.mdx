@@ -4,29 +4,29 @@ description: 'Learn about how languages are supported in Corti APIs'
 ---
 
 ## Introduction
-Corti foundation models are specifically designed for use in the healthcare domain. While the speech recognition models are continuously refined, a tier system has been introduced to relay functionality and performance that is available. 
+Corti foundation models are specifically designed for use in the healthcare domain. While automated speech recognition (ASR) capabilities are continuously refined, a tier system has been introduced to categorize functionality and performance that is available. Selecting language models at the appropriate tier allows you to find the right fit for your needs while balancing capabilities and cost. 
 
-Selecting language models at the appropriate tier allows you to find the right fit for your needs while balancing capabilities and cost. 
+The language codes are also used for defining output language in note generation requests. 
 
 
 ## Corti ASR tiers 
 
-| Tier           |  Description | Primary use case |
-| :------------- |  :---------- | :--- |
-| **Base**       |  “Base” ASR models enable speech-to-text with a **general medicine model** for a variety of medical specialties | Broad support for speech-enabled clinical documentation workflows |
-| **Enhanced**   |  “Enhanced” ASR models enable speech-to-text with **optimized medical terminology recognition for a variety of specialties**, balancing speed, functionality, and quality | Power ambient documentation workflows |
-| **Premier**    |  “Premier” ASR models enable speech-to-text with the highest accuracy, **widest language model and utmost functionality** (e.g., customized commands, user-defined lexicon, medical specialist terminology) | Power robust dictation or ambient documentation workflows |
+| Tier           |  Description | Primary use case | Token utilization rate | 
+| :------------- |  :---------- | :--------------- | :--------- |
+| **Base**       |  Enable speech-to-text with a **general medicine model** for various speech-enabled workflows | Automated speech recognition | Standard | 
+| **Enhanced**   |  Base functionality plus **optimized medical terminology recognition** for a variety of specialties, balancing speed, performance, and quality | Ambient documentation workflows | Standard | 
+| **Premier**    |  Enhanced functionality plus the highest accuracy, **lowest latency and most functionality** (e.g., customized commands, user-defined lexicon, spoken or automated punctuation) | Robust dictation workflows | Higher | 
 
 ## Available languages
 
 | Language     | Language Code (BCP47) | Tier availability |
 | :----------- | :-------------------- | :---------------- |
-| English (US) | en                    | Base, Enhanced, Premier |
-| English (UK) | en-GB                 | Base, Enhanced, Premier |
-| Danish       | da                    | Base, Enhanced, Premier (coming soon) |
-| German       | de                    | Base, Enhanced, Premier (coming soon) |
-| Swiss-German | de-CH                 | Base, Enhanced |
-| French       | fr                    | Base, Enhanced |
+| English (US) | en                    | Enhanced, Premier |
+| English (UK) | en-GB                 | Enhanced, Premier |
+| Danish       | da                    | Enhanced, Premier (coming soon) |
+| German       | de                    | Enhanced, Premier (coming soon) |
+| Swiss-German | de-CH                 | Enhanced |
+| French       | fr                    | Enhanced |
 | Spanish      | es                    | Base, Enhanced (coming soon) |
 | Swedish      | sv                    | Base, Enhanced (coming soon) |
 | Italian      | it                    | Base |
@@ -36,4 +36,4 @@ Selecting language models at the appropriate tier allows you to find the right f
 | Arabic       | ar                    | Base (coming soon) |
 
 <br/>
-<Note>If you are interested in a language that is not listed here, please contact your Corti representative</Note>
+<Note>If you are interested in a language that is not listed here, or need help determining the best language tier for your needs, please [contact us](https://help.corti.ai)</Note>
