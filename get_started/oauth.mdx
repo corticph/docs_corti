@@ -200,7 +200,7 @@ This guide breaks down the four most common OAuth flows, explains when to use th
     ```
 </Accordion>
 
-    <Warning>This authentication method is not recommended, but sometimes necessary. Use with caution.</Warning>
+    <Warning>This authentication method is not recommended, but sometimes necessary.</Warning>
 
 
 ### 4. Client Credentials Grant (Used for API integrations)
@@ -215,11 +215,11 @@ This guide breaks down the four most common OAuth flows, explains when to use th
 - Doesn’t trigger the UI or login experience.
 - Breaks downstream audit trails, logging, and personalization.
 
-    <Warning>Never use for user-facing integrations or embedding Corti Assistant.</Warning>
+    <Warning>Not appropriate for user-facing integrations or embedding Corti Assistant.</Warning>
 
 ## Final Guidance
 
-Pick the flow that matches your interaction model. If a user is present, authenticate them properly as described above. If not, then use machine credentials — but be aware of the guidance offered above.
+Pick the flow that matches your interaction model as offered above. See further details and contact us for [support here](https://help.corti.app/en/articles/11156327-choosing-the-right-oauth2-flow-for-corti-integrations).
 
 **What to Use When:**
 
