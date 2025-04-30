@@ -68,7 +68,7 @@
       },
       {
         "group": "Get Started",
-        "pages": ["get_started/getaccess","get_started/authentication"]
+        "pages": ["get_started/getaccess","get_started/oauth", "get_started/authentication"]
       },
       {
         "group": "Templates and Documents",

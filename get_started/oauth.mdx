@@ -1,0 +1,236 @@
+---
+title: Working with OAuth 
+description: 'Choosing the Right OAuth2 Flow for Corti Integrations'
+---
+
+## Background 
+
+OAuth (Open Authorization) is an open-standard framework for access delegation, allowing applications to securely access a user’s protected resources without exposing their login credentials. By keeping passwords private and limiting access to sensitive information, OAuth improves both security and access management across web, mobile, and desktop applications. OAuth 2.0, the current and most widely adopted version, expands upon the original protocol to support APIs, mobile apps, and connected devices, offering multiple authorization flows tailored to different application types.
+
+Whether you're embedding the Corti Assistant in a front-end experience (via iFrame/WebView) or calling Corti APIs from a backend service, **it's important to use the right OAuth2 grant type** for the given context. 
+
+This guide breaks down the four most common OAuth flows, explains when to use them, and why some are better suited for interactive user scenarios while others are strictly backend-only.
+
+## OAuth Grant Types
+
+### 1. Authorization Code Flow with PKCE (Recommended for Corti Assistant)
+
+**Best for:** Native apps, single-page apps, or any browser-based integration where a user is present.
+
+**Why:** This flow is secure, interactive, and doesn't require a client secret (ideal for public clients). Proof Key for Code Exchange (PKCE) protects against code interception attacks.
+
+**How it works:**
+1. Your app redirects the user to Corti's OAuth2 authorization server.
+2. The user logs in and grants permission.
+3. Corti redirects back with an authorization code. 
+4. Your app exchanges the code (with the PKCE verifier) for an access token.
+
+**Key Advantages:**
+- Secure and suitable for embedded web apps.
+- No client secret is required.
+- Enforces user interaction.
+
+<Accordion title="Code sample:">
+    This flow requires two stages: generating the code verifier/challenge and handling the token exchange after the redirect.
+    ```bash Step 1: Redirect User to Authorize [expandable]
+    // Generate code verifier + challenge
+    const code_verifier = crypto.randomUUID().replace(/-/g, '');
+    const code_challenge = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(code_verifier));
+    const base64url = btoa(String.fromCharCode(...new Uint8Array(code_challenge)))
+    .replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+
+    // Store verifier for use after redirect
+    localStorage.setItem('pkce_verifier', code_verifier);
+
+    // Redirect to authorization server
+    window.location.href = `https://auth.us.corti.app/realms/<realm-name>/protocol/openid-connect/auth?response_type=code&client_id=YOUR_CLIENT_ID&redirect_uri=https://yourapp.com/callback&code_challenge=${base64url}&code_challenge_method=S256&scope=openid`;
+    ```
+    ```bash Step 2: Exchange Code for Token (after redirect) [expandable]
+    const code = new URLSearchParams(window.location.search).get('code');
+    const code_verifier = localStorage.getItem('pkce_verifier');
+
+    const response = await fetch('https://auth.us.corti.app/realms/<realm-name>/protocol/openid-connect/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+        grant_type: 'authorization_code',
+        client_id: 'YOUR_CLIENT_ID',
+        redirect_uri: 'https://yourapp.com/callback',
+        code,
+        code_verifier
+    })
+    });
+
+    const data = await response.json();
+    console.log('Access Token:', data.access_token);
+    ```
+</Accordion>
+
+
+    <Tip>Use this gold standard for Corti Assistant embedded use cases.</Tip>
+
+
+### 2. Authorization Code Flow (without PKCE)
+
+**Best for:** Server-side web applications where the client secret can be safely stored.
+
+**Why:** Similar to PKCE, but requires storing a client secret — which is *not* safe in public or browser-based clients.
+
+**Key Concerns:**
+- Unsafe for apps where the frontend or iFrame can be inspected.
+- Only acceptable in secure backend environments.
+
+<Accordion title="Code sample:">
+    This version assumes:
+    - Your app has a **frontend (e.g., React)** that initiates the login.
+    - Your app has a **backend (e.g., Node.js + Express)** that securely stores the `client_secret` and handles the token exchange.
+    
+    <Warning>Use this only if your backend can securely store the client secret (e.g. not in a browser or mobile app). Ideal for server-rendered or hybrid web apps.</Warning>
+
+    ```bash Step 1: Frontend – Redirect the User to Log In [expandable]
+    // login.tsx or similar
+    const clientId = 'YOUR_CLIENT_ID';
+    const redirectUri = 'https://yourapp.com/callback'; // Must match what's registered in Corti OAuth
+
+    const login = () => {
+    const authUrl = new URL('https://auth.us.corti.app/realms/<realm-name>/protocol/openid-connect/auth');
+    authUrl.searchParams.set('response_type', 'code');
+    authUrl.searchParams.set('client_id', clientId);
+    authUrl.searchParams.set('redirect_uri', redirectUri);
+    authUrl.searchParams.set('scope', 'openid profile');
+
+    window.location.href = authUrl.toString(); // Send user to Corti login page
+    };
+    ```
+    ```bash Step 2: Corti Redirects Back with a Code 
+    https://yourapp.com/callback?code=abc123xyz
+    ```
+    ```bash Step 3: Backend – Exchange Code for Access Token [expandable]
+    // server.js or routes/callback.js
+    const express = require('express');
+    const fetch = require('node-fetch');
+    const app = express();
+
+    const CLIENT_ID = 'YOUR_CLIENT_ID';
+    const CLIENT_SECRET = 'YOUR_CLIENT_SECRET';
+    const REDIRECT_URI = 'https://yourapp.com/callback'; // Must match Step 1
+
+    app.get('/callback', async (req, res) => {
+    const authCode = req.query.code;
+
+    if (!authCode) {
+        return res.status(400).send('Missing authorization code');
+    }
+
+    // Exchange code for access token
+    const tokenResponse = await fetch('https://auth.us.corti.app/realms/<realm-name>/protocol/openid-connect/token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+        grant_type: 'authorization_code',
+        code: authCode,
+        client_id: CLIENT_ID,
+        client_secret: CLIENT_SECRET,
+        redirect_uri: REDIRECT_URI
+        })
+    });
+
+    const tokenData = await tokenResponse.json();
+
+    if (tokenData.error) {
+        return res.status(500).send(`Token error: ${tokenData.error_description}`);
+    }
+
+    // Do something useful with the token, like create a session
+    console.log('Access Token:', tokenData.access_token);
+
+    // Optional: send token data to frontend or store in session
+    res.redirect(`/app?token=${tokenData.access_token}`);
+    });
+
+    app.listen(3000, () => console.log('App listening on http://localhost:3000'));
+    ```
+
+    Summary of the flow: 
+    | Step | Component | Description | 
+    | :--- | :--- | :--- |
+    | 1 | Frontend | Redirects user to Corti login | 
+    | 2 | Corti | Redirects back to your app with `code` |
+    | 3 | Backend | Exchanges code + client secret for tokens <br/> Responds with session/token, redirects to frontend | 
+
+    Requirements: 
+    - Must use **HTTPS** for `redirect_uri`
+    - Your `client_secret` **must not** be exposed to the frontend
+    - The code returned is **valid for one use and short-lived**
+
+</Accordion>
+
+    <Warning>Use only if the OAuth2 flow is entirely server-to-server.</Warning>
+
+
+### 3. Resource Owner Password Credentials (ROPC) Grant (Use with caution) 
+
+**Best for:** Controlled environments with trusted clients (e.g., internal tools).
+
+**Why:** Allows username/password login directly in the app — but **bypasses the authorization server UI**.
+
+**Risks:**
+- Trains users to enter passwords into third-party apps.
+- Easy to misuse, violates best practices.
+- Only viable where UI constraints prevent redirecting (e.g., native kiosk apps without browsers).
+
+<Accordion title="Code sample:">
+    <Warning>Use only in trusted/internal scenarios.</Warning> 
+    
+    Here's a simple fetch example:
+    ```bash [expandable]
+    const response = await fetch('https://auth.us.corti.app/realms/<realm-name>/protocol/openid-connect/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+        grant_type: 'password',
+        client_id: 'YOUR_CLIENT_ID',
+        username: 'user@example.com',
+        password: 'yourpassword'
+    })
+    });
+
+    const data = await response.json();
+    console.log('Access Token:', data.access_token);
+    ```
+</Accordion>
+
+    <Warning>This authentication method is not recommended, but sometimes necessary.</Warning>
+
+
+### 4. Client Credentials Grant (Used for API integrations)
+
+**Best for:** Machine-to-machine API calls where no user is present.
+
+**Why:** Authenticates the *application itself*, not an end user.
+
+**Why it’s wrong for embedding Corti Assistant:**
+- No user context is available.
+- You can’t attribute any actions or documentation to a logged-in user.
+- Doesn’t trigger the UI or login experience.
+- Breaks downstream audit trails, logging, and personalization.
+
+    <Warning>Not appropriate for user-facing integrations or embedding Corti Assistant.</Warning>
+
+## Final Guidance
+
+Pick the flow that matches your interaction model as offered above. See further details and contact us for [support here](https://help.corti.app/en/articles/11156327-choosing-the-right-oauth2-flow-for-corti-integrations).
+
+**What to Use When:**
+
+- **For user-facing or embedded applications** (e.g., Corti Assistant in an iFrame): <br/>
+    Use **Authorization Code Flow with PKCE** to authenticate the end user securely.
+- **For backend-to-backend systems with no user context**: <br/>
+    Use **Client Credentials**, but only where no user interaction or attribution is needed.
+- **Avoid using ROPC** unless you're in a locked-down internal environment with no redirect capabilities.
+- **Never use Client Credentials for anything user-facing** — it breaks audit trails, personalization, and proper authorization checks.
+
+
+**Additional Reference**: <br/>
+- [OAuth 2.0 Authorization Framework (RFC 6749)](https://datatracker.ietf.org/doc/html/rfc6749)
+- [IBM](https://www.ibm.com/think/topics/oauth)
