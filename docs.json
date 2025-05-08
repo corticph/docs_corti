@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "palm",
+  "theme": "maple",
   "name": "Corti API Documentation",
   "colors": {
     "primary": "#A55639",
@@ -90,11 +90,6 @@
             ]
           }
         ]
-      },
-      {
-        "anchor": "Support",
-        "href": "https://help.corti.ai",
-        "icon": "square-question"
       }
     ]
   },
@@ -116,11 +111,16 @@
     }
   },
   "navbar": {
-    "primary": {
-      "type": "button",
+    "links": [
+      {
       "label": "Get Started",
       "href": "https://www.corti.ai/contact-us"
+    },
+    {
+      "label": "Support",
+      "href": "https://help.corti.ai/"
     }
+    ]
   },
   "footer": {
     "socials": {
