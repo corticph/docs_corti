@@ -1,0 +1,48 @@
+---
+title: Transcription
+description: 'Creating a text document from a pre-recorded audio file'
+---
+
+## Introduction 
+
+The **Transcription Workflow** is defined by processing a complete audio file to return a text document. In scenarios where real-time speech-to-text is not required or feasible, the transcription workflow provides functional and cost effective means for creating verbatim, conversational or dictation-style transcripts. 
+
+
+### Endpoints and capabilities 
+
+| Endpoint | Capability | Use |
+| :--- | :--- | :--- |
+| Interactions | The foundational unit that ties together all related data and operations, enabling a cohesive workflow. | Required | 
+| Recordings | Upload audio file(s) that can be used for transcript generation. | Required | 
+| Transcripts | Generate transcripts for audio files that are associated with the interaction. | Required | 
+
+## Workflow 
+
+<Card>
+  ```mermaid
+        sequenceDiagram
+        Client ->> Public API: POST /interactions
+        Public API -->> Client: 200, interactionId, wssUrl
+        Client ->> Public API: POST /interactions/:id/recording
+        Public API -->> Client: 200, recordingId
+        Client ->> Public API: POST /interactions/:id/transcripts
+        Public API -->> Client: 200, transcript
+    ```
+</Card>
+
+<Steps titleSize="h3">
+    <Step title="Create interaction">
+        1. The workflow begins with the client initiating an interaction by sending a `POST` request to the `/interactions` endpoint.
+        2. The API responds with a unique `id` for the interaction and a WebSocket URL (`wssUrl`). The identifier will be used to manage the subsequent steps of the workflow. The WebSocket URL will not be required for this workflow. 
+    </Step>
+    <Step title="Upload audio recording">
+        3. Once the interaction is initialized, the client uploads an audio file associated with that interaction by sending a `POST` request to `/interactions/:id/recording`.
+        4. The API responds with a `200` status and returns a `recordingId`, confirming that the audio file has been successfully uploaded and linked to the interaction.
+    </Step>
+    <Step title="Create transcript">
+        5. After the recording is uploaded, the client initiates the transcription process by sending a `POST` request to `/interactions/:id/transcripts`.
+        6. The API processes the audio and returns a `200` status with the generated transcript. This transcript contains the text version of the recorded interaction, extracted and formatted for review.
+    </Step>
+</Steps>
+
+<Check>See details on transcription configuration options [here](/api-reference/transcripts/create-transcript/)</Check>
