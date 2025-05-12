@@ -1,0 +1,151 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "maple",
+  "name": "Corti API Documentation",
+  "colors": {
+    "primary": "#A55639",
+    "light": "#A55639",
+    "dark": "#C26E4F"
+  },
+  "favicon": "/logo/favicon-docs.svg",
+  "navigation": {
+    "anchors": [
+      {
+        "anchor": "Documentation",
+        "icon": "book-open",
+        "groups": [
+          {
+            "group": "About Corti API",
+            "pages": [
+              "about/introduction",
+              "about/ai_platform",
+              "about/how_it_works",
+              "about/languages",
+              "about/errors"
+            ]
+          },
+          {
+            "group": "Get Started",
+            "pages": [
+              "get_started/getaccess",
+              "get_started/oauth",
+              "get_started/authentication"
+            ]
+          },
+          {
+            "group": "Templates and Documents",
+            "pages": [
+              "templates/templates",
+              "templates/templates-standard",
+              "templates/documents-standard",
+              "templates/documents-advanced",
+              "templates/templates-request"
+            ]
+          },
+          {
+            "group": "Workflows",
+            "pages": [
+              "workflows/overview",
+              "workflows/ambient-rt",
+              "workflows/ambient-async"
+            ]
+          },
+          {
+            "group": "SDKs",
+            "pages": [
+              "sdk/overview",
+              "sdk/dictation-sdk"
+            ]
+          }
+        ]
+      },
+      {
+        "anchor": "API Reference",
+        "openapi": {
+          "source": "/api-reference/swagger-spec.json",
+          "directory": "api-reference"
+        },
+        "icon": "square-terminal",
+        "groups": [
+          {
+            "group": "Live Streams",
+            "pages": [
+              "api-reference/stream",
+              "api-reference/transcribe"
+            ]
+          }
+        ]
+      },
+      {
+        "anchor": "Updates",
+        "icon": "gears",
+        "groups": [
+          {
+            "group": "Updates",
+            "pages": [
+              "release-notes/overview",
+              "release-notes/fm-updates",
+              "release-notes/api-updates",
+              "release-notes/language-updates"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "logo": {
+    "light": "/logo/corti_light.svg",
+    "dark": "/logo/corti_dark.svg"
+  },
+  "api": {
+    "mdx": {
+      "auth": {
+        "method": "bearer"
+      }
+    }
+  },
+  "background": {
+    "color": {
+      "light": "#FFFFFF",
+      "dark": "#000000"
+    }
+  },
+  "navbar": {
+    "links": [
+      {
+      "label": "Get Started",
+      "href": "https://www.corti.ai/contact-us"
+    },
+    {
+      "label": "Support",
+      "href": "https://help.corti.ai/"
+    }
+    ]
+  },
+  "footer": {
+    "socials": {
+      "website": "https://www.corti.ai",
+      "x": "https://x.com/corti_ai",
+      "github": "https://github.com/corticph",
+      "linkedin": "https://www.linkedin.com/company/corti"
+    }
+  },
+  "integrations": {
+    "gtm": {
+      "tagId": "GTM-MR3DSSF2"
+    },
+    "intercom": {
+      "appId": "y30epli4"
+    }
+  },
+  "fonts": {
+    "heading": {
+      "family": "Inter",
+      "weight": 600
+    },
+    "body": {
+      "family": "Inter",
+      "weight": 400
+    }
+  }
+}
