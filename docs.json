@@ -46,6 +46,7 @@
             "group": "Workflows",
             "pages": [
               "workflows/overview",
+              "workflows/transcription",
               "workflows/ambient-rt",
               "workflows/ambient-async"
             ]
