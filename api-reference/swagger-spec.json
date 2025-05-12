@@ -1875,6 +1875,72 @@
         ]
       }
     },
+    "/templateSections/": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "List of Template Sections",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseAllTemplateSections"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "templates"
+        ],
+        "summary": "List Template Sections",
+        "description": " Retrieves a list of template sections with optional filters for organization and language.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
+          },
+          {
+            "name": "org",
+            "in": "query",
+            "description": "Filter template sections by organization.",
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "Filter template sections by organization."
+            }
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "Filter template sections by language.",
+            "schema": {
+              "type": "string",
+              "format": "string",
+              "description": "Filter template sections by language."
+            }
+          }
+        ]
+      }
+    },
     "/templates/": {
       "get": {
         "responses": {
@@ -1883,7 +1949,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ResponseTemplate"
+                  "$ref": "#/components/schemas/ResponseAllTemplates"
                 }
               }
             }
@@ -1947,6 +2013,52 @@
               "format": "string",
               "description": "Filter templates by their status."
             }
+          }
+        ]
+      }
+    },
+    "/templates/{key}": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "Template by key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TemplateFiltered"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "RFC9457",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "templates"
+        ],
+        "summary": "Get Template",
+        "description": " Retrieves template by key.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Tenant-Name"
           }
         ]
       }
@@ -3840,6 +3952,92 @@
           }
         }
       },
+      "ResponseAllTemplateSections": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "description": "List of filtered template sections",
+            "items": {
+              "$ref": "#/components/schemas/Section"
+            }
+          }
+        }
+      },
+      "ResponseAllTemplates": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "description": "List of filtered templates",
+            "items": {
+              "type": "object",
+              "properties": {
+                "date_updated": {
+                  "type": "string",
+                  "format": "date-time",
+                  "description": "The timestamp when the template was updated."
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Name of the template"
+                },
+                "description": {
+                  "type": "string",
+                  "description": "Description of the template"
+                },
+                "key": {
+                  "type": "string",
+                  "description": "Unique key for the template"
+                },
+                "status": {
+                  "type": "string",
+                  "description": "Status of the template."
+                },
+                "template_sections": {
+                  "type": "array",
+                  "description": "List of sections included in the template",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "sort": {
+                        "type": "integer",
+                        "description": "Sort order of the section within the template"
+                      },
+                      "sections_id": {
+                        "type": "object",
+                        "description": "The section details",
+                        "$ref": "#/components/schemas/Section"
+                      }
+                    }
+                  }
+                },
+                "translations": {
+                  "type": "array",
+                  "description": "Available translations for the template",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "languages_id": {
+                        "type": "string",
+                        "description": "Language identifier"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Localized name of the template"
+                      },
+                      "description": {
+                        "type": "string",
+                        "description": "Localized description of the template"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "ResponseClassificationCreate": {
         "type": "object",
         "properties": {
@@ -4731,80 +4929,6 @@
           }
         }
       },
-      "ResponseTemplate": {
-        "type": "object",
-        "properties": {
-          "data": {
-            "type": "array",
-            "description": "List of filtered templates",
-            "items": {
-              "type": "object",
-              "properties": {
-                "date_updated": {
-                  "type": "string",
-                  "format": "date-time",
-                  "description": "The timestamp when the template was updated."
-                },
-                "name": {
-                  "type": "string",
-                  "description": "Name of the template"
-                },
-                "description": {
-                  "type": "string",
-                  "description": "Description of the template"
-                },
-                "key": {
-                  "type": "string",
-                  "description": "Unique key for the template"
-                },
-                "status": {
-                  "type": "string",
-                  "description": "Status of the template."
-                },
-                "template_sections": {
-                  "type": "array",
-                  "description": "List of sections included in the template",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "sort": {
-                        "type": "integer",
-                        "description": "Sort order of the section within the template"
-                      },
-                      "sections_id": {
-                        "type": "object",
-                        "description": "The section details",
-                        "$ref": "#/components/schemas/Section"
-                      }
-                    }
-                  }
-                },
-                "translations": {
-                  "type": "array",
-                  "description": "Available translations for the template",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "languages_id": {
-                        "type": "string",
-                        "description": "Language identifier"
-                      },
-                      "name": {
-                        "type": "string",
-                        "description": "Localized name of the template"
-                      },
-                      "description": {
-                        "type": "string",
-                        "description": "Localized description of the template"
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      },
       "ResponseTranscriptAnonymize": {
         "type": "object",
         "properties": {
@@ -5299,6 +5423,29 @@
       },
       "copilotModels.V2TranscriptParticipantRole": {
         "type": "string"
+      },
+      "cortiCommon.ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "requestid": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "status": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "details": {
+            "type": "string"
+          },
+          "instance": {
+            "type": "string"
+          }
+        }
       },
       "type.NoContent": {
         "type": "object"
