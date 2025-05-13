@@ -86,6 +86,9 @@ The configuration must be committed within 10 seconds of opening the WebSocket, 
 <ParamField body="automaticPunctuation" type="bool">
   When true, automatically punctuates and capitalizes in the final transcript.
 </ParamField>
+<ParamField body="additionalVocabulary" type="string[]">
+  An optional list of custom words or phrases to help the model better recognize and transcribe domain-specific or uncommon terms. Only available for `enhanced` models.
+</ParamField>
 
 ### Advanced Stream Configuration: Commands
 The transcribe endpoint supports registration and detection of commands, common in dictation workflows.
@@ -126,6 +129,7 @@ Here is an example configuration for transcription of dictated audio in English,
   interimResults: true, 
   spokenPunctuation: true, 
   automaticPunctuation: true,
+  additionalVocabulary: ["flu", "COVID"],
   commands: [
     {
       id: "next_section",
