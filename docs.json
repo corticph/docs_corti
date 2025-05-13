@@ -14,6 +14,15 @@
         "anchor": "Documentation",
         "icon": "book-open",
         "groups": [
+                    {
+            "group": "Get Started",
+            "pages": [
+              "get_started/welcome",
+              "get_started/authentication",
+              "get_started/getaccess",
+              "get_started/oauth"
+            ]
+          },
           {
             "group": "About Corti API",
             "pages": [
@@ -22,14 +31,6 @@
               "about/how_it_works",
               "about/languages",
               "about/errors"
-            ]
-          },
-          {
-            "group": "Get Started",
-            "pages": [
-              "get_started/getaccess",
-              "get_started/oauth",
-              "get_started/authentication"
             ]
           },
           {
@@ -67,6 +68,13 @@
         },
         "icon": "square-terminal",
         "groups": [
+            {
+            "group": "Get Started",
+            "pages": [
+              "api-reference/welcome",
+              "api-reference/quickstart"
+              ]
+          },
           {
             "group": "Live Streams",
             "pages": [
