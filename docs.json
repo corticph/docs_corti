@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "maple",
+  "theme": "mint",
   "name": "Corti API Documentation",
   "colors": {
     "primary": "#A55639",
@@ -119,12 +119,13 @@
     }
   },
   "navbar": {
-    "links": [
+    "primary": 
       {
+      "type": "button",
       "label": "Get Started",
       "href": "https://www.corti.ai/contact-us"
     },
-    {
+    "links":[{
       "label": "Support",
       "href": "https://help.corti.ai/"
     }
