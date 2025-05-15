@@ -31,7 +31,7 @@ description: 'Learn how to authenticate to the Corti API and make your first req
 
   def get_access_token():
       print("🔐 Step 1 — Authenticating via Keycloak...")
-      url = f"https://keycloak.{ENVIRONMENT}.corti.app/realms/{TENANT_NAME}/protocol/openid-connect/token"
+      url = f"https://auth.{ENVIRONMENT}.corti.app/realms/{TENANT_NAME}/protocol/openid-connect/token"
       payload = {
           "grant_type": "client_credentials",
           "client_id": CLIENT_ID,
