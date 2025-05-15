@@ -69,7 +69,6 @@
             "description": "Field used to sort interactions. Allowed values: [startedAt, endedAt, updatedAt, lastUpdated]. Default is startedAt.",
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "Field used to sort interactions. Allowed values: [startedAt, endedAt, updatedAt, lastUpdated]. Default is startedAt."
             }
           },
@@ -79,7 +78,6 @@
             "description": "Sorting order. Allowed values: [asc, desc]. Default is desc.",
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "Sorting order. Allowed values: [asc, desc]. Default is desc."
             }
           },
@@ -109,7 +107,6 @@
             "description": "The status of the encounter. To filter on multiple statuses, pass the same parameter again.",
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The status of the encounter. To filter on multiple statuses, pass the same parameter again."
             }
           },
@@ -119,7 +116,6 @@
             "description": "A unique identifier for the patient. Must be a valid UUID.",
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "A unique identifier for the patient. Must be a valid UUID."
             }
           }
@@ -250,7 +246,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The unique identifier of the interaction to retrieve. Must be a valid UUID."
             }
           }
@@ -305,7 +300,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The unique identifier of the interaction to update. Must be a valid UUID."
             }
           }
@@ -370,7 +364,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The unique identifier of the interaction to delete. Must be a valid UUID."
             }
           }
@@ -447,7 +440,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The unique identifier of the interaction for which recordings should be retrieved. Must be a valid UUID."
             }
           }
@@ -522,7 +514,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The unique identifier of the interaction for which recording should be attributed. Must be a valid UUID."
             }
           }
@@ -622,7 +613,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The unique identifier of the interaction for which the recording should be retrieved. Must be a valid UUID."
             }
           },
@@ -633,7 +623,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The unique identifier of the recording to be retrieved. Must be a valid UUID."
             }
           }
@@ -708,7 +697,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The unique identifier of the interaction for which the recording should be deleted from. Must be a valid UUID."
             }
           },
@@ -719,7 +707,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The unique identifier of the recording to be deleted. Must be a valid UUID."
             }
           }
@@ -806,7 +793,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The unique identifier of the interaction for which transcripts should be retrieved. Must be a valid UUID."
             }
           },
@@ -816,7 +802,6 @@
             "description": "Describes transcript attribute for sorting",
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "Describes transcript attribute for sorting"
             }
           },
@@ -826,7 +811,6 @@
             "description": "Describes sorting direction",
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "Describes sorting direction"
             }
           },
@@ -856,7 +840,6 @@
             "description": "Display full transcripts in listing",
             "schema": {
               "type": "boolean",
-              "format": "boolean",
               "description": "Display full transcripts in listing"
             }
           }
@@ -941,7 +924,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The unique identifier of the interaction for which the transcript is created. Must be a valid UUID."
             }
           }
@@ -1038,7 +1020,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The unique identifier of the interaction containing the transcript. Must be a valid UUID."
             }
           },
@@ -1049,7 +1030,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The unique identifier of the transcript to retrieve. Must be a valid UUID."
             }
           }
@@ -1134,7 +1114,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The unique identifier of the interaction to which the transcript belongs. Must be a valid UUID."
             }
           },
@@ -1145,7 +1124,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The unique identifier of the transcript to delete. Must be a valid UUID."
             }
           }
@@ -1227,7 +1205,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The unique identifier of the interaction for which facts should be retrieved. Must be a valid UUID."
             }
           }
@@ -1272,7 +1249,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The unique identifier of the interaction to which the facts belong. Must be a valid UUID."
             }
           }
@@ -1327,7 +1303,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The unique identifier of the interaction for which facts are being updated. Must be a valid UUID."
             }
           }
@@ -1384,7 +1359,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The unique identifier of the interaction to which the fact belongs. Must be a valid UUID."
             }
           },
@@ -1395,7 +1369,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The unique identifier of the fact to update. Must be a valid UUID."
             }
           }
@@ -1482,7 +1455,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The interaction ID representing the context for the request. Must be a valid UUID."
             }
           }
@@ -1557,7 +1529,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The interaction ID representing the context for the request. Must be a valid UUID."
             }
           }
@@ -1666,7 +1637,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The interaction ID representing the context for the request. Must be a valid UUID."
             }
           },
@@ -1677,7 +1647,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The document ID representing the context for the request. Must be a valid UUID."
             }
           },
@@ -1688,7 +1657,6 @@
             "example": "false",
             "schema": {
               "type": "boolean",
-              "format": "boolean",
               "description": "If true the response contains the context used to generated the document, such as fact, transcript or string."
             }
           }
@@ -1762,7 +1730,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The interaction ID representing the context for the request. Must be a valid UUID."
             }
           },
@@ -1773,7 +1740,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The document ID representing the context for the request. Must be a valid UUID."
             }
           }
@@ -1857,7 +1823,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The interaction ID representing the context for the request. Must be a valid UUID."
             }
           },
@@ -1868,7 +1833,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The document ID representing the context for the request. Must be a valid UUID."
             }
           }
@@ -1924,7 +1888,6 @@
             "description": "Filter template sections by organization.",
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "Filter template sections by organization."
             }
           },
@@ -1934,7 +1897,6 @@
             "description": "Filter template sections by language.",
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "Filter template sections by language."
             }
           }
@@ -1990,7 +1952,6 @@
             "description": "Filter templates by organization.",
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "Filter templates by organization."
             }
           },
@@ -2000,7 +1961,6 @@
             "description": "Filter templates by language.",
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "Filter templates by language."
             }
           },
@@ -2010,7 +1970,6 @@
             "description": "Filter templates by their status.",
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "Filter templates by their status."
             }
           }
@@ -2133,7 +2092,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The interaction ID representing the context for the request. Must be a valid UUID."
             }
           }
@@ -2218,7 +2176,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The interaction ID representing the context for the request. Must be a valid UUID."
             }
           }
@@ -2303,7 +2260,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The interaction ID representing the context for the request. Must be a valid UUID."
             }
           }
@@ -2436,7 +2392,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The interaction ID representing the context for the request. Must be a valid UUID."
             }
           }
@@ -2523,7 +2478,6 @@
             "required": true,
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The interaction ID representing the context for the request. Must be a valid UUID."
             }
           },
@@ -2533,7 +2487,6 @@
             "description": "The thread ID representing the context for the request. Must be a valid UUID.",
             "schema": {
               "type": "string",
-              "format": "string",
               "description": "The thread ID representing the context for the request. Must be a valid UUID."
             }
           }
@@ -2793,6 +2746,9 @@
           },
           "data": {
             "type": "string"
+          },
+          "clinic": {
+            "type": "string"
           }
         }
       },
@@ -2834,6 +2790,7 @@
         "properties": {
           "id": {
             "type": "string",
+            "format": "uuid",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
@@ -2949,6 +2906,7 @@
         "properties": {
           "sectionIds": {
             "type": "array",
+            "format": "uuid",
             "description": "An array of section IDs.",
             "items": {
               "$ref": "#/components/schemas/UUID"
@@ -3089,12 +3047,14 @@
           },
           "documentId": {
             "type": "string",
+            "format": "uuid",
             "description": "The document ID if applicable.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "utteranceId": {
             "type": "string",
+            "format": "uuid",
             "description": "The utterance ID if applicable.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -3277,6 +3237,7 @@
           },
           "taskId": {
             "type": "string",
+            "format": "uuid",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           }
@@ -3598,6 +3559,7 @@
               "properties": {
                 "factId": {
                   "type": "string",
+                  "format": "uuid",
                   "description": "The unique identifier of the fact to be updated.",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
@@ -3628,6 +3590,7 @@
         "properties": {
           "factId": {
             "type": "string",
+            "format": "uuid",
             "description": "The unique identifier of the fact to be updated.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -3668,6 +3631,7 @@
           },
           "sourceIds": {
             "type": "array",
+            "format": "uuid",
             "description": "An array of source IDs to narrow down the search.",
             "items": {
               "$ref": "#/components/schemas/UUID"
@@ -3683,6 +3647,7 @@
         "properties": {
           "assignedUserId": {
             "type": "string",
+            "format": "uuid",
             "description": "A unique identifier for the medical professional responsible for this interaction. If nulled, automatically set to a uuid.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -3704,6 +3669,7 @@
         "properties": {
           "assignedUserId": {
             "type": "string",
+            "format": "uuid",
             "description": "The unique identifier of the medical professional responsible for this interaction.  If nulled, automatically set to a uuid.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -3862,6 +3828,7 @@
         "properties": {
           "recordingId": {
             "type": "string",
+            "format": "uuid",
             "description": "The unique identifier for the recording.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -4170,6 +4137,7 @@
               "properties": {
                 "id": {
                   "type": "string",
+                  "format": "uuid",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
@@ -4214,6 +4182,7 @@
         "properties": {
           "id": {
             "type": "string",
+            "format": "uuid",
             "description": "Unique ID of the generated document",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -4285,6 +4254,7 @@
         "properties": {
           "id": {
             "type": "string",
+            "format": "uuid",
             "description": "The unique identifier of the fact.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -4300,6 +4270,7 @@
           },
           "groupId": {
             "type": "string",
+            "format": "uuid",
             "description": "The unique identifier of the group to which the fact belongs.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -4349,6 +4320,7 @@
         "properties": {
           "id": {
             "type": "string",
+            "format": "uuid",
             "description": "The unique identifier of the newly created fact.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -4364,6 +4336,7 @@
           },
           "groupId": {
             "type": "string",
+            "format": "uuid",
             "description": "The unique identifier of the group to which the fact belongs.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -4405,6 +4378,7 @@
         "properties": {
           "id": {
             "type": "string",
+            "format": "uuid",
             "description": "The unique identifier of the fact.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -4420,6 +4394,7 @@
           },
           "groupId": {
             "type": "string",
+            "format": "uuid",
             "description": "The unique identifier of the associated group.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -4455,6 +4430,7 @@
               "properties": {
                 "id": {
                   "type": "string",
+                  "format": "uuid",
                   "description": "The unique identifier of the newly created fact.",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
@@ -4470,6 +4446,7 @@
                 },
                 "groupId": {
                   "type": "string",
+                  "format": "uuid",
                   "description": "The unique identifier of the group to which the fact belongs.",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
@@ -4503,6 +4480,7 @@
               "properties": {
                 "id": {
                   "type": "string",
+                  "format": "uuid",
                   "description": "The unique identifier of the fact.",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
@@ -4518,6 +4496,7 @@
                 },
                 "groupId": {
                   "type": "string",
+                  "format": "uuid",
                   "description": "The unique identifier of the group to which the fact belongs.",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
@@ -4576,6 +4555,7 @@
               "properties": {
                 "id": {
                   "type": "string",
+                  "format": "uuid",
                   "description": "The unique identifier of the updated fact.",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
@@ -4591,6 +4571,7 @@
                 },
                 "groupId": {
                   "type": "string",
+                  "format": "uuid",
                   "description": "The unique identifier of the associated group.",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
@@ -4623,6 +4604,7 @@
         "properties": {
           "id": {
             "type": "string",
+            "format": "uuid",
             "description": "The unique identifier of the updated fact.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -4638,6 +4620,7 @@
           },
           "groupId": {
             "type": "string",
+            "format": "uuid",
             "description": "The unique identifier of the associated group.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -4682,12 +4665,14 @@
         "properties": {
           "id": {
             "type": "string",
+            "format": "uuid",
             "description": "Unique identifier for the interaction.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "assignedUserId": {
             "type": "string",
+            "format": "uuid",
             "description": "A unique identifier for the medical professional responsible for this interaction. If nulled, automatically set to a uuid.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -4733,6 +4718,7 @@
         "properties": {
           "interactionId": {
             "type": "string",
+            "format": "uuid",
             "description": "Unique identifier for the interaction.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -4753,12 +4739,14 @@
               "properties": {
                 "id": {
                   "type": "string",
+                  "format": "uuid",
                   "description": "Unique identifier for the interaction.",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
                 },
                 "assignedUserId": {
                   "type": "string",
+                  "format": "uuid",
                   "description": "A unique identifier for the medical professional responsible for this interaction. If nulled, automatically set to a uuid.",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
@@ -4829,12 +4817,14 @@
           },
           "documentId": {
             "type": "string",
+            "format": "uuid",
             "description": "The document ID if applicable.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
           },
           "utteranceId": {
             "type": "string",
+            "format": "uuid",
             "description": "The utterance ID if applicable.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -4911,6 +4901,7 @@
         "properties": {
           "recordingId": {
             "type": "string",
+            "format": "uuid",
             "description": "The unique identifier for the created recording.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -4922,6 +4913,7 @@
         "properties": {
           "recordings": {
             "type": "array",
+            "format": "uuid",
             "description": "A list of recordings for the interaction.",
             "items": {
               "$ref": "#/components/schemas/UUID"
@@ -4945,6 +4937,7 @@
         "properties": {
           "id": {
             "type": "string",
+            "format": "uuid",
             "description": "The unique identifier of the transcript.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
@@ -4999,6 +4992,7 @@
               "properties": {
                 "id": {
                   "type": "string",
+                  "format": "uuid",
                   "description": "The unique identifier of the transcript.",
                   "items": {},
                   "$ref": "#/components/schemas/UUID"
@@ -5016,6 +5010,7 @@
         "properties": {
           "id": {
             "type": "string",
+            "format": "uuid",
             "description": "The unique identifier of the transcript.",
             "items": {},
             "$ref": "#/components/schemas/UUID"
