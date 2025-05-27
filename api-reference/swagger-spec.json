@@ -4082,6 +4082,10 @@
                 }
               }
             }
+          },
+          "usageInfo": {
+            "type": "object",
+            "$ref": "#/components/schemas/UsageInfo"
           }
         }
       },
@@ -4256,6 +4260,10 @@
           "outputLanguage": {
             "type": "string",
             "description": "The language in which the document will be generated. Check https://docs.corti.ai/about/languages for more."
+          },
+          "usageInfo": {
+            "type": "object",
+            "$ref": "#/components/schemas/UsageInfo"
           }
         }
       },
@@ -4939,6 +4947,10 @@
             "items": {
               "$ref": "#/components/schemas/Utterance"
             }
+          },
+          "usageInfo": {
+            "type": "object",
+            "$ref": "#/components/schemas/UsageInfo"
           }
         }
       },
@@ -5268,6 +5280,20 @@
         "items": {},
         "format": "uuid"
       },
+      "UsageInfo": {
+        "type": "object",
+        "properties": {
+          "inputRawTokens": {
+            "type": "integer"
+          },
+          "outputRawTokens": {
+            "type": "integer"
+          },
+          "creditsConsumed": {
+            "type": "number"
+          }
+        }
+      },
       "Utterance": {
         "type": "object",
         "properties": {
@@ -5449,6 +5475,20 @@
           },
           "instance": {
             "type": "string"
+          }
+        }
+      },
+      "cortiOpenmeter.UsageInfo": {
+        "type": "object",
+        "properties": {
+          "inputRawTokens": {
+            "type": "integer"
+          },
+          "outputRawTokens": {
+            "type": "integer"
+          },
+          "creditsConsumed": {
+            "type": "number"
           }
         }
       },
