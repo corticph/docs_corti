@@ -18,19 +18,16 @@
             "group": "Get Started",
             "pages": [
               "get_started/welcome",
-              "get_started/authentication",
-              "get_started/getaccess",
-              "get_started/oauth"
+              "get_started/quickstart",
+              "get_started/getaccess"
             ]
           },
           {
             "group": "About Corti API",
             "pages": [
               "about/introduction",
-              "about/ai_platform",
               "about/how_it_works",
-              "about/languages",
-              "about/errors"
+              "about/languages"
             ]
           },
           {
@@ -73,7 +70,8 @@
             "group": "Get Started",
             "pages": [
               "api-reference/welcome",
-              "api-reference/quickstart"
+              "api-reference/quickstart",
+              "api-reference/getaccess"
               ]
           },
           {
@@ -97,10 +95,17 @@
               "release-notes/api-updates",
               "release-notes/language-updates"
             ]
+          },
+          {
+            "group": "Additional Resources", 
+            "pages": [
+              "about/ai_platform",
+              "about/errors",
+              "about/oauth"
+              ]}
+            ]
           }
-        ]
-      }
-    ]
+      ]
   },
   "logo": {
     "light": "/logo/corti_light.svg",
@@ -124,7 +129,7 @@
       {
       "type": "button",
       "label": "Get Started",
-      "href": "https://www.corti.ai/contact-us"
+      "href": "https://corti-api-console.web.app/signup"
     },
     "links":[{
       "label": "Support",
