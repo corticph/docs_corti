@@ -1,20 +1,21 @@
 ---
-title: Real-time transcript and Fact generation 
-description: WebSocket Secure (WSS) API Documentation for /stream endpoint in support of real-time conversational transcript and fact generation 
+title: Real-time conversational transcript generation and fact extraction
+sidebarTitle: Real-time conversational fact extraction
+description: WebSocket Secure (WSS) API Documentation for /stream endpoint 
 tag: WSS
 ---
 
 ## Overview
 
-The WebSocket Secure (WSS) API enables real-time, bidirectional communication with the Corti system for interaction streaming. Clients can send and receive structured data, including transcripts and facts updates.
+The WebSocket Secure (WSS) `/stream`API enables real-time, bidirectional communication with the Corti system for interaction streaming. Clients can send and receive structured data, including transcripts and facts updates.
 
 This documentation provides a structured guide for integrating the Corti WSS API for real-time interaction streaming.
 
 <Info>
-  This `/stream` endpoint supports real-time ambient documentation interactions. 
+  This `/stream` endpoint supports real-time ambient documentation interactions and clinical decision support workflows. 
 
-  - If you are looking for a stateless, atomic endpoint that is more geared towards front-end dictation workflows you should use the [/transcribe WSS](/api-reference/transcribe/)
-  - If you are looking for asynchronous ambient documentation interactions, then please refer to the [/documents endpoint](/api-reference/documents)  
+  - If you are looking for a stateless endpoint that is geared towards front-end dictation workflows you should use the [/transcribe WSS](/api-reference/transcribe/)
+  - If you are looking for asynchronous ambient documentation interactions, then please refer to the [/documents endpoint](/api-reference/documents/generate-document/)
 </Info>
 
 ### Environment Options
@@ -23,7 +24,6 @@ This documentation provides a structured guide for integrating the Corti WSS API
 | :--- | :--- |
 | `us` | US-based instance |
 | `eu` | EU-based instance |
-| `beta-eu` | Beta EU instance (default) |
 
 ## Establishing a Connection
 
