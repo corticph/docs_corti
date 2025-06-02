@@ -81,7 +81,7 @@ Follow these steps to get access and start building:
         )
 
         URL = (
-            f"https://keycloak.{ENV}.corti.app"
+            f"https://auth.{ENV}.corti.app"
             f"/realms/{TENANT}/protocol/openid-connect/token"
         )
 
@@ -145,7 +145,7 @@ Follow these steps to get access and start building:
 
         // ─── TOKEN ENDPOINT ────────────────────────────────────
         var url = 
-        $"https://keycloak.{ENV}.corti.app" +
+        $"https://auth.{ENV}.corti.app" +
         $"/realms/{TENANT}/protocol/openid-connect/token";
 
         using var client = new HttpClient();
