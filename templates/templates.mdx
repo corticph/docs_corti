@@ -17,21 +17,25 @@ Templates are available in different languages and can be specific to your organ
 
 ## Retrieving Available Templates
 
-To generate a document, you must use a valid `templateKey` and the template must be available in the desired `outputLanguage`. To retrieve a list of available templates use the `GET /templates` request and use `?lang=` to filter for available languages. Without any language filtering, the default returned are templates in `en`.
+To generate a document, you must use a valid `templateKey`, and the template must be available in the required `outputLanguage`. You can retrieve a list of available templates and their language translations using the `GET /templates` endpoint. Depending on your use case, this may include either Corti’s standard templates or organization-specific custom templates.
 
-<CodeGroup>
-  ```javascript request to retrieve default templates 
-  GET https://api.{environment}.corti.app/v2/templates/
-  ```
+**Retrieving Standard Templates**
+Standard templates are accessible by default and can be retrieved without any query parameters.
 
-  ```javascript request to retrieve templates available for customer TestHealth
-  GET https://api.{environment}.corti.app/v2/templates/?org=TestHealth
-  ```
+```bash request to retrieve standard templates
+GET https://api.{environment}.corti.app/v2/templates/
+```
 
-  ```javascript request to retrieve templates available in Danish
-  GET https://api.{environment}.corti.app/v2/templates/?lang=da
-  ```
-</CodeGroup>
+**Retrieving Custom Templates for an Organization**
+If your organization has requested and been provided with custom templates, you can retrieve them by including your assigned organization identifier using the org query parameter. Be sure to use the exact organization value provided by the Corti Support team.
+
+```bash retrieve templates by example org
+GET https://api.{environment}.corti.app/v2/templates/?org=TestHealth
+```
+
+Custom templates are typically tailored to your workflows or documentation standards. If you're unsure which templates are available or want to verify the correct `templateKey` and language support, querying by organization ensures you retrieve the full list of templates assigned to your organization.
+
+However, if Corti Support has already provided you with the relevant `templateKey` and language information, you can use those details directly without needing to query the endpoint.
 
 <br/>
 
