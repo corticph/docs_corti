@@ -19,10 +19,14 @@ groups:
         version: 1.0.0
         output:
           location: npm
-          package-name: '@corti/core'
+          package-name: '@markitosha/package-core-test'
+          token: ${NPM_TOKEN}
         github:
-          repository: fern-demo/corti-typescript-sdk
-          #mode: pull-request
+          repository: corticph/corti-sdk-typescript
+          mode: pull-request
+        metadata:
+          license: MIT
+          package-description: Corti API TypeScript SDK
         config:
           namespaceExport: Corti
           noSerdeLayer: false
