@@ -45,7 +45,6 @@ jobs:
       - name: Commit changes if needed
         run: |
           git status
-          git diff --quiet api-reference/swagger-with-sdk-snippets.json
           if ! git diff --quiet api-reference/swagger-with-sdk-snippets.json; then
             git add api-reference/swagger-with-sdk-snippets.json
             title="[Automated] Update swagger-with-sdk-snippets.json from PR changes"
