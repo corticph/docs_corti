@@ -1,25 +1,7 @@
 name: Update SDK and Swagger Spec
 
 on:
-  # Manual trigger with version input
-  workflow_dispatch:
-    inputs:
-      version:
-        description: 'SDK Version to generate'
-        required: true
-        type: string
-      generate_sdk:
-        description: 'Generate SDK'
-        required: true
-        type: boolean
-        default: true
-      pr_number:
-        description: 'PR number to update'
-        required: true
-        type: string
-  # Automatic trigger on file changes
-  pull_request_target:
-    types: [opened, synchronize]
+  pull_request:
     paths:
       - 'snippets/sdk/**'
       - 'api-reference/swagger-spec.json'
@@ -34,26 +16,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Get PR branch
-        id: get-pr
-        run: |
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            PR_NUMBER="${{ inputs.pr_number }}"
-            PR_DATA=$(curl -s -H "Authorization: token ${{ github.token }}" \
-              "https://api.github.com/repos/${{ github.repository }}/pulls/$PR_NUMBER")
-            PR_REF=$(echo "$PR_DATA" | jq -r .head.ref)
-            PR_SHA=$(echo "$PR_DATA" | jq -r .head.sha)
-            echo "ref=$PR_REF" >> $GITHUB_OUTPUT
-            echo "sha=$PR_SHA" >> $GITHUB_OUTPUT
-          else
-            echo "ref=${{ github.head_ref }}" >> $GITHUB_OUTPUT
-            echo "sha=${{ github.event.pull_request.head.sha }}" >> $GITHUB_OUTPUT
-          fi
-
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: ${{ steps.get-pr.outputs.ref }}
+          ref: ${{ github.head_ref }}
           token: ${{ github.token }}
           fetch-depth: 0
 
@@ -67,9 +33,8 @@ jobs:
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@users.noreply.github.com'
 
-      # Check if swagger spec changed (for automatic triggers)
+      # Only run SDK generation if swagger spec changed
       - name: Check if swagger spec changed
-        if: github.event_name == 'pull_request_target'
         id: check-spec
         run: |
           git fetch origin ${{ github.base_ref }}
@@ -80,26 +45,16 @@ jobs:
           fi
 
       - name: Install Fern
-        if: |
-          github.event_name == 'workflow_dispatch' && inputs.generate_sdk ||
-          github.event_name == 'pull_request_target' && steps.check-spec.outputs.spec_changed == 'true'
+        if: steps.check-spec.outputs.spec_changed == 'true'
         run: npm install -g fern-api
 
       - name: Generate SDK
-        if: |
-          github.event_name == 'workflow_dispatch' && inputs.generate_sdk ||
-          github.event_name == 'pull_request_target' && steps.check-spec.outputs.spec_changed == 'true'
+        if: steps.check-spec.outputs.spec_changed == 'true'
         env:
           # FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
           FERN_TOKEN: 'fern_nPMzsDv9RgFs9fa21_Q0CqbS-vgaOmHd'
         run: |
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            echo "Generating SDK with version ${{ inputs.version }}"
-            fern generate --group ts-sdk --version ${{ inputs.version }} --log-level debug
-          else
-            echo "Generating SDK without version (PR trigger)"
-            fern generate --group ts-sdk --log-level debug
-          fi
+          fern generate --group ts-sdk --log-level debug
 
       - name: Update swagger doc
         run: |
@@ -116,24 +71,16 @@ jobs:
           git add snippets/sdk/ api-reference/swagger-with-sdk-snippets.json
 
           if ! git diff --cached --quiet; then
-            # Determine commit message based on what triggered the workflow
-            if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-              if [ "${{ inputs.generate_sdk }}" == "true" ]; then
-                title="[Automated] Generate SDK v${{ inputs.version }} and update swagger doc"
-              else
-                title="[Automated] Update swagger doc only"
-              fi
+            # Determine commit message based on what changed
+            if [ "${{ steps.check-spec.outputs.spec_changed }}" == "true" ]; then
+              title="[Automated] Update SDK snippets and swagger doc from spec changes"
             else
-              if [ "${{ steps.check-spec.outputs.spec_changed }}" == "true" ]; then
-                title="[Automated] Update SDK snippets and swagger doc from spec changes"
-              else
-                title="[Automated] Update swagger doc from snippet changes"
-              fi
+              title="[Automated] Update swagger doc from snippet changes"
             fi
 
             git commit -m "$title"
             git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-            git push origin HEAD:${{ steps.get-pr.outputs.ref }} --force
+            git push origin HEAD:${GITHUB_HEAD_REF} --force
           else
             echo "No changes to commit"
           fi
