@@ -45,8 +45,8 @@ jobs:
       - name: Commit changes if needed
         run: |
           git status
-          if git diff --quiet api-reference/swagger-doc.json; then
-            git add api-reference/swagger-doc.json
+          if git diff --quiet api-reference/swagger-with-sdk-snippets.json; then
+            git add api-reference/swagger-with-sdk-snippets.json
             title="[Automated] Update swagger-with-sdk-snippets.json from PR changes"
             git commit -m "$title"
             git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
