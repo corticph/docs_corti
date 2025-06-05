@@ -1,5 +1,10 @@
 # yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
 api:
+  default-environment: beta-eu
+  environments:
+    beta-eu: https://api.beta-eu.corti.app/v2
+    us: https://api.us.corti.com/v2
+    eu: https://api.eu.corti.app/v2
   specs:
     - openapi: ../api-reference/swagger-spec.json
       overrides: ./overrides.yml
