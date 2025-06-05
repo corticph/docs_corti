@@ -31,11 +31,6 @@ jobs:
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@users.noreply.github.com'
 
-      - name: Install dependencies
-        run: |
-          cd fern
-          npm install
-
       - name: Update swagger doc
         run: node fern/scripts/merge_snippets_to_spec.js
 
