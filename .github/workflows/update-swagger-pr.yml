@@ -20,6 +20,8 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
+          token: ${{ github.token }}
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -41,12 +43,13 @@ jobs:
           node fern/scripts/merge_snippets_to_spec.js
 
       - name: Commit changes if needed
-        env:
-          GH_TOKEN: ${{ github.token }}
         run: |
           if ! git diff --quiet api-reference/swagger-doc.json; then
             git add api-reference/swagger-doc.json
             title="[Automated] Update swagger-doc.json from PR changes"
             git commit -m "$title"
-            git push
-          fi 
+            git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+            git push origin HEAD:${GITHUB_HEAD_REF} --force
+          fi
+        env:
+          GITHUB_TOKEN: ${{ github.token }} 
