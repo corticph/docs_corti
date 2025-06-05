@@ -47,7 +47,7 @@ jobs:
           git status
           if git diff --quiet api-reference/swagger-doc.json; then
             git add api-reference/swagger-doc.json
-            title="[Automated] Update swagger-doc.json from PR changes"
+            title="[Automated] Update swagger-with-sdk-snippets.json from PR changes"
             git commit -m "$title"
             git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
             git push origin HEAD:${GITHUB_HEAD_REF} --force
