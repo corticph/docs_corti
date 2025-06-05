@@ -55,8 +55,7 @@
           }
         },
         "tags": [
-          "interactions",
-          "facts"
+          "interactions"
         ],
         "summary": "List All Interactions",
         "description": " Lists all existing interactions. Results can be filtered by encounter status and patient identifier.",
