@@ -1,4 +1,4 @@
-name: Update Swagger Doc in PR
+name: Join SDK Snippets to Swagger Spec
 
 on:
   pull_request:
