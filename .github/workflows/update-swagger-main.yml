@@ -31,13 +31,14 @@ jobs:
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@users.noreply.github.com'
 
-      - name: Install dependencies
-        run: |
-          cd fern
-          npm install
-
       - name: Update swagger doc
-        run: node fern/scripts/merge_snippets_to_spec.js
+        run: |
+          if [ ! -f "fern/scripts/merge_snippets_to_spec.js" ]; then
+            echo "Error: Script fern/scripts/merge_snippets_to_spec.js not found"
+            echo "Please create this script to merge snippets into the swagger spec"
+            exit 1
+          fi
+          node fern/scripts/merge_snippets_to_spec.js
 
       - name: Create PR with changes
         env:

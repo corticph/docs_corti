@@ -1,0 +1,117 @@
+paths:
+  /interactions/:
+    get:
+      x-fern-audiences:
+        - public
+      operationId: interactions_list
+      x-fern-pagination:
+        offset: $request.index
+        results: $response.interactions
+      parameters:
+        - {}
+        - name: sort
+          schema:
+            default: createdAt
+            enum:
+            - createdAt
+            - endedAt
+            - updatedAt
+        - name: direction
+          schema:
+            default: desc
+            enum:
+            - asc
+            - desc
+        - {}
+        - {}
+        - name: encounterStatus
+          style: form
+          explode: true
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/V2EncounterStatusEnum'
+    post:
+      x-fern-audiences:
+        - public
+      operationId: interactions_create
+  /interactions/{id}:
+    get:
+      x-fern-audiences:
+        - public
+      operationId: interactions_get
+      parameters:
+        - {}
+        - name: 'id'
+          schema:
+            $ref: '#/components/schemas/UUID'
+    delete:
+      x-fern-audiences:
+        - public
+      operationId: interactions_delete
+      parameters:
+        - {}
+        - name: 'id'
+          schema:
+            $ref: '#/components/schemas/UUID'
+    patch:
+      x-fern-audiences:
+        - public
+      operationId: interactions_update
+      parameters:
+        - {}
+        - name: 'id'
+          schema:
+            $ref: '#/components/schemas/UUID'
+
+components:
+  schemas:
+    V2EncounterStatusEnum:
+      x-fern-type-name: EncounterStatus
+    V2EncounterTypeEnum:
+      x-fern-type-name: EncounterType
+    V2GenderEnum:
+      x-fern-type-name: GenderEnum
+    Encounter:
+      required:
+        - identifier
+        - status
+        - type
+        - {}
+    EncounterPeriod:
+      required: []
+    UUID:
+      example: 'f47ac10b-58cc-4372-a567-0e02b2c3d479'
+    ResponseInteractions:
+      required:
+        - interactions
+      properties:
+        interactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResponseInteraction'
+    RequestEncounterUpdate:
+      x-fern-type-name: EncounterUpdate
+      properties:
+        period:
+          $ref: '#/components/schemas/EncounterPeriod'
+    RequestPatientUpdate:
+      x-fern-type-name: PatientUpdate
+    ResponseInteraction:
+      required:
+        - id
+        - lastUpdated
+        - websocketUrl
+        - updatedAt
+        - createdAt
+        - endedAt
+        - patient
+        - encounter
+        - assignedUserId
+    ResponseInteractionCreate:
+      required:
+        - interactionId
+        - websocketUrl
+  parameters:
+    Tenant-Name:
+      required: true
