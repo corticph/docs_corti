@@ -1,0 +1,60 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/interactions/",
+                "method": "GET",
+                "identifier_override": "endpoint_interactions.list"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { CortiClient } from \"@corti/core\";\n\nconst client = new CortiClient({ token: \"YOUR_TOKEN\", tenantName: \"YOUR_TENANT_NAME\" });\nconst response = await client.interactions.list();\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nconst page = await client.interactions.list();\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/interactions/",
+                "method": "POST",
+                "identifier_override": "endpoint_interactions.create"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { CortiClient } from \"@corti/core\";\n\nconst client = new CortiClient({ token: \"YOUR_TOKEN\", tenantName: \"YOUR_TENANT_NAME\" });\nawait client.interactions.create({\n    encounter: {\n        identifier: \"identifier\",\n        status: \"planned\",\n        type: \"first_consultation\"\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/interactions/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_interactions.get"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { CortiClient } from \"@corti/core\";\n\nconst client = new CortiClient({ token: \"YOUR_TOKEN\", tenantName: \"YOUR_TENANT_NAME\" });\nawait client.interactions.get(\"f47ac10b-58cc-4372-a567-0e02b2c3d479\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/interactions/{id}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_interactions.delete"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { CortiClient } from \"@corti/core\";\n\nconst client = new CortiClient({ token: \"YOUR_TOKEN\", tenantName: \"YOUR_TENANT_NAME\" });\nawait client.interactions.delete(\"f47ac10b-58cc-4372-a567-0e02b2c3d479\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/interactions/{id}",
+                "method": "PATCH",
+                "identifier_override": "endpoint_interactions.update"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { CortiClient } from \"@corti/core\";\n\nconst client = new CortiClient({ token: \"YOUR_TOKEN\", tenantName: \"YOUR_TENANT_NAME\" });\nawait client.interactions.update(\"f47ac10b-58cc-4372-a567-0e02b2c3d479\");\n"
+            }
+        }
+    ],
+    "types": {}
+}
