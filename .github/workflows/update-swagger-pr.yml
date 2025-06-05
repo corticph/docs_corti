@@ -1,4 +1,4 @@
-name: Join SDK Snippets to Swagger Spec
+name: Update SDK and Swagger Spec
 
 on:
   pull_request:
@@ -33,6 +33,29 @@ jobs:
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@users.noreply.github.com'
 
+      # Only run SDK generation if swagger spec changed
+      - name: Check if swagger spec changed
+        id: check-spec
+        run: |
+          git fetch origin ${{ github.base_ref }}
+          if git diff --name-only origin/${{ github.base_ref }} HEAD | grep -q "^api-reference/swagger-spec.json$"; then
+            echo "spec_changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "spec_changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Install Fern
+        if: steps.check-spec.outputs.spec_changed == 'true'
+        run: npm install -g fern-api
+
+      - name: Generate SDK
+        if: steps.check-spec.outputs.spec_changed == 'true'
+        env:
+          # FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+          FERN_TOKEN: 'fern_nPMzsDv9RgFs9fa21_Q0CqbS-vgaOmHd'
+        run: |
+          fern generate --group ts-sdk --log-level debug
+
       - name: Update swagger doc
         run: |
           if [ ! -f "fern/scripts/merge_snippets_to_spec.js" ]; then
@@ -44,13 +67,22 @@ jobs:
 
       - name: Commit changes if needed
         run: |
-          git status
-          if ! git diff --quiet api-reference/swagger-with-sdk-snippets.json; then
-            git add api-reference/swagger-with-sdk-snippets.json
-            title="[Automated] Update swagger-with-sdk-snippets.json from PR changes"
+          # Stage both snippets and swagger doc if they changed
+          git add snippets/sdk/ api-reference/swagger-with-sdk-snippets.json
+
+          if ! git diff --cached --quiet; then
+            # Determine commit message based on what changed
+            if [ "${{ steps.check-spec.outputs.spec_changed }}" == "true" ]; then
+              title="[Automated] Update SDK snippets and swagger doc from spec changes"
+            else
+              title="[Automated] Update swagger doc from snippet changes"
+            fi
+
             git commit -m "$title"
             git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
             git push origin HEAD:${GITHUB_HEAD_REF} --force
+          else
+            echo "No changes to commit"
           fi
         env:
           GITHUB_TOKEN: ${{ github.token }} 
