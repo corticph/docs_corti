@@ -55,8 +55,7 @@
           }
         },
         "tags": [
-          "interactions",
-          "facts"
+          "interactions"
         ],
         "summary": "List All Interactions",
         "description": " Lists all existing interactions. Results can be filtered by encounter status and patient identifier.",
@@ -119,6 +118,13 @@
               "type": "string",
               "description": "A unique identifier for the patient. Must be a valid UUID."
             }
+          }
+        ],
+        "x-codeSamples": [
+          {
+            "lang": "typescript",
+            "label": "Typescript SDK",
+            "source": "import { CortiClient } from \"@corti/core\";\n\nconst client = new CortiClient({ token: \"YOUR_TOKEN\", tenantName: \"YOUR_TENANT_NAME\" });\nconst response = await client.interactions.list();\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nconst page = await client.interactions.list();\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
           }
         ]
       },
