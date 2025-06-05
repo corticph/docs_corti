@@ -64,7 +64,7 @@
       {
         "anchor": "API Reference",
         "openapi": {
-          "source": "/api-reference/swagger-spec.json",
+          "source": "/api-reference/swagger-with-sdk-snippets.json",
           "directory": "api-reference"
         },
         "icon": "square-terminal",

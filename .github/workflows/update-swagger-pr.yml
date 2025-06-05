@@ -3,6 +3,8 @@ name: Update SDK and Swagger Spec
 on:
   pull_request:
     paths:
+      - 'fern/generators.yml'
+      - 'fern/overrides.yml'
       - 'api-reference/swagger-spec.json'
 
 permissions:
