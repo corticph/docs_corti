@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "http://sandbox-test.mintlify.com"
+      "url": "http://sandbox.mintlify.com"
     }
   ],
   "security": [
