@@ -44,7 +44,8 @@ jobs:
 
       - name: Commit changes if needed
         run: |
-          if ! git diff --quiet api-reference/swagger-doc.json; then
+          git status
+          if git diff --quiet api-reference/swagger-doc.json; then
             git add api-reference/swagger-doc.json
             title="[Automated] Update swagger-doc.json from PR changes"
             git commit -m "$title"
