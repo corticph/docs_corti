@@ -20,7 +20,7 @@ groups:
       - name: fernapi/fern-typescript-node-sdk
         snippets:
           path: ../snippets/sdk/ts
-        version: 1.0.0
+        version: 1.4.0
         output:
           location: npm
           package-name: '@markitosha/core'
