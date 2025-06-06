@@ -208,7 +208,7 @@ In case of an invalid or missing interaction ID, the server will return an error
 
 <Note>From opening the WebSocket, you need to commit the configuration within 15 seconds, else the WebSocket will close again</Note>
 
-During a WebSocket session the following messages related to configuration can be returned.
+At the beginning of a WebSocket session the following messages related to configuration can be returned.
 
 ```json
 
@@ -220,6 +220,23 @@ During a WebSocket session the following messages related to configuration can b
 
 In addition, a reason will be supplied, e.g. `reason: language unavailable`
 
+Once configuration has been accepted and the session is running, you may encounter runtime or application-level errors.
+ These are sent as JSON objects with the following structure:
+
+```json
+{
+  "type": "error",
+  "error": {
+    "id": "error id",
+    "title": "error title",
+    "status": 400,
+    "detailsf": "error details",
+    "doc":"link to documentation"
+  }
+}
+```
+In some cases, receiving an "error" type message will cause the stream to end and send a message of type `usage` and type `ENDED`.
+
 ## Closing the Connection
 
 To terminate the WebSocket session, send a standard WebSocket close frame, or use:
@@ -230,6 +247,12 @@ To terminate the WebSocket session, send a standard WebSocket close frame, or us
 }
 ```
 
-The connection remains open until all transcripts are complete, at which point the server sends a message of type `ENDED` and then closes.
-
+The connection remains open until all transcripts are complete, at which point the server sends a usage message
+```json 
+{
+  "type":"usage",
+  "credits":<number>
+}
+```
+, then a message of type ENDED, and then closes.
 <Note>You can at any time open the WebSocket again and resume by sending the configuration.</Note>
