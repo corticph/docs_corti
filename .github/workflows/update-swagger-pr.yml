@@ -35,7 +35,7 @@ jobs:
         id: sdk-version
         run: |
           if [ -f "sdk-repo/src/version.ts" ]; then
-            VERSION=$(grep -o "'.*'" sdk-repo/src/version.ts | tr -d "'")
+            VERSION=$(grep -o 'SDK_VERSION = "[^"]*"' sdk-repo/src/version.ts | cut -d'"' -f2)
             echo "version=$VERSION" >> $GITHUB_OUTPUT
             echo "Found SDK version: $VERSION"
           else
