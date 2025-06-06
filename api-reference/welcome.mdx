@@ -1,42 +1,11 @@
 ---
-title: Welcome
-description: 'to the Corti API'
+title: Welcome to the Corti API  
+sidebarTitle: Welcome
+description: 'AI for every healthcare app'
+mode: "wide"
 ---
 
-This documentation site provides information on how Corti foundation models can be integrated via the Corti API, allowing organizations to build bespoke healthcare AI solutions that meet their specific needs.
+import WelcomeSnippet from '/snippets/welcome-snip.mdx';
 
-## Most popular 
-
-<Columns cols={2}>
-  <Card title="Quickstart" icon="rocket-launch" href="/api-reference/quickstart/" arrow="true">
-    Walkthrough and examples on how to authenticate and make your firt API request
-  </Card>
-  <Card title="Get access" icon="wrench">
-    Coming soon: Self service console to create API client credentials 
-  </Card>
-  <Card title="Stateless dictation" icon="microphone" href="/api-reference/transcribe/" arrow="true">
-    Detailed spec for real-time dictation and voice commands   
-  </Card>
-  <Card title="Real-time audio stream" icon="tower-broadcast" href="/api-reference/stream/" arrow="true">
-    Detailed spec for real-time conversational transcript and fact extraction   
-  </Card>
-  <Card title="Create interaction" icon="message-plus" href="/api-reference/interactions/create-interaction/" arrow="true">
-    Detailed spec for creating an interaction and setting appropriate context  
-  </Card>
-  <Card title="Upload recording" icon="play" href="/api-reference/recordings/upload-recording/" arrow="true">
-    Attach an audio file to the interaction 
-  </Card>
-  <Card title="Create transcript" icon="file" href="/api-reference/transcripts/create-transcript/" arrow="true">
-    Convert audio files to text 
-  </Card>
-  <Card title="Generate document" icon="notes-medical" href="/api-reference/documents/generate-document/" arrow="true">
-    Create one to many documents for an interaction based on transcripts, facts, or other documents/ text 
-  </Card>
-  <Card title="Languages" icon="language" href="/about/languages/" arrow="true">
-    Description of available languages, language code to use in API requests, and ASR capabilities per language tier
-  </Card>
-  <Card title="Standard templates" icon="file-check" href="/templates/templates-standard/" arrow="true">
-    Description of out of the box templates and template sections, along with the `templateKey` to use in API requests
-  </Card>
-</Columns>
+<WelcomeSnippet/>
 

@@ -1,12 +1,12 @@
 ---
 title: Real-time stateless dictation 
-description: WebSocket Secure (WSS) API Documentation for stateless use of /transcribe endpoint for real-time speech-to-text  
+description: WebSocket Secure (WSS) API Documentation for /transcribe endpoint 
 tag: WSS
 ---
 
 ## Overview
 
-The WebSocket Secure (WSS) API enables real-time, bidirectional communication with the Corti system for stateless speech-to-text. Clients can send and receive structured data, including transcripts and detected commands.
+The WebSocket Secure (WSS) `/transcribe` API enables real-time, bidirectional communication with the Corti system for stateless speech-to-text. Clients can send and receive structured data, including transcripts and detected commands.
 
 This documentation provides a comprehensive guide for integrating these capabilities.
 
@@ -14,7 +14,7 @@ This documentation provides a comprehensive guide for integrating these capabili
   This `/transcribe` endpoint supports real-time stateless dictation. 
   
   - If you are looking for real-time ambient documentation interactions, you should use the [/stream WSS](/api-reference/stream/)
-  - If you are looking for asynchronous transcript generation as part of an interaction, then please refer to the [/transcripts endpoint](/api-reference/transcripts)
+  - If you are looking for asynchronous transcript generation as part of an interaction, then please refer to the [/transcripts endpoint](/api-reference/transcripts/create-transcript/)
 </Info>
 
 ### Environment Options
@@ -23,7 +23,6 @@ This documentation provides a comprehensive guide for integrating these capabili
 | :--- | :--- |
 | `us` | US-based instance |
 | `eu` | EU-based instance |
-| `beta-eu` | Beta EU instance (default) |
 
 ## Establishing a Connection <Icon icon="circle-wifi" iconType="solid" /> 
 

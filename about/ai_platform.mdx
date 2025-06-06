@@ -1,37 +1,49 @@
 ---
 title: AI Platform
 description: 'Learn about Corti AI capabilities'
+mode: "wide"
 ---
 
-Corti empowers healthcare professionals with cutting-edge AI solutions designed to enhance clinical documentation, streamline workflows, and ensure accuracy in patient records. By leveraging advanced speech recognition, machine learning, and intelligent automation, Corti supports clinicians by reducing administrative burden so they can focus on patient care.
+Corti empowers healthcare professionals with cutting-edge AI solutions designed to enhance clinical documentation, streamline workflows, and ensure accuracy in patient records. By leveraging advanced speech recognition, machine learning, and intelligent automation, Corti enables app developers to reduce administrative burden so clinicians can focus on patient care.
 
-## Clinical Documentation 
+## Use cases 
 
-<Tip>Corti AI is the only platform supporting an Ambient Documentation LIVE workflow, where **real-time** `Fact` generation occurs _during_ audio recording. Turbo charge your ambient scribe solution by using the `Stream` endpoint.</Tip> 
+<Accordion title="Ambient AI scribe"> 
+    1. Real-time fact extraction during conversational audio processing to capture key clinical findings 
+    2. Empower clinicians with control over ambient document generation - select, reject, or augment extracted clinical findings so that AI notes are complete, concise, and correct 
+    3. Flexibility to generate one or multiple different summary documents for a given interaction 
+    4. Support for customizable templates, formats, and styles
 
-### Ambient AI medical scribe 
-1. Live note taking during conversational audio processing to capture key clinical facts 
-2. Empower clinicians with control over clinical facts - select, reject, or augment generated content that is to be included in ensuing documentation 
-3. Flexibility to generate one or multiple different summary documents for a given interaction 
-4. Support for customizable templates, formats, and styles.
+    <Tip>Corti AI is the only platform supporting truly real-time clinical intelligence, where clinical finding `fact` extraction occurs _during_ audio streaming. Use the `stream` endpoint to turbo charge your ambient scribe solution, build real-time clinical decision support, and more.</Tip> 
+</Accordion> 
 
-### Medical dictation and conversational transcription 
-1. Automated speech recognition (ASR) focused on medical domain to provide speech-to-text and command-and-control capabilities.
-2. Diarized transcription of multi-user medical conversations from audio to text.
-3. Support for in-person or virtual care workflows. 
+<Accordion title="Dictation and conversational transcription">
+    1. Automated speech recognition (ASR) focused on medical domain to provide speech-to-text and command-and-control capabilities 
+    2. Diarized transcription of multi-user medical conversations from audio to text 
+    3. Support for in-person or virtual care workflows 
 
-## Medical coding 
-1. Streamline ICD-10 coding with precision and scale. 
-2. Support for both diagnosis and procedure coding. 
-3. Capture CPT codes with modifiers that accurately reflect the level of care provided. 
+    <Tip>Use the `transcribe` endpoint for stateless dictation and the `transcripts` endpoint for batch audio file processing</Tip>
+</Accordion>
 
+<Accordion title="Medical coding">
+    1. Streamline ICD-10 coding with precision and scale 
+    2. Support for both diagnosis and procedure coding 
+    3. Capture CPT codes with modifiers that accurately reflect the level of care provided 
 
-## Contextual search and knowledge retrieval 
-1. Instant access to critical information, precisely when you need it.
-2. Support for standard public reference material or customizable for organizational standards of care.
+    <Tip>General purpose coding models can also be finetuned with individual customer data</Tip> 
+</Accordion>
 
+<Accordion title="Contextual search and knowledge retrieval">
+    1. Instant access to critical information, precisely when you need it
+    2. Support for standard public reference material or customizable for organizational standards of care
 
-## Alignment and analysis 
-1. Compare "source" and "target" resources to identify alignment rate between the two assets. 
-2. Option to include explainability with AI output to ensure trust and reliability. 
-3. Power benchmarking and quality analysis efforts. 
+    <Tip>Use these tools along with the AI agent to power workflows</Tip>
+</Accordion>
+
+<Accordion title="Alignment and analysis">
+    1. Compare "source" and "target" resources to identify alignment rate between the two assets
+    2. Option to include explainability with AI output to ensure trust and reliability
+    3. Power benchmarking and quality analysis efforts
+
+    <Tip>Use these tools along with the AI agent to power workflows</Tip>
+</Accordion>

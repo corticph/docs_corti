@@ -1,0 +1,402 @@
+
+Follow these steps to get access and start building: 
+
+<Steps titleSize="h3">
+
+<Step title="Create an account in the self-service API Console">
+    <AccordionGroup>
+    <Accordion title="Get access" icon="key"> 
+        The [Corti API Console](https://corti-api-console.web.app/) is where you can create an account to access Corti AI
+
+        &nbsp;&nbsp; <Icon icon="check" iconType="solid" /> Create an account <br/>
+        &nbsp;&nbsp; <Icon icon="check" iconType="solid" /> Create a project <br/>
+        &nbsp;&nbsp; <Icon icon="check" iconType="solid" /> Create API clients <br/>
+        &nbsp;&nbsp; <Icon icon="check" iconType="solid" /> Use the client ID and client secret in your app <br/> 
+        &nbsp;&nbsp; <Icon icon="check" iconType="solid" /> Develop against the API and collaborate with your project team <br/>
+        &nbsp;&nbsp; <Icon icon="check" iconType="solid" /> Monitor usage, manage billing and more 
+    </Accordion>
+
+    <Accordion title="Walkthrough video" icon="youtube">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/mI6pUnJNLX8?si=tfmr7id9lk4BgmQs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </Accordion>
+    </AccordionGroup>
+    <br/>
+</Step>
+
+<Step title="Authenticate and test the API"> 
+    <AccordionGroup>
+    <Accordion title="Authenticate" icon="unlock-keyhole">
+
+        Authentication to the API on all environments is governed by OAuth 2.0. This authentication protocol offers enhanced security measures, ensuring that access to patient data and medical documentation is securely managed and compliant with healthcare regulations.
+
+        <Info>By default, you will receive a client-id and client-secret to authenticate via grant type: client credentials. This can be modified and extended upon request to authenticate individual users of your application, including options to utilize SSO or SAML.</Info>
+
+        <Steps titleSize="h3">
+        <Step title="Request an access token">
+            To acquire an access token, make a request to the authURL provided to you:
+
+            ```bash auth URL
+            https://auth.{environment}.corti.app/realms/{tenant-name}/protocol/openid-connect/token
+            ```
+
+            <Note>Create your account and client credentials in the API Console - in addition to client ID and client secret you'll see the tenant name and environment.</Note>
+        <br/>
+            The full request body that needs to be of `Content-Type: "application/x-www-form-urlencoded"` looks like this:
+
+            ```jsx Client Credentials request body
+            grant_type: "client_credentials"
+            scope: "openid"
+            client_id: "<the-provided-client-id>"
+            client_secret: "********"
+            ```
+
+        </Step>
+        <Step title="Receive an access token">
+            It will return you an `access_token`:
+
+            ```jsx Access token
+            {"access_token":"ey...","expires_in":300,"refresh_expires_in":0,"token_type":"Bearer","id_token":"e...","not-before-policy":0,"scope":"openid email profile"}
+            ```
+
+            As you can see, the access token expires after 300 seconds (5 minutes). By default as per oAuth standards, no refresh token is used in this flow. There are many available modules to manage monitoring expiry and acquiring a new access token. However, a refresh token can be enabled if needed.
+        </Step>
+        </Steps>
+
+    </Accordion>
+
+    <Accordion title="Code examples" icon="code">
+        
+        Example **authentication code snippets** for the Corti API in Python, JavaScript, and .NET:
+
+        <CodeGroup>
+
+        ```py Python [expandable]
+        import requests
+
+        CLIENT_ID, CLIENT_SECRET, ENV, TENANT = (
+            "<your client id>",
+            "<your client secret>",
+            "<your environment>",
+            "<your tenant name>",
+        )
+
+        URL = (
+            f"https://auth.{ENV}.corti.app"
+            f"/realms/{TENANT}/protocol/openid-connect/token"
+        )
+
+        def get_access_token():
+            r = requests.post(
+                URL,
+                data={
+                    "client_id": CLIENT_ID,
+                    "client_secret": CLIENT_SECRET,
+                    "grant_type": "client_credentials",
+                    "scope": "openid"
+                },
+            )
+            r.raise_for_status()
+            return r.json()["access_token"]
+
+        if __name__ == "__main__":
+            token = get_access_token()
+            print(token)
+        ```
+
+        ```js JavaScript [expandable]
+        const CLIENT_ID     = "<your client id>";
+        const CLIENT_SECRET = "<your client secret>";
+        const ENVIRONMENT   = "<your environment>";
+        const TENANT_NAME   = "<your tenant name>";
+
+        const TOKEN_URL = `https://auth.${ENVIRONMENT}.corti.app/realms/${TENANT_NAME}/protocol/openid-connect/token`;
+
+        export async function getAccessToken() {
+        const res = await fetch(TOKEN_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({
+            client_id: CLIENT_ID,
+            client_secret: CLIENT_SECRET,
+            grant_type: 'client_credentials',
+            })
+        });
+        if (!res.ok) throw new Error(`Token request failed (${res.status})`);
+        const { access_token } = await res.json();
+        return access_token;
+        }
+
+        // example
+        getAccessToken()
+        .then(token => console.log(token))
+        .catch(err => console.error(err.message));
+        ```
+
+        ```dotnet .NET [expandable]
+        using System;
+        using System.Net.Http;
+        using System.Text.Json;
+
+        // ─── CONFIG ────────────────────────────────────────────
+        const string CLIENT_ID     = "<your client id>";
+        const string CLIENT_SECRET = "<your client secret>";
+        const string ENV           = "<your environment>";
+        const string TENANT        = "<your tenant name>";
+
+        // ─── TOKEN ENDPOINT ────────────────────────────────────
+        var url = 
+        $"https://auth.{ENV}.corti.app" +
+        $"/realms/{TENANT}/protocol/openid-connect/token";
+
+        using var client = new HttpClient();
+
+        // ─── FETCH TOKEN ──────────────────────────────────────
+        var payload = new FormUrlEncodedContent(new[]
+        {
+            KeyValuePair.Create("client_id",     CLIENT_ID),
+            KeyValuePair.Create("client_secret", CLIENT_SECRET),
+            KeyValuePair.Create("grant_type",    "client_credentials"),
+            KeyValuePair.Create("scope",         "openid")
+        });
+
+        var resp = await client.PostAsync(url, payload);
+        resp.EnsureSuccessStatusCode();
+
+        using var doc = 
+        await JsonDocument.ParseAsync(await resp.Content.ReadAsStreamAsync());
+        var token = doc.RootElement.GetProperty("access_token").GetString();
+
+        Console.WriteLine(token);
+        ```
+        </CodeGroup>
+    </Accordion>
+    </AccordionGroup>
+
+    <br/>
+    <AccordionGroup>
+    <Accordion title="Make an API request" icon="code-pull-request">
+
+        Once you're authenticated, make requests against the API. Below is a basic example for creating an Interaction. See all API requests and specifications [here](/api-reference/).
+
+        <Steps titleSize="h3"> 
+        <Step title="Call the base URL">
+            Subsequently you use the `access_token` to authenticate any API request. The baseURL is dependent on the environment:
+
+            ```bash baseURL API
+            api.{environment}.corti.app/v2
+            ```
+
+            <Note>Create your account and client credentials in the API Console - in addition to client ID and client secret you'll see the tenant name and environment.</Note>
+        <br/>
+            If, for example, you are on the eu environment and want to create an interaction as the starting point for any other workflow operations your URL will look like this:
+
+            ```bash URL to create an interaction
+            POST https://api.eu.corti.app/v2/interactions/
+            ```
+        </Step>
+        <Step title="Pass the auth token"> 
+            For **REST API requests**, your `access_token` should be passed as part of the `Request Header`. Additionally you need to include the `Tenant-Name` parameter:
+            
+            ```jsx API call request header
+            Tenant-Name: <tenantname>
+            Authorization: Bearer <access_token>
+            ```
+
+            <Note>Create your account and client credentials in the API Console - in addition to client ID and client secret you'll see the tenant name and environment.</Note>
+        <br/>
+            For **WebSocket** connections, the `access_token` should be passed in as URL parameter. The `Tenant-Name` is already part of the WebSocket url returned with the create interaction request:
+
+            ```javascript wss url with access_token appended
+            wss://{stream-url}&token=Bearer {access_token}
+            ```
+        <Tip>Find the full specification for create interaction request in the [API Reference](api-reference/interactions/create-interaction)</Tip>
+
+        </Step>
+        </Steps>
+
+    </Accordion>
+
+    <Accordion title="Walkthrough video" icon="youtube">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/NlF39t7uU6A?si=07X7ZH_lEEZJ8Hik" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </Accordion>
+    </AccordionGroup>
+
+<br/>
+</Step>
+
+<Step title="Build the API into your application">
+
+<AccordionGroup>
+    <Accordion title="Python app example" icon="python">
+
+        ```py Python app - Corti API - Stream interaction [expandable]
+        import os
+        import json
+        import time
+        import uuid
+        import requests
+        import websocket
+        from urllib.parse import quote
+        from datetime import datetime, timezone
+        from dotenv import load_dotenv
+
+        # Load environment variables from .env file
+        load_dotenv()
+        CLIENT_ID = os.getenv("CLIENT_ID")
+        CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+        TENANT_NAME = os.getenv("TENANT_NAME")
+        ENVIRONMENT = os.getenv("ENVIRONMENT")
+
+        def get_access_token():
+            print("🔐 Step 1 — Authenticating...")
+            url = f"https://auth.{ENVIRONMENT}.corti.app/realms/{TENANT_NAME}/protocol/openid-connect/token"
+            payload = {
+                "grant_type": "client_credentials",
+                "client_id": CLIENT_ID,
+                "client_secret": CLIENT_SECRET,
+                "scope": "openid"
+            }
+            headers = {"Content-Type": "application/x-www-form-urlencoded"}
+            response = requests.post(url, data=payload, headers=headers)
+            if response.ok:
+                print("✅ Authenticated")
+                return response.json()["access_token"]
+            raise Exception(f"Authentication failed: {response.status_code} - {response.text}")
+
+        def create_interaction(token):
+            print("🔗 Step 2 — Creating interaction session...")
+            url = f"https://api.{ENVIRONMENT}.corti.app/v2/interactions"
+            headers = {
+                "Authorization": f"Bearer {token}",
+                "Content-Type": "application/json",
+                "Tenant-Name": TENANT_NAME
+            }
+            now = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+            payload = {
+                "assignedUserId": str(uuid.uuid4()),
+                "encounter": {
+                    "identifier": str(uuid.uuid4()),
+                    "status": "planned",
+                    "type": "first_consultation",
+                    "period": {
+                        "startedAt": now,
+                        "startedAtTzoffset": "+00:00",
+                        "endedAt": now,
+                        "endedAtTzoffset": "+00:00"
+                    },
+                    "title": "Consultation"
+                }
+            }
+            response = requests.post(url, json=payload, headers=headers)
+            if response.ok:
+                print("✅ Interaction session created")
+                return response.json()
+            raise Exception(f"Interaction creation failed: {response.status_code} - {response.text}")
+
+        def stream_audio(ws, path):
+            print("🎧 Step 4 — Streaming audio...")
+            chunk_size = 32000
+            with open(path, "rb") as f:
+                while chunk := f.read(chunk_size):
+                    ws.send(chunk, opcode=websocket.ABNF.OPCODE_BINARY)
+                    time.sleep(0.5)
+            ws.send(json.dumps({"type": "end"}))
+            print("✅ Audio stream completed")
+
+        def connect_and_stream_audio(ws_url, audio_path):
+            print("🌐 Step 3 — Connecting to WebSocket and sending config...")
+            transcript_lines = []
+
+            def on_open(ws):
+                config = {
+                    "type": "config",
+                    "configuration": {
+                        "transcription": {
+                            "primaryLanguage": "en",
+                            "isDiarization": False,
+                            "isMultichannel": False,
+                            "participants": [{"channel": 0, "role": "multiple"}]
+                        },
+                        "mode": {"type": "facts", "outputLocale": "en"}
+                    }
+                }
+                ws.send(json.dumps(config))
+                print("✅ Configuration sent")
+
+            def on_message(ws, message):
+                msg = json.loads(message)
+                msg_type = msg.get("type").upper()
+
+                if msg_type == "CONFIG_ACCEPTED":
+                    print("🟢 Config accepted by server")
+                    stream_audio(ws, audio_path)
+
+                elif msg_type == "TRANSCRIPT":
+                    print("📄Step 5 -Transcript received:")
+                    content = " ".join([x["transcript"] for x in msg["data"]])
+                    if content:
+                        transcript_lines.append(content)
+
+                elif msg_type == "FACTS":
+                    print("📄Step 5 - Facts received:")
+                    print(json.dumps(msg, indent=2))
+
+                elif msg_type == "ENDED":
+                    print("📌 Step 6 — Session ended by server")
+                    if transcript_lines:
+                        print("\n📝 Final Transcript:")
+                        for line in transcript_lines:
+                            print(line)
+                    else:
+                        print("⚠️ No transcript received.")
+                    ws.close()
+
+            def on_close(ws, code, reason):
+                print("✅ WebSocket closed")
+
+            websocket.enableTrace(False)
+            ws = websocket.WebSocketApp(
+                ws_url,
+                on_open=on_open,
+                on_message=on_message,
+                on_error=lambda ws, err: print(f"[ERROR] {err}"),
+                on_close=on_close
+            )
+            ws.run_forever()
+
+        def main(audio_path):
+            if not os.path.isfile(audio_path):
+                raise FileNotFoundError(f"Missing file: {audio_path}")
+
+            token = get_access_token()
+            interaction = create_interaction(token)
+
+            print("\n📦 Final interaction response:")
+            print(json.dumps(interaction, indent=2))
+
+            ws_url = interaction.get("websocketUrl")
+            if not ws_url:
+                raise ValueError("Missing WebSocket URL in response")
+
+            ws_url += f"&token={quote(f'Bearer {token}')}"
+            connect_and_stream_audio(ws_url, audio_path)
+
+        if __name__ == "__main__":
+            audio_file_path = "PATH_TO_FILE.wav"
+            main(audio_file_path)
+        ```
+
+    </Accordion>
+    <Accordion title="Walkthrough video" icon="youtube">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/FfwjQMOgh34?si=RDA055uYpMkiBE6I" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </Accordion>
+    </AccordionGroup>
+</Step>
+
+</Steps>
+
+
+For support or questions, please reach out via [help.corti.ai](https://help.corti.ai).
+
+<br/>
+<Note>To get access to Corti API [click here to sign up](https://corti-api-console.web.app/signup)</Note>
