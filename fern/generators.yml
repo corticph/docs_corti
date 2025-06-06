@@ -23,16 +23,15 @@ groups:
         version: 1.4.0
         output:
           location: npm
-          package-name: '@markitosha/core'
+          package-name: '@corti/core'
           token: ${NPM_TOKEN}
         github:
           repository: corticph/corti-sdk-typescript
           mode: pull-request
         metadata:
           license: MIT
-          package-description: Corti API TypeScript SDK
+          package-description: Alpha version of Corti API TypeScript SDK
         config:
           namespaceExport: Corti
           noSerdeLayer: false
           enableInlineTypes: false
-          skipResponseValidation: true

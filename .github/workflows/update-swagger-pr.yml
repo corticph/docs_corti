@@ -24,6 +24,25 @@ jobs:
           token: ${{ github.token }}
           fetch-depth: 0
 
+      # Checkout SDK repository to get version (public repo)
+      - name: Checkout SDK repository
+        uses: actions/checkout@v4
+        with:
+          repository: 'corticph/corti-sdk-typescript'
+          path: 'sdk-repo'
+
+      - name: Get SDK version
+        id: sdk-version
+        run: |
+          if [ -f "sdk-repo/src/version.ts" ]; then
+            VERSION=$(grep -o "'.*'" sdk-repo/src/version.ts | tr -d "'")
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+            echo "Found SDK version: $VERSION"
+          else
+            echo "Error: version.ts not found in SDK repository"
+            exit 1
+          fi
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -41,7 +60,8 @@ jobs:
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
-          fern generate --group ts-sdk --log-level debug
+          echo "Generating SDK with version ${{ steps.sdk-version.outputs.version }}"
+          fern generate --group ts-sdk --version ${{ steps.sdk-version.outputs.version }} --log-level debug
 
       - name: Update swagger doc
         run: |
