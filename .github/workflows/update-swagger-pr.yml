@@ -39,8 +39,7 @@ jobs:
 
       - name: Generate SDK
         env:
-          # FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-          FERN_TOKEN: 'fern_nPMzsDv9RgFs9fa21_Q0CqbS-vgaOmHd'
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
           fern generate --group ts-sdk --log-level debug
 

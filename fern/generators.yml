@@ -24,8 +24,7 @@ groups:
         output:
           location: npm
           package-name: '@markitosha/core'
-#          token: ${NPM_TOKEN}
-          token: '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'
+          token: ${NPM_TOKEN}
         github:
           repository: corticph/corti-sdk-typescript
           mode: pull-request
