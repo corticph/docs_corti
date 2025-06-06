@@ -318,14 +318,7 @@
       "delete": {
         "responses": {
           "204": {
-            "description": "The interaction was successfully deleted. No response body is returned.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NoContent"
-                }
-              }
-            }
+            "description": "The interaction was successfully deleted. No response body is returned."
           },
           "403": {
             "description": "RFC9457",
@@ -631,14 +624,7 @@
       "delete": {
         "responses": {
           "204": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NoContent"
-                }
-              }
-            }
+            "description": ""
           },
           "403": {
             "description": "RFC9457",
@@ -1038,14 +1024,7 @@
       "delete": {
         "responses": {
           "204": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NoContent"
-                }
-              }
-            }
+            "description": ""
           },
           "400": {
             "description": "RFC9457",
@@ -1138,7 +1117,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ResponseDirectusFactGroupsFiltered"
+                  "$ref": "#/components/schemas/ResponseFactGroupsFiltered"
                 }
               }
             }
@@ -1758,14 +1737,7 @@
       "delete": {
         "responses": {
           "204": {
-            "description": "",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NoContent"
-                }
-              }
-            }
+            "description": ""
           },
           "403": {
             "description": "RFC9457",
@@ -2795,51 +2767,6 @@
           }
         }
       },
-      "DirectusFactGroupFiltered": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string",
-            "format": "uuid",
-            "items": {},
-            "$ref": "#/components/schemas/UUID"
-          },
-          "key": {
-            "type": "string"
-          },
-          "translations": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "integer"
-                },
-                "languages_id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      },
-      "DirectusFactGroupTranslationFiltered": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer"
-          },
-          "languages_id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          }
-        }
-      },
       "DocumentContext": {
         "type": "object",
         "required": [
@@ -3031,6 +2958,51 @@
           "source": {
             "description": "The source of the fact. 'USER' refers to facts provided by the user, while 'SYSTEM' refers to system-generated facts (e.g., EHR).",
             "$ref": "#/components/schemas/V2SourceEnum"
+          }
+        }
+      },
+      "FactGroupFiltered": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "items": {},
+            "$ref": "#/components/schemas/UUID"
+          },
+          "key": {
+            "type": "string"
+          },
+          "translations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer"
+                },
+                "languages_id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "FactGroupTranslationFiltered": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "languages_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
           }
         }
       },
@@ -3728,6 +3700,7 @@
             "description": "The audio channel to associate with a participant role."
           },
           "role": {
+            "description": "The role of the participant (e.g., 'doctor', 'patient', use 'multiple' for single channel).",
             "$ref": "#/components/schemas/V2TranscriptParticipantRoleEnum"
           }
         }
@@ -3874,6 +3847,7 @@
                   "description": "The audio channel to associate with a participant role."
                 },
                 "role": {
+                  "description": "The role of the participant (e.g., 'doctor', 'patient', use 'multiple' for single channel).",
                   "$ref": "#/components/schemas/V2TranscriptParticipantRoleEnum"
                 }
               }
@@ -4082,6 +4056,10 @@
                 }
               }
             }
+          },
+          "usageInfo": {
+            "type": "object",
+            "$ref": "#/components/schemas/UsageInfo"
           }
         }
       },
@@ -4131,45 +4109,6 @@
                   "type": "object",
                   "description": "State of the additional code",
                   "$ref": "#/components/schemas/CodesState"
-                }
-              }
-            }
-          }
-        }
-      },
-      "ResponseDirectusFactGroupsFiltered": {
-        "type": "object",
-        "properties": {
-          "data": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "type": "string",
-                  "format": "uuid",
-                  "items": {},
-                  "$ref": "#/components/schemas/UUID"
-                },
-                "key": {
-                  "type": "string"
-                },
-                "translations": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "integer"
-                      },
-                      "languages_id": {
-                        "type": "string"
-                      },
-                      "name": {
-                        "type": "string"
-                      }
-                    }
-                  }
                 }
               }
             }
@@ -4256,6 +4195,10 @@
           "outputLanguage": {
             "type": "string",
             "description": "The language in which the document will be generated. Check https://docs.corti.ai/about/languages for more."
+          },
+          "usageInfo": {
+            "type": "object",
+            "$ref": "#/components/schemas/UsageInfo"
           }
         }
       },
@@ -4380,6 +4323,45 @@
           "quote": {
             "type": "string",
             "description": "A direct excerpt or phrase extracted from the reference source that justifies the fact."
+          }
+        }
+      },
+      "ResponseFactGroupsFiltered": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "format": "uuid",
+                  "items": {},
+                  "$ref": "#/components/schemas/UUID"
+                },
+                "key": {
+                  "type": "string"
+                },
+                "translations": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "languages_id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
@@ -4939,6 +4921,10 @@
             "items": {
               "$ref": "#/components/schemas/Utterance"
             }
+          },
+          "usageInfo": {
+            "type": "object",
+            "$ref": "#/components/schemas/UsageInfo"
           }
         }
       },
@@ -4989,6 +4975,10 @@
                 }
               }
             }
+          },
+          "usageInfo": {
+            "type": "object",
+            "$ref": "#/components/schemas/UsageInfo"
           }
         }
       },
@@ -5268,6 +5258,14 @@
         "items": {},
         "format": "uuid"
       },
+      "UsageInfo": {
+        "type": "object",
+        "properties": {
+          "creditsConsumed": {
+            "type": "number"
+          }
+        }
+      },
       "Utterance": {
         "type": "object",
         "properties": {
@@ -5368,98 +5366,6 @@
           }
         }
       },
-      "common.ErrorResponse": {
-        "type": "object",
-        "properties": {
-          "requestid": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string"
-          },
-          "status": {
-            "type": "integer"
-          },
-          "title": {
-            "type": "string"
-          },
-          "details": {
-            "type": "string"
-          },
-          "instance": {
-            "type": "string"
-          }
-        }
-      },
-      "copilotCommon.ErrorResponse": {
-        "type": "object",
-        "properties": {
-          "requestid": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string"
-          },
-          "status": {
-            "type": "integer"
-          },
-          "title": {
-            "type": "string"
-          },
-          "details": {
-            "type": "string"
-          },
-          "instance": {
-            "type": "string"
-          }
-        }
-      },
-      "copilotModels.V2EncounterStatus": {
-        "type": "string"
-      },
-      "copilotModels.V2EncounterType": {
-        "type": "string"
-      },
-      "copilotModels.V2Gender": {
-        "type": "string"
-      },
-      "copilotModels.V2Source": {
-        "type": "string"
-      },
-      "copilotModels.V2TranscriptParticipantRole": {
-        "type": "string"
-      },
-      "cortiCommon.ErrorResponse": {
-        "type": "object",
-        "properties": {
-          "requestid": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string"
-          },
-          "status": {
-            "type": "integer"
-          },
-          "title": {
-            "type": "string"
-          },
-          "details": {
-            "type": "string"
-          },
-          "instance": {
-            "type": "string"
-          }
-        }
-      },
-      "type.NoContent": {
-        "type": "object"
-      },
-      "uuid.UUID": {
-        "type": "string",
-        "items": {},
-        "format": "uuid"
-      },
       "ResponseTranscriptTime": {
         "type": "object",
         "properties": {
@@ -5544,6 +5450,13 @@
         }
       }
     },
+    "securitySchemes": {
+      "AuthorizationHeader": {
+        "type": "http",
+        "description": "Input your token",
+        "scheme": "bearer"
+      }
+    },
     "parameters": {
       "Tenant-Name": {
         "name": "Tenant-Name",
@@ -5558,6 +5471,13 @@
       }
     }
   },
+  "security": [
+    {
+      "AuthorizationHeader": [
+        "bearer"
+      ]
+    }
+  ],
   "tags": [
     {
       "name": "interactions"
