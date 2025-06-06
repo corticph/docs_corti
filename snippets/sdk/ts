@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { CortiEnvironment, CortiClient } from \"@markitosha/core\";\n\nconst client = new CortiClient({ environment: CortiEnvironment.BetaEu, token: \"YOUR_TOKEN\", tenantName: \"YOUR_TENANT_NAME\" });\nconst response = await client.interactions.list();\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nconst page = await client.interactions.list();\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
+                "client": "import { CortiEnvironment, CortiClient } from \"@corti/core\";\n\nconst client = new CortiClient({ environment: CortiEnvironment.BetaEu, token: \"YOUR_TOKEN\", tenantName: \"YOUR_TENANT_NAME\" });\nconst response = await client.interactions.list();\nfor await (const item of response) {\n    console.log(item);\n}\n\n// Or you can manually iterate page-by-page\nconst page = await client.interactions.list();\nwhile (page.hasNextPage()) {\n    page = page.getNextPage();\n}\n"
             }
         },
         {
@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { CortiEnvironment, CortiClient } from \"@markitosha/core\";\n\nconst client = new CortiClient({ environment: CortiEnvironment.BetaEu, token: \"YOUR_TOKEN\", tenantName: \"YOUR_TENANT_NAME\" });\nawait client.interactions.create({\n    encounter: {\n        identifier: \"identifier\",\n        status: \"planned\",\n        type: \"first_consultation\"\n    }\n});\n"
+                "client": "import { CortiEnvironment, CortiClient } from \"@corti/core\";\n\nconst client = new CortiClient({ environment: CortiEnvironment.BetaEu, token: \"YOUR_TOKEN\", tenantName: \"YOUR_TENANT_NAME\" });\nawait client.interactions.create({\n    encounter: {\n        identifier: \"identifier\",\n        status: \"planned\",\n        type: \"first_consultation\"\n    }\n});\n"
             }
         },
         {
@@ -30,7 +30,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { CortiEnvironment, CortiClient } from \"@markitosha/core\";\n\nconst client = new CortiClient({ environment: CortiEnvironment.BetaEu, token: \"YOUR_TOKEN\", tenantName: \"YOUR_TENANT_NAME\" });\nawait client.interactions.get(\"f47ac10b-58cc-4372-a567-0e02b2c3d479\");\n"
+                "client": "import { CortiEnvironment, CortiClient } from \"@corti/core\";\n\nconst client = new CortiClient({ environment: CortiEnvironment.BetaEu, token: \"YOUR_TOKEN\", tenantName: \"YOUR_TENANT_NAME\" });\nawait client.interactions.get(\"f47ac10b-58cc-4372-a567-0e02b2c3d479\");\n"
             }
         },
         {
@@ -41,7 +41,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { CortiEnvironment, CortiClient } from \"@markitosha/core\";\n\nconst client = new CortiClient({ environment: CortiEnvironment.BetaEu, token: \"YOUR_TOKEN\", tenantName: \"YOUR_TENANT_NAME\" });\nawait client.interactions.delete(\"f47ac10b-58cc-4372-a567-0e02b2c3d479\");\n"
+                "client": "import { CortiEnvironment, CortiClient } from \"@corti/core\";\n\nconst client = new CortiClient({ environment: CortiEnvironment.BetaEu, token: \"YOUR_TOKEN\", tenantName: \"YOUR_TENANT_NAME\" });\nawait client.interactions.delete(\"f47ac10b-58cc-4372-a567-0e02b2c3d479\");\n"
             }
         },
         {
@@ -52,7 +52,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { CortiEnvironment, CortiClient } from \"@markitosha/core\";\n\nconst client = new CortiClient({ environment: CortiEnvironment.BetaEu, token: \"YOUR_TOKEN\", tenantName: \"YOUR_TENANT_NAME\" });\nawait client.interactions.update(\"f47ac10b-58cc-4372-a567-0e02b2c3d479\");\n"
+                "client": "import { CortiEnvironment, CortiClient } from \"@corti/core\";\n\nconst client = new CortiClient({ environment: CortiEnvironment.BetaEu, token: \"YOUR_TOKEN\", tenantName: \"YOUR_TENANT_NAME\" });\nawait client.interactions.update(\"f47ac10b-58cc-4372-a567-0e02b2c3d479\");\n"
             }
         }
     ],
