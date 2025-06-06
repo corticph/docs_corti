@@ -36,3 +36,4 @@ groups:
           namespaceExport: Corti
           noSerdeLayer: false
           enableInlineTypes: false
+          skipResponseValidation: true
