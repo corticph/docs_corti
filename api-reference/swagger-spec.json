@@ -5261,18 +5261,6 @@
       "UsageInfo": {
         "type": "object",
         "properties": {
-          "inputRawTokens": {
-            "type": "integer"
-          },
-          "audioInputRawTokens": {
-            "type": "integer"
-          },
-          "inputRawMinutes": {
-            "type": "number"
-          },
-          "outputRawTokens": {
-            "type": "integer"
-          },
           "creditsConsumed": {
             "type": "number"
           }
