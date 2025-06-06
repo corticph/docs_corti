@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+api:
+  environments:
+    beta-eu: https://api.beta-eu.corti.app/v2
+    us: https://api.us.corti.com/v2
+    eu: https://api.eu.corti.app/v2
+  specs:
+    - openapi: ../api-reference/swagger-spec.json
+      overrides: ./overrides.yml
+      settings:
+        respect-nullable-schemas: true
+
+default-group: ts-sdk
+
+groups:
+  ts-sdk:
+    audiences:
+      - public
+    generators:
+      - name: fernapi/fern-typescript-node-sdk
+        snippets:
+          path: ../snippets/sdk/ts
+        version: 1.4.0
+        output:
+          location: npm
+          package-name: '@corti/core'
+          token: ${NPM_TOKEN}
+        github:
+          repository: corticph/corti-sdk-typescript
+          mode: pull-request
+        metadata:
+          license: MIT
+          package-description: Alpha version of Corti API TypeScript SDK
+        config:
+          namespaceExport: Corti
+          noSerdeLayer: false
+          enableInlineTypes: false

@@ -1,0 +1,92 @@
+name: Update SDK and Swagger Spec
+
+on:
+  pull_request:
+    paths:
+      - 'fern/generators.yml'
+      - 'fern/overrides.yml'
+      - 'api-reference/swagger-spec.json'
+
+permissions:
+  actions: write
+  contents: write
+  pull-requests: write
+
+jobs:
+  update-swagger:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          token: ${{ github.token }}
+          fetch-depth: 0
+
+      # Checkout SDK repository to get version (public repo)
+      - name: Checkout SDK repository
+        uses: actions/checkout@v4
+        with:
+          repository: 'corticph/corti-sdk-typescript'
+          path: 'sdk-repo'
+
+      - name: Get SDK version
+        id: sdk-version
+        run: |
+          if [ -f "sdk-repo/src/version.ts" ]; then
+            VERSION=$(grep -o 'SDK_VERSION = "[^"]*"' sdk-repo/src/version.ts | cut -d'"' -f2)
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+            echo "Found SDK version: $VERSION"
+          else
+            echo "Error: version.ts not found in SDK repository"
+            exit 1
+          fi
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Set up Git
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@users.noreply.github.com'
+
+      - name: Install Fern
+        run: npm install -g fern-api
+
+      - name: Generate SDK
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          echo "Generating SDK with version ${{ steps.sdk-version.outputs.version }}"
+          fern generate --group ts-sdk --version ${{ steps.sdk-version.outputs.version }} --log-level debug
+
+      - name: Update swagger doc
+        run: |
+          if [ ! -f "fern/scripts/merge_snippets_to_spec.js" ]; then
+            echo "Error: Script fern/scripts/merge_snippets_to_spec.js not found"
+            echo "Please create this script to merge snippets into the swagger spec"
+            exit 1
+          fi
+          node fern/scripts/merge_snippets_to_spec.js
+
+      - name: Commit changes if needed
+        run: |
+          # Stage both snippets and swagger doc if they changed
+          git add snippets/sdk/ api-reference/swagger-with-sdk-snippets.json
+
+          if ! git diff --cached --quiet; then
+            # Determine commit message based on what changed
+            title="[Automated] Update SDK snippets and swagger doc from spec changes"
+
+            git commit -m "$title"
+            git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+            git push origin HEAD:${GITHUB_HEAD_REF} --force
+          else
+            echo "No changes to commit"
+          fi
+        env:
+          GITHUB_TOKEN: ${{ github.token }} 
