@@ -159,8 +159,15 @@ Here is an example configuration for transcription of dictated audio in English,
 Raw audio data to be transcribed.
 
 ### Ending
-To end the /transcribe session send a `type: end`. This will signal the server to send any remaining transcript segments and detected commands before ending the session.
-
+To end the /transcribe session send a `type: end`. 
+This will signal the server to send any remaining transcript segments and detected commands before the server sends a usage message
+```json 
+{
+  "type":"usage",
+  "credits":0.1
+}
+```
+, then a message of type `ended`, and then closes.
 ## Responses <Icon icon="message-arrow-down" iconType="solid" /> 
 
 ### Configuration
@@ -243,3 +250,20 @@ To end the /transcribe session send a `type: end`. This will signal the server t
 <ResponseField name="sessionId" type="uuid" required>
   The session ID.
 </ResponseField>
+
+Once configuration has been accepted and the session is running, you may encounter runtime or application-level errors.
+ These are sent as JSON objects with the following structure:
+
+```json
+{
+  "type": "error",
+  "error": {
+    "id": "error id",
+    "title": "error title",
+    "status": 400,
+    "details": "error details",
+    "doc":"link to documentation"
+  }
+}
+```
+In some cases, receiving an "error" type message will cause the stream to end and send a message of type `usage` and type `ENDED`.
