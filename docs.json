@@ -27,6 +27,7 @@
             "pages": [
               "about/introduction",
               "about/how_it_works",
+              "about/asr",
               "about/languages"
             ]
           },
@@ -84,16 +85,22 @@
         ]
       },
       {
-        "anchor": "Updates",
+        "anchor": "Resources",
         "icon": "gears",
         "groups": [
           {
-            "group": "Updates",
+            "group": "Get Started",
             "pages": [
               "release-notes/overview",
-              "release-notes/fm-updates",
+              "about/help",
+              "about/getaccess"
+            ]
+          },
+          {
+            "group": "Release Notes",
+            "pages": [
               "release-notes/api-updates",
-              "release-notes/language-updates"
+              "release-notes/asr-updates"
             ]
           },
           {
@@ -133,7 +140,7 @@
     },
     "links":[{
       "label": "Support",
-      "href": "https://help.corti.ai/"
+      "href": "https://help.corti.app/"
     }
     ]
   },
@@ -141,8 +148,9 @@
     "socials": {
       "website": "https://www.corti.ai",
       "x": "https://x.com/corti_ai",
+      "linkedin": "https://www.linkedin.com/company/corti",
       "github": "https://github.com/corticph",
-      "linkedin": "https://www.linkedin.com/company/corti"
+      "youtube": "https://www.youtube.com/@cortiai"
     }
   },
   "integrations": {

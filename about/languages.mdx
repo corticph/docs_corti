@@ -4,36 +4,35 @@ description: 'Learn about how languages are supported in Corti APIs'
 ---
 
 ## Introduction
-Corti foundation models are specifically designed for use in the healthcare domain. While automated speech recognition (ASR) capabilities are continuously refined, a tier system has been introduced to categorize functionality and performance that is available. Selecting language models at the appropriate tier allows you to find the right fit for your needs while balancing capabilities and cost. 
+Corti automated speech recognition (ASR) is specifically designed for use in the healthcare domain. A tier system has been introduced to categorize functionality and performance that is available per language and endpoint. Selecting language models at the appropriate tier allows you to find the right fit for your needs while balancing capabilities and cost. 
 
-The language codes are also used for defining output language in note generation requests. 
+<Tip>The `language codes` listed below are used in API requests for both defining speech recognition language and document generation output language</Tip>
 
+## Corti ASR language tiers 
 
-## Corti ASR tiers 
+| Tier           | Description | Primary use case |
+| :------------- | :---------- | :--- |
+| **Base**       | Enable speech-to-text with a **general medicine model** for various speech-enabled workflows | Automated speech recognition |
+| **Enhanced**   | Base functionality plus **optimized medical terminology recognition** for a variety of specialties, balancing speed, performance, and quality | Ambient documentation workflows |
+| **Premier**    | Enhanced functionality plus the highest accuracy, **lowest latency and most features** (e.g., customized commands, spoken or automated punctuation, and smart formatting) | Robust dictation workflows |
 
-| Tier           |  Description | Primary use case |
-| :------------- |  :---------- | :--- |
-| **Base**       |  Enable speech-to-text with a **general medicine model** for various speech-enabled workflows | Automated speech recognition |
-| **Enhanced**   |  Base functionality plus **optimized medical terminology recognition** for a variety of specialties, balancing speed, performance, and quality | Ambient documentation workflows |
-| **Premier**    |  Enhanced functionality plus the highest accuracy, **lowest latency and most functionality** (e.g., customized commands, user-defined lexicon, spoken or automated punctuation) | Robust dictation workflows |
+## Available language tiers per ASR endpoint 
 
-## Available languages
-
-| Language     | Language Code (BCP47) | Tier availability |
-| :----------- | :-------------------- | :---------------- |
-| English (US) | en                    | Enhanced, Premier |
-| English (UK) | en-GB                 | Enhanced, Premier |
-| Danish       | da                    | Enhanced, Premier (coming soon) |
-| German       | de                    | Enhanced, Premier (coming soon) |
-| Swiss-German | de-CH                 | Enhanced |
-| French       | fr                    | Enhanced |
-| Spanish      | es                    | Base, Enhanced (coming soon) |
-| Swedish      | sv                    | Base, Enhanced (coming soon) |
-| Italian      | it                    | Base |
-| Dutch        | nl                    | Base |
-| Norwegian    | no                    | Base |
-| Portuguese   | pt                    | Base |
-| Arabic       | ar                    | Base (coming soon) |
+| Language     | Language Code<br/>(BCP47) | [Transcribe](/api-reference/transcribe/) | [Stream](/api-reference/stream/) | [Transcripts](/api-reference/transcripts/create-transcript)|
+| :----------- | :-----------------------: | :--- | :--- | :--- |
+| English (US) | en                    | Premier | Premier | Premier | 
+| English (UK) | en-GB                 | Premier | Premier | Premier | 
+| Danish       | da                    | Premier | Premier | Base | 
+| German       | de                    | Premier | Premier | Base | 
+| French       | fr                    | Premier | Premier | Base | 
+| Swiss-German | de-CH                 | Base | Enhanced | Base | 
+| Spanish      | es                    | Base | Base | Base | 
+| Italian      | it                    | Base | Base | Base | 
+| Dutch        | nl                    | Base | Base | Base | 
+| Norwegian    | no                    | Base | Base | Base | 
+| Portuguese   | pt                    | Base | Base | Base | 
+| Swedish      | sv                    | Base | Base | Base | 
+| Arabic       | ar                    | | _coming soon_ | | 
 
 <br/>
-<Note>If you are interested in a language that is not listed here, or need help determining the best language tier for your needs, please [contact us](https://help.corti.ai)</Note>
+<Note>Please [contact us](https://help.corti.app) if you are interested in a language that is not listed here, need help determining the best language tier for your needs, or have questions about how to use language codes in API requests.</Note>
