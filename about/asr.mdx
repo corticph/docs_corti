@@ -1,0 +1,36 @@
+---
+title: Overview of Corti ASR
+sidebarTitle: Speech recognition
+description: 'Learn about the speech recognition endpoints in the Corti API'
+---
+
+## Introduction
+Corti automated speech recognition (ASR) is specifically designed for use in the healthcare domain. The API endpoints detailed below provide access to different ASR functionality. Selecting the right endpoint(s) is important based on your needs and use case. 
+
+<Tip>Please review the [languages page](/about/languages/) to learn more about languages supported per endpoint, functionality per language tier, and language code to use in API requests.</Tip>
+
+## Corti ASR endpoints 
+| Endpoint | Description | 
+| :------- | :---------- | 
+| **[Transcribe](/api-reference/transcribe/)** | Stateless speech-to-text and commands used to power dictation workflows | 
+| **[Stream](/api-reference/stream/)** | Real-time transcript generation and fact extraction to power intelligent ambient documentation and decision support workflows |
+| **[Transcripts](/api-reference/transcripts/create-transcript)** | Speech-to-text via batch audio file processing |
+
+## ASR endpoint functionality 
+
+| | **[Transcribe](/api-reference/transcribe/)** | **[Stream](/api-reference/stream/)** | **[Transcripts](/api-reference/transcripts/create-transcript)** |
+| :------- | :---: | :---: | :---: | 
+| **Connection** | WSS | WSS | REST | 
+| **Data processing** | Real-time | Real-time | Asynchronous | 
+| **Speech-to-text** | Verbatim | Conversational transcript | Verbatim or transcript |
+| **State** | Stateless | Stateful | Stateful |
+| **Commands** | Yes | No | No |
+| **Spoken punctuation** | Yes | No | Yes |
+| **Automatic punctuation** | Yes | No | Yes | 
+| **Diarization** | No | Yes | Yes |
+| **Multichannel** | No | Yes | Yes |
+| **Smart formatting** | _coming soon_ | | |
+| **Custom dictionary** | _coming soon_ | | |
+
+<br/>
+<Note>Please [contact us](https://help.corti.app) if you need help determining the best endpoint for your use case, have questions about using language codes in API requests, or want to learn more about ASR language models.</Note>
